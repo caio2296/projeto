@@ -1,0 +1,217 @@
+.calendario {
+  background-color: rgba(81, 80, 80);
+
+  // background-color: #515050;
+  padding-top: 1rem;
+  // padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  width: 100%;
+  /* centraliza horizontalmente */
+  align-items: center;
+  /* alinha verticalmente (se tiver altura maior) */
+  gap: 1rem;
+
+  /* <-- Aqui arredonda as bordas */
+  border-radius: 16px;
+
+  /* (opcional) sombra para ficar mais bonito */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.Sessao-Botoes {
+  display: flex;
+  justify-content: center;
+  /* centraliza horizontalmente */
+  align-items: center;
+  /* alinha verticalmente (se tiver altura maior) */
+  padding: 1rem;
+
+}
+
+.example-label {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: #fff;
+  text-align: center;
+}
+
+.intervalo-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; // Centraliza na horizontal
+  align-items: center; // Centraliza na vertical (opcional)
+  // gap: 16px;
+
+    width: 100%;
+    gap: 1rem;
+    padding: 1rem 0;
+
+}
+
+
+.example-button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+
+  max-width: 600px;
+
+  .mat-mdc-button-base {
+    flex: 1 1 45%;
+    min-width: 120px;
+    margin: 1.8%;
+  }
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+mat-form-field {
+  width: 80%;
+}
+
+.example-flex-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.day {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.month {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.year {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.fiscalYear {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+
+.sandwich-menu {
+  display: block;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+
+/* Tablets (≥770px) */
+@media (min-width: 933px) {
+
+  .sandwich-menu {
+    display: none;
+
+  }
+
+
+
+
+
+  .Sessao-Botoes {
+    display: flex;
+    justify-content: center;
+    /* centraliza horizontalmente */
+    align-items: center;
+    /* alinha verticalmente (se tiver altura maior) */
+    padding: 1rem;
+
+  }
+
+  .example-button-row {
+    // justify-content: flex-start;
+    align-items: center;
+
+    .mat-mdc-button-base {
+      flex: 0 0 auto;
+    }
+  }
+
+  section {
+ display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  }
+
+
+
+  form {
+    flex: 1;
+  }
+
+  .form-Calendar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* <- Centraliza horizontalmente */
+    justify-content: center;
+    width: 100%;
+    gap: 1rem;
+    padding: 1rem 0;
+  }
+
+  /* Os elementos filhos (como seus app-input-* e mat-form-field) devem ter largura controlada */
+  form:not(.intervalo-form)>* {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  /* Apenas para garantir os mat-form-field dentro do form principal também se comportem bem */
+  form:not(.intervalo-form) mat-form-field {
+    width: 100%;
+  }
+
+  /* Se precisar usar uma classe para evitar conflito com o form de intervalo */
+  form.intervalo-form {
+    align-items: center;
+    /* centraliza o de intervalo */
+  }
+
+}
+
+/* Desktop grande (≥1200px) */
+@media (min-width: 1200px) {
+  .sandwich-menu {
+    display: none;
+  }
+
+  .calendario {
+    padding: 2rem;
+  }
+
+  .example-button-row {
+    gap: 1rem;
+  }
+
+  section {
+    gap: 2rem;
+  }
+}

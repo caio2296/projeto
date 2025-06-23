@@ -1,0 +1,36 @@
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root' // Faz com que esse service seja um singleton global
+})
+export class CalendarBarModel{
+
+    dados ={
+    type:'calendarBar',
+    calendarBar:    {
+                        datetime: {visible:false, range:true, rangeStart:'', rangeEnd:''},
+                        day: {visible:true, range:true, rangeStart:'01', rangeEnd:'1'},
+                        week: {visible:true, range:true, rangeStart:'', rangeEnd:''},
+                        month: {visible:true, range:true, rangeStart:'11', rangeEnd:'1'},
+                        year: {visible:true, range:true, rangeStart:'', rangeEnd:''},
+                        fiscalYear: {visible:true, range:true, rangeStart:'', rangeEnd:''},
+                        defaultSelection:   {
+                                                selection:'day',
+                                                range:false,
+                                                dateStart:'09/12/2012',
+                                                dateEnd:''
+                                            }
+                    },
+    shiftBar:   {
+                    descriptions: ['Mañana','Tarde','Noche','Todos'], 
+                    visible:true,
+                    range:false,
+                    rangeStart: null,
+                    rangeEnd: null,
+                    typeCtrl: 'combobox'
+                },
+    dateMin:'01/09/2006',
+    dateMax:'31/12/2012',
+    fiscalYearStart:'01/07'
+};
+}

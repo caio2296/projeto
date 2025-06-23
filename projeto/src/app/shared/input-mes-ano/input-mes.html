@@ -1,0 +1,13 @@
+
+<div [formGroup]="form">
+    <mat-form-field appearance="outline">
+        <mat-label>Mes</mat-label>
+        <input  matInput [matDatepicker]="pickerMonth" formControlName="month"
+            [min]="dateHelperServices.dateMinISO()" [max]="dateHelperServices.dateMaxISO()"
+            (dateInput)="this.calendarFormService.onDateChangeDataAndMonth($event, 'month')" [readonly]="true"/>
+        <mat-hint>MM/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="pickerMonth"></mat-datepicker-toggle>
+        <mat-datepicker #pickerMonth startView="multi-year"
+            (monthSelected)="setMonthAndYear($event, pickerMonth, 'month')" panelClass="month-picker"></mat-datepicker>
+    </mat-form-field>
+</div>

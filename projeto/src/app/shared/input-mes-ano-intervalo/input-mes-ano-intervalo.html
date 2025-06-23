@@ -1,0 +1,26 @@
+<div class="input-container" [formGroup]="intervaloForm">
+  <mat-form-field appearance="outline">
+    <mat-label>Inicio</mat-label>
+    <input matInput [type]="inputConfig.type" [matDatepicker]="pickerInicioMes" formControlName="dataInicioMes"
+      [min]="dateHelperService.dateMinISO()" [max]="dateHelperService.dateMaxISO()" [readonly]="true" />
+    <mat-hint>MM/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="pickerInicioMes"></mat-datepicker-toggle>
+    <mat-datepicker #pickerInicioMes startView="multi-year"
+      (monthSelected)="setMonthAndYear($event, pickerInicioMes, 'dataInicioMes')"
+      panelClass="example-month-picker"></mat-datepicker>
+  </mat-form-field>
+
+  
+  <mat-form-field appearance="outline">
+    <mat-label>Fim</mat-label>
+    <input [type]="inputConfig.type" matInput [matDatepicker]="pickerFimMes" formControlName="dataFimMes"
+      [min]="dateHelperService.dateMinISO()" [max]="dateHelperService.dateMaxISO()"
+      (dateInput)="this.calendarFormService.onDateChangeInterval($event, 'dataInicioMes','dataFimMes')"
+      [readonly]="true" />
+
+    <mat-hint>MM/YYYY</mat-hint>
+    <mat-datepicker-toggle matSuffix [for]="pickerFimMes"></mat-datepicker-toggle>
+    <mat-datepicker #pickerFimMes startView="multi-year"
+      (monthSelected)="setMonthAndYear($event, pickerFimMes,'dataFimMes')" panelClass="month-picker"></mat-datepicker>
+  </mat-form-field>
+</div>

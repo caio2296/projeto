@@ -1,0 +1,18 @@
+<div class="input-container" [formGroup]="intervaloForm">
+
+  <mat-form-field>
+    <mat-label>Ano Inicial</mat-label>
+    <mat-select formControlName="anoInicio">
+      <mat-option *ngFor="let year of dateHelperServices.yearOptions" [value]="year.toString()">{{ year }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Ano Final</mat-label>
+    <mat-select formControlName="anoFim" (selectionChange)="this.calendarFormServices.onYearChangeInterval($event,'anoInicio', 'anoFim')">
+      <mat-option *ngFor="let year of dateHelperServices.yearOptions" [value]="year">{{ year }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

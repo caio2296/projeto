@@ -1,0 +1,28 @@
+/* Estilo padrão (mobile first) */
+div[formGroup] {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+mat-form-field {
+    display: flex;
+    width: 100%;
+    padding: auto;
+    justify-content: center;
+    max-width: 320px;
+
+    /* controla a largura máxima no mobile */
+}
+
+/* Para telas maiores que 768px */
+@media (min-width: 768px) {
+    div[formGroup] {
+        justify-content: flex-start;
+        /* Alinha para a esquerda no desktop */
+    }
+
+    mat-form-field {
+        max-width: 400px;
+    }
+}

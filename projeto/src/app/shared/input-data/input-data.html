@@ -1,0 +1,9 @@
+<div [formGroup]="form">
+    <mat-form-field appearance="outline">
+        <mat-label>Dia</mat-label>
+        <input class="inputData" matInput [matDatepicker]="picker" formControlName="day" [min]="dateHelperServices.dateMinISO()"
+            [max]="dateHelperServices.dateMaxISO()"  (dateInput)="this.calendarFormService.onDateChangeDataAndMonth($event, 'day')" [readonly]="true" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+</div>

@@ -1,0 +1,21 @@
+<div [formGroup]="form">
+    <mat-form-field>
+        <mat-label>{{label}}</mat-label>
+        <mat-select [formControlName]="calendarMode === 'fiscalYear' ? 'fiscalYear' : 'year'"
+            (selectionChange)="this.calendarFormServices.onYearChange($event, calendarMode)">
+            <!-- Opções de ano normal -->
+            <ng-container *ngIf="calendarMode === 'year'">
+                <mat-option *ngFor="let year of dateHelperServices.yearOptions" [value]="year">
+                    {{ year }}
+                </mat-option>
+            </ng-container>
+
+            <!-- Opções de ano fiscal -->
+            <ng-container *ngIf="calendarMode === 'fiscalYear'">
+                <mat-option *ngFor="let year of dateHelperServices.fiscalYearOptions" [value]="year">
+                    {{ year }}/{{ year + 1 }}
+                </mat-option>
+            </ng-container>
+        </mat-select>
+    </mat-form-field>
+</div>

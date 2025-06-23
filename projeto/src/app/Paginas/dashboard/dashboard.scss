@@ -1,0 +1,73 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+   display: block;
+  margin: 0 auto;
+  max-width: 1048px;
+  width: 90%;
+}
+
+// /* 🔥 BLOQUEIO DE ORIENTAÇÃO - PAISAGEM */
+// @media (orientation: landscape) {
+//   body {
+//     overflow: hidden;
+//   }
+
+//   .bloqueio-orientacao {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     position: fixed;
+//     inset: 0;
+//     background-color: rgba(0, 0, 0, 0.85);
+//     color: white;
+//     z-index: 9999;
+//     text-align: center;
+//     padding: 2rem;
+//     font-size: 1.5rem;
+//   }
+
+//   .conteudo {
+//     display: none;
+//   }
+// }
+
+// /* Quando estiver em retrato, tudo normal */
+// @media (orientation: portrait) {
+//   .bloqueio-orientacao {
+//     display: none;
+//   }
+
+//   .conteudo {
+//     display: block;
+//   }
+// }
+
+// .calendario{
+//   background-color: #515050;
+// }
+// section {
+//   display: flex;
+//   align-items: center;
+// }
+
+// .example-label {
+//   font-size: 14px;
+//   margin: 0 16px 0 8px;
+//   min-width: 120px;
+// }
+
+// .example-button-row {
+//   max-width: 600px;
+// }
+
+// .example-button-row .mat-mdc-button-base {
+//   margin: 8px 8px 8px 0;
+// }
+
+// .example-flex-container {
+//   display: flex;
+//   justify-content: space-between;
+//   flex-wrap: wrap;
+// }
