@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { CalendarFormService } from '../../Services/calendarFormService';
-import { DateHelperService } from '../../Services/dateHelperService';
-import { InputConfig } from '../../Services/InputConfig';
+import { CalendarFormService } from '../Services/calendarFormService';
+import { DateHelperService } from '../Services/dateHelperService';
+import { InputConfig } from '../Services/InputConfig';
+
 
 @Component({
   selector: 'app-data-intervalo',

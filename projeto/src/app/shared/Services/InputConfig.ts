@@ -1,7 +1,8 @@
 import { FormGroup } from "@angular/forms";
-import { CalendarBarModel } from "../Models/calendarBarModel";
+
 import { DateHelperService } from "./dateHelperService";
 import { Injectable } from "@angular/core";
+import { CalendarBarModel } from "../Models/calendarBarModel";
 
 @Injectable({
   providedIn: 'root' // Isso já registra automaticamente como provider global

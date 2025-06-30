@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { LabelDataService } from '../../Services/label-data-service';
 import { Subscription } from 'rxjs';
+import { LabelDataService } from '../Services/label-data-service';
 
 @Component({
   selector: 'app-label-data',

@@ -1,11 +1,11 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, MinValidator, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CalendarBarModel } from '../../Models/calendarBarModel';
-import { DateHelperService } from '../../Services/dateHelperService';
+import { CalendarBarModel } from '../Models/calendarBarModel';
 
-import { CalendarFormService } from '../../Services/calendarFormService';
-import { InputConfig } from '../../Services/InputConfig';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { CalendarFormService } from '../Services/calendarFormService';
+import { DateHelperService } from '../Services/dateHelperService';
+import { InputConfig } from '../Services/InputConfig';
 
 @Component({
   selector: 'app-calendario',

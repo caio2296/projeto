@@ -1,7 +1,8 @@
 import { Component, input, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { DateHelperService } from '../../Services/dateHelperService';
-import { CalendarFormService } from '../../Services/calendarFormService';
+import { CalendarFormService } from '../Services/calendarFormService';
+import { DateHelperService } from '../Services/dateHelperService';
+
 
 @Component({
   selector: 'app-seletor-ano',

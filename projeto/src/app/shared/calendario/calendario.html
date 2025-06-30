@@ -1,10 +1,10 @@
-<div class="sandwich-menu"  (click)="toggleMenu()">
-     <mat-icon>calendar_today</mat-icon>
-    </div>
+<div class="sandwich-menu" (click)="toggleMenu()">
+  <mat-icon>calendar_today</mat-icon>
+</div>
 <!-- <div class="sandwich-menu"  (click)="toggleMenu()">
         &#9776;
     </div> -->
-<section class="calendario"  *ngIf="isMenuOpen">
+<section class="calendario" *ngIf="isMenuOpen">
   <div class="example-label">Calendário</div>
   <section class="Sessao-Botoes">
     <div class="example-button-row">
@@ -35,28 +35,28 @@
   <section>
     <form class="form-Calendar" *ngIf="!intervaloAtivo" [formGroup]="form">
       <!-- Input para dia -->
-      <div class= "day" *ngIf="calendarMode === 'day'">
+      <div class="day" *ngIf="calendarMode === 'day'">
 
         <app-input-data [form]="form"></app-input-data>
 
       </div>
 
       <!-- Input para mês -->
-      <div class= "month" *ngIf="calendarMode === 'month'">
+      <div class="month" *ngIf="calendarMode === 'month'">
 
         <app-input-mes [form]="form"></app-input-mes>
 
       </div>
 
       <!-- Input para ano -->
-      <div class= "year"  *ngIf="calendarMode === 'year'">
+      <div class="year" *ngIf="calendarMode === 'year'">
 
         <app-seletor-ano [form]="form" [calendarMode]="calendarMode" [label]="'Selecione o Ano:'"></app-seletor-ano>
 
       </div>
 
       <!-- Input para ano fiscal -->
-      <div class= "fiscalYear" *ngIf="calendarMode === 'fiscalYear'">
+      <div class="fiscalYear" *ngIf="calendarMode === 'fiscalYear'">
 
         <app-seletor-ano [form]="form" [calendarMode]="calendarMode" [label]="'Ano Fiscal:'"> </app-seletor-ano>
 
@@ -79,19 +79,19 @@
         </mat-select>
       </mat-form-field>
 
-      <div  *ngIf="intervaloForm.get('unidade')?.value === 'dias'">
+      <div *ngIf="intervaloForm.get('unidade')?.value === 'dias'">
 
         <app-data-intervalo class="inputs-datas" [intervaloForm]="intervaloForm"></app-data-intervalo>
 
       </div>
 
-      <div  *ngIf="intervaloForm.get('unidade')?.value === 'meses'">
+      <div *ngIf="intervaloForm.get('unidade')?.value === 'meses'">
 
         <app-input-mes-ano-intervalo [intervaloForm]="intervaloForm"></app-input-mes-ano-intervalo>
 
       </div>
 
-      <div  *ngIf="intervaloForm.get('unidade')?.value === 'anos'">
+      <div *ngIf="intervaloForm.get('unidade')?.value === 'anos'">
 
         <app-seletor-ano-intervalo [intervaloForm]="intervaloForm"></app-seletor-ano-intervalo>
 

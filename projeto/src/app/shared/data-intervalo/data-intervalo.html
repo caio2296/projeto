@@ -1,36 +1,23 @@
 <div class="input-container" [formGroup]="intervaloForm">
   <mat-form-field appearance="outline">
     <mat-label>Inicio</mat-label>
-    <input
-      [type]="inputConfig.type"
-      matInput
-      [matDatepicker]="pickerInicio"
-      formControlName="dataInicio"
-      [min]="dateHelperServices.dateMinISO()"
-      [max]="dateHelperServices.dateMaxISO()"
-      [readonly]="true"      
-    />
-    <mat-datepicker-toggle matSuffix [for]="pickerInicio" ></mat-datepicker-toggle>
+    <input [type]="inputConfig.type" matInput [matDatepicker]="pickerInicio" formControlName="dataInicio"
+      [min]="dateHelperServices.dateMinISO()" [max]="dateHelperServices.dateMaxISO()" [readonly]="true" />
+    <mat-datepicker-toggle matSuffix [for]="pickerInicio"></mat-datepicker-toggle>
     <mat-datepicker #pickerInicio></mat-datepicker>
   </mat-form-field>
-     <mat-form-field appearance="outline">
+  <mat-form-field appearance="outline">
     <mat-label>Fim</mat-label>
-    <input
-      matInput
-      [matDatepicker]="pickerFim"
-      formControlName="dataFim"
-      [min]="dateHelperServices.dateMinISO()"
+    <input matInput [matDatepicker]="pickerFim" formControlName="dataFim" [min]="dateHelperServices.dateMinISO()"
       [max]="dateHelperServices.dateMaxISO()"
-      (dateInput)="this.calendarFormService.onDateChangeInterval($event,'dataInicio','dataFim')"
-      [readonly]="true"
-
-    />
+      (dateInput)="this.calendarFormService.onDateChangeInterval($event,'dataInicio','dataFim')" [readonly]="true" />
     <mat-error *ngIf="this.intervaloForm.get('dataFim')?.errors  && intervaloForm.get('dataFim')?.touched">
-  Data inválida.
-</mat-error>
+      Data inválida.
+    </mat-error>
     <mat-datepicker-toggle matSuffix [for]="pickerFim"></mat-datepicker-toggle>
     <mat-datepicker #pickerFim></mat-datepicker>
-<mat-error *ngIf="intervaloForm.get('dataFim')?.hasError('matDatepickerParse') && intervaloForm.get('dataFim')?.touched">
+    <mat-error
+      *ngIf="intervaloForm.get('dataFim')?.hasError('matDatepickerParse') && intervaloForm.get('dataFim')?.touched">
       Data inválida.
     </mat-error>
   </mat-form-field>
