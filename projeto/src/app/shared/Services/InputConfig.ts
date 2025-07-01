@@ -35,7 +35,7 @@ export class InputConfig{
           dataInicio: new Date( `${parte[1]}-${parte[0]}-${parte[2]}`),
           dataFim:  new Date( `${parte[1]}-${parte[0]}-${parte[2]}`)
           });
-        })
+        });
         break;
       }
       case 'meses':{
