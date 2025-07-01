@@ -6,7 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { registerLocaleData } from '@angular/common';
 import localeBr from '@angular/common/locales/pt';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 registerLocaleData(localeBr, 'pt');
 
 import { AppRoutingModule } from './app-routing-module';
@@ -17,6 +17,7 @@ import { MaterialModule } from './core/material/material.module';
 import { SharedModule } from './shared/shared.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { ErroModule } from './core/erro/erro-module';
+import { ErrosInterceptor } from './core/erro/erros-interceptor';
 
 
 
@@ -24,8 +25,7 @@ const moment = _rollupMoment || _moment;
 
 @NgModule({
   declarations: [
-    App,
-    
+    App  
   ],
   imports: [
     BrowserModule,
@@ -44,6 +44,11 @@ const moment = _rollupMoment || _moment;
   providers: [
     // DatePipe, { provide: LOCALE_ID, useValue: 'pt' },
     provideBrowserGlobalErrorListeners(),
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass:ErrosInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [App]
 })
