@@ -21,7 +21,13 @@ export class ApiService {
     // }
   }
   chamarApi():string{
-    console.log("Chamando api!");
+
+    this.http.get(`${this.apiBaseUrl}/estado`).subscribe({
+  next: (res) => console.log("Resposta da API:", res),
+  error: (err) => console.error("Erro ao chamar API:", err)
+});
+
+console.log("Chamando api!");
    return "Chamando api!"; 
     // return this.http.get<Sgl[]>(`${this.apiBaseUrl}/Sgl`);
   }
