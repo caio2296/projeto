@@ -28,7 +28,7 @@ import { DateHelperService } from '../Services/dateHelperService';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputMes   {
-  @Input() form!: FormGroup
+  @Input() form!: FormGroup;
 
   public calendarMode: 'day' | 'month' | 'year' | 'fiscalYear' | 'week' | 'datetime' = 'day';
   /**

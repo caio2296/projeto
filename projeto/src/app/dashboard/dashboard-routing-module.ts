@@ -8,7 +8,7 @@ const routes :Routes = [
     path:'dashboard',
     component: Dashboard
     }
-]
+];
 
 @NgModule({
     imports:[RouterModule.forChild(routes)],

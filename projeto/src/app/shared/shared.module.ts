@@ -1,4 +1,6 @@
-import { NgModule } from "@angular/core";
+import { LOCALE_ID, NgModule } from "@angular/core";
+import { CommonModule, DatePipe } from "@angular/common";
+
 import { Calendario } from "./calendario/calendario";
 import { DataIntervalo } from "./data-intervalo/data-intervalo";
 import { Grafico } from "./grafico/grafico";
@@ -9,7 +11,6 @@ import { LabelData } from "./label-data/label-data";
 import { SeletorAnoIntervalo } from "./seletor-ano-intervalo/seletor-ano-intervalo";
 import { SeletorAno } from "./seletor-ano/seletor-ano";
 import { MaterialModule } from "../core/material/material.module";
-import { CommonModule, DatePipe } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
@@ -25,10 +26,10 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
         LabelData
     ],
     imports: [
- CommonModule,
+        CommonModule,
         MaterialModule,
         ReactiveFormsModule,
-    FormsModule,
+        FormsModule,
     ],
     exports: [
         Calendario,
@@ -42,7 +43,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
         LabelData
     ],
      providers: [
-    DatePipe // ✅ Aqui sim é o lugar correto para DatePipe
+    DatePipe, { provide: LOCALE_ID, useValue: 'pt' } // ✅ Aqui sim é o lugar correto para DatePipe
   ],
 })
 

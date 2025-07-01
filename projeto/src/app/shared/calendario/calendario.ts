@@ -20,7 +20,7 @@ export class Calendario implements OnInit {
 
   form!: FormGroup;
   resultadoIntervalo: number | null = null;
-  public intervaloForm!: FormGroup
+  public intervaloForm!: FormGroup;
   intervaloAtivo = false;
 
   inputConfig = {

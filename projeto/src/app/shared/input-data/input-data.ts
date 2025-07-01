@@ -13,7 +13,7 @@ import { DateHelperService } from '../Services/dateHelperService';
   styleUrl: './input-data.scss'
 })
 export class InputData {
-@Input() form!: FormGroup
+@Input() form!: FormGroup;
 
 public calendarMode: 'day' | 'month' | 'year' | 'fiscalYear' | 'week' | 'datetime' = 'day';
 

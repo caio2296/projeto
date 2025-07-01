@@ -13,7 +13,7 @@ import { DateHelperService } from '../Services/dateHelperService';
   styleUrl: './seletor-ano.scss'
 })
 export class SeletorAno  {
-@Input() form!: FormGroup
+@Input() form!: FormGroup;
 @Input() label = '';
 @Input() calendarMode: 'year' | 'fiscalYear' = 'year';
 

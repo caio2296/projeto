@@ -22,7 +22,7 @@ export class ApiService {
   }
   chamarApi():string{
     console.log("Chamando api!");
-   return "Chamando api!" 
+   return "Chamando api!"; 
     // return this.http.get<Sgl[]>(`${this.apiBaseUrl}/Sgl`);
   }
 
