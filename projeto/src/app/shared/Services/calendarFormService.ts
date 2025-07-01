@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @angular-eslint/prefer-inject */
 import { Injectable } from "@angular/core";
 
 import { FormBuilder, FormGroup } from "@angular/forms";

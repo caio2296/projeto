@@ -1,5 +1,7 @@
+/* eslint-disable @angular-eslint/prefer-standalone */
+/* eslint-disable @angular-eslint/prefer-inject */
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, MinValidator, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { CalendarBarModel } from '../Models/calendarBarModel';
 
 import { BreakpointObserver } from '@angular/cdk/layout';
@@ -19,7 +21,7 @@ export class Calendario implements OnInit {
   form!: FormGroup;
   resultadoIntervalo: number | null = null;
   public intervaloForm!: FormGroup
-  intervaloAtivo: boolean = false;
+  intervaloAtivo = false;
 
   inputConfig = {
     type: 'data',
@@ -27,7 +29,7 @@ export class Calendario implements OnInit {
     max: ''
   };
 
-  isMenuOpen: boolean = false;
+  isMenuOpen = false;
 
   public calendarMode: 'day' | 'month' | 'year' | 'fiscalYear' | 'week' | 'datetime' = 'day';
 

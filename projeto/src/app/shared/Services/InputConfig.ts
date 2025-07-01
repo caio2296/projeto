@@ -1,3 +1,4 @@
+/* eslint-disable @angular-eslint/prefer-inject */
 import { FormGroup } from "@angular/forms";
 
 import { DateHelperService } from "./dateHelperService";
@@ -22,13 +23,13 @@ export class InputConfig{
 
    updateInputConfig(unidade: string, intervaloForm:FormGroup):FormGroup {
     switch (unidade) {
-      case 'dias':
+      case 'dias':{
         this.inputConfig = {
           type: 'data',
           min: this.dateHelperServices.dateMinISO().toString(),
           max: this.dateHelperServices.dateMaxISO().toString()
         };
-       let parte = this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart.split('/');
+       const parte = this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart.split('/');
         setTimeout(()=>{
           intervaloForm.patchValue({
           dataInicio: new Date( `${parte[1]}-${parte[0]}-${parte[2]}`),
@@ -36,7 +37,8 @@ export class InputConfig{
           });
         })
         break;
-      case 'meses':
+      }
+      case 'meses':{
          const partes = this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart.split('/');
         this.inputConfig = {
           type: 'month',
@@ -52,7 +54,10 @@ export class InputConfig{
           });
         });
         break;
+      }
+
       case 'anos':
+        {
         this.inputConfig = {
           type: 'number',
           min: this.dateHelperServices.getYearMin().toString(),
@@ -69,6 +74,8 @@ export class InputConfig{
             });
           });
         break;
+        }
+
     }
 
      return intervaloForm;

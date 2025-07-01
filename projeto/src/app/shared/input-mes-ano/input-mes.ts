@@ -1,4 +1,7 @@
-import { ChangeDetectionStrategy, Component, Input, input, OnInit, ViewEncapsulation } from '@angular/core';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @angular-eslint/prefer-inject */
+/* eslint-disable @angular-eslint/prefer-standalone */
+import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDatepicker } from '@angular/material/datepicker';
 import moment from 'moment';
@@ -24,7 +27,7 @@ import { DateHelperService } from '../Services/dateHelperService';
 
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InputMes implements OnInit {
+export class InputMes   {
   @Input() form!: FormGroup
 
   public calendarMode: 'day' | 'month' | 'year' | 'fiscalYear' | 'week' | 'datetime' = 'day';
@@ -35,12 +38,10 @@ export class InputMes implements OnInit {
 
 
   }
-  ngOnInit(): void {
 
-  }
 
   setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>, inputControlName: string) {
-    let ctrlValue = moment(this.form.get(inputControlName)?.value) ?? moment();
+    const ctrlValue = moment(this.form.get(inputControlName)?.value) ?? moment();
     ctrlValue.month(normalizedMonthAndYear.month());
     ctrlValue.year(normalizedMonthAndYear.year());
 

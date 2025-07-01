@@ -28,7 +28,6 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
  CommonModule,
         MaterialModule,
         ReactiveFormsModule,
-            DatePipe,
     FormsModule,
     ],
     exports: [
@@ -41,7 +40,10 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
         InputData,
         SeletorAno,
         LabelData
-    ]
+    ],
+     providers: [
+    DatePipe // ✅ Aqui sim é o lugar correto para DatePipe
+  ],
 })
 
 export class SharedModule { }

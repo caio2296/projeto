@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+/* eslint-disable @angular-eslint/prefer-standalone */
+/* eslint-disable @angular-eslint/prefer-inject */
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { LabelDataService } from '../Services/label-data-service';
 
 @Component({
   selector: 'app-label-data',
-  standalone: false,
+  standalone:false,
   templateUrl: './label-data.html',
   styleUrl: './label-data.scss'
 })
-export class LabelData implements OnInit {
+export class LabelData implements OnInit, OnDestroy {
 
- tipo: string = '';
-  label: string = '';
+ tipo = '';
+  label = '';
 
   private subscriptions = new Subscription();
 
