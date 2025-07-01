@@ -1,4 +1,6 @@
-import { Component, input, Input, OnInit } from '@angular/core';
+/* eslint-disable @angular-eslint/prefer-standalone */
+/* eslint-disable @angular-eslint/prefer-inject */
+import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { CalendarFormService } from '../Services/calendarFormService';
 import { DateHelperService } from '../Services/dateHelperService';
@@ -10,15 +12,14 @@ import { DateHelperService } from '../Services/dateHelperService';
   templateUrl: './seletor-ano.html',
   styleUrl: './seletor-ano.scss'
 })
-export class SeletorAno implements OnInit {
+export class SeletorAno  {
 @Input() form!: FormGroup
-@Input() label: string = '';
+@Input() label = '';
 @Input() calendarMode: 'year' | 'fiscalYear' = 'year';
 
 
 constructor( protected dateHelperServices:DateHelperService, protected calendarFormServices:CalendarFormService) {
 
 }
-  ngOnInit(): void {
-  }
+
 }

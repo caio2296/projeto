@@ -1,13 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @angular-eslint/prefer-standalone */
+/* eslint-disable @angular-eslint/prefer-inject */
 import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
 import { Moment } from 'moment';
-import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDatepicker } from '@angular/material/datepicker';
 import moment from 'moment';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MY_FORMATS } from '../Models/Formats';
-import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter, provideMomentDateAdapter } from '@angular/material-moment-adapter';
+import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import { CalendarFormService } from '../Services/calendarFormService';
 import { DateHelperService } from '../Services/dateHelperService';
 import { InputConfig } from '../Services/InputConfig';
@@ -41,7 +43,7 @@ export class InputMesAnoIntervalo implements OnInit {
   };
   @Input() intervaloForm!: FormGroup;
   readonly date = new FormControl(moment());
-  data: string = '';
+  data = '';
 
   constructor(protected inputConfigs: InputConfig, protected calendarFormService: CalendarFormService, protected dateHelperService: DateHelperService) {
 
@@ -63,7 +65,7 @@ export class InputMesAnoIntervalo implements OnInit {
 
     ctrlValue.month(normalizedMonthAndYear.month());
     ctrlValue.year(normalizedMonthAndYear.year());
-    const date = moment().year(normalizedMonthAndYear.year()).month(normalizedMonthAndYear.month());
+
 
     this.intervaloForm.get(inputControlName)?.setValue(ctrlValue); // <- Aqui é o essencial!
     //o que irá enviar para api:

@@ -1,3 +1,4 @@
+/* eslint-disable @angular-eslint/prefer-inject */
 import { Injectable } from "@angular/core";
 import { CalendarBarModel } from "../Models/calendarBarModel";
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
@@ -12,9 +13,8 @@ registerLocaleData(localeBr, 'pt')
 
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
-import { Dashboard } from './dashboard/dashboard';
 import * as _moment from 'moment';
-// tslint:disable-next-line:no-duplicate-imports
+
 import {default as _rollupMoment, Moment} from 'moment';
 import { MaterialModule } from './core/material/material.module';
 import { SharedModule } from './shared/shared.module';

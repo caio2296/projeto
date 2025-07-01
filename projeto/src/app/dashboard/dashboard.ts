@@ -1,4 +1,5 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+/* eslint-disable @angular-eslint/prefer-standalone */
+import { Component, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,8 +21,6 @@ export class Dashboard {
   }
 
   checkOrientation() {
-      const isMobile = window.innerWidth <= 768;
-    const isLandscape = window.innerWidth > window.innerHeight;
 
     this.isLandscape =  window.innerWidth <= 932 &&  window.innerHeight < 480 && window.innerWidth > window.innerHeight;
 
