@@ -1,0 +1,26 @@
+<h1 mat-dialog-title>Adicionar Item</h1>
+<form [formGroup]="cadastroForm">
+    <div mat-dialog-content class="input-container">
+        <mat-form-field>
+            <mat-label>Descrição</mat-label>
+            <input matInput formControlName="descricao">
+        </mat-form-field>
+        <!-- <mat-form-field>
+            <mat-label>Tamanho</mat-label>
+            <input matInput formControlName="tamanho">
+        </mat-form-field> -->
+
+        <mat-form-field>
+            <mat-label>Selecione o tamanho</mat-label>
+            <mat-select formControlName="tamanho">
+                <mat-option value="Pequeno">Pequeno</mat-option>
+                <mat-option value="Médio">Médio</mat-option>
+                <mat-option value="Grande">Grande</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions align="end">
+        <button mat-button (click)="dialogRef.close()" cdkFocusInitial>Cancelar</button>
+        <button mat-button [disabled]="cadastroForm.invalid" (click)="salvar()">Salvar</button>
+    </div>
+</form>

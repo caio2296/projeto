@@ -12,6 +12,9 @@ import { SeletorAnoIntervalo } from "./seletor-ano-intervalo/seletor-ano-interva
 import { SeletorAno } from "./seletor-ano/seletor-ano";
 import { MaterialModule } from "../core/material/material.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { Tabela } from './tabela/tabela';
+import { Dialog } from './dialog/dialog';
+import { DialogAdicionarItem } from './dialog-adicionar-item/dialog-adicionar-item';
 
 @NgModule({
     declarations: [
@@ -23,7 +26,10 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
         InputMes,
         InputData,
         SeletorAno,
-        LabelData
+        LabelData,
+        Tabela,
+        Dialog,
+        DialogAdicionarItem
     ],
     imports: [
         CommonModule,
@@ -40,10 +46,13 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
         InputMes,
         InputData,
         SeletorAno,
-        LabelData
+        LabelData,
+        Tabela,
+        Dialog,
+        DialogAdicionarItem
     ],
      providers: [
-    DatePipe, { provide: LOCALE_ID, useValue: 'pt' } // ✅ Aqui sim é o lugar correto para DatePipe
+    DatePipe, { provide: LOCALE_ID, useValue: 'pt' } 
   ],
 })
 
