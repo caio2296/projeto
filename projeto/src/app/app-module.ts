@@ -20,7 +20,6 @@ import { ErroModule } from './core/erro/erro-module';
 import { ErrosInterceptor } from './core/erro/erros-interceptor';
 
 
-
 const moment = _rollupMoment || _moment;
 
 @NgModule({
@@ -31,9 +30,7 @@ const moment = _rollupMoment || _moment;
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    CommonModule,
-
-  
+    CommonModule,  
     FormsModule,
     HttpClientModule,
     MaterialModule,

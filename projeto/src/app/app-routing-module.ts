@@ -11,13 +11,12 @@ const routes: Routes = [
     redirectTo: 'dashboard',
     pathMatch: 'full'
   },
-
   {
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full'
   },
-   {
+  {
     path: '**',
     redirectTo: 'pagina-nao-encontrada',
     pathMatch: 'full'

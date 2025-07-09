@@ -1,0 +1,18 @@
+{
+  "type": "calendarBar",
+  "calendarBar": {
+    "datetime": { "visible": false, "range": true, "rangeStart": "", "rangeEnd": "" },
+    "day": { "visible": true, "range": true, "rangeStart": "01", "rangeEnd": "1" }
+  },
+  "shiftBar": {
+    "descriptions": ["Mañana", "Tarde", "Noche", "Todos"],
+    "visible": true,
+    "range": false,
+    "rangeStart": null,
+    "rangeEnd": null,
+    "typeCtrl": "combobox"
+  },
+  "dateMin": "01/09/2006",
+  "dateMax": "31/12/2012",
+  "fiscalYearStart": "01/07"
+}
