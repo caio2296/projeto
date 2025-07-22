@@ -40,7 +40,7 @@ export class CalendarFormService {
 
     this.labelDataService.setTipoData(calendarMode);
     this.labelDataService.setLabel(this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart);
-      this.ApiService.chamarApi();
+      // this.ApiService.chamarApi();
     return this.form = this.fb.group({
       data: [this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart],
       day: [dataJs],

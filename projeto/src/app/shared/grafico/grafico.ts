@@ -16,33 +16,79 @@ export class Grafico implements OnInit {
   }
 
   gerarGrafico() {
-    if (typeof document !== 'undefined') {
-      const ctx = document.getElementById('myChart') as HTMLCanvasElement;
+  //   if (typeof document !== 'undefined') {
+  //     const ctx = document.getElementById('myChart') as HTMLCanvasElement;
 
-      if (ctx) {
-        const myChart = new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            datasets: [{
-              label: '# of Votes',
-              data: [12, 19, 3, 5, 2, 3],
-              borderWidth: 1
-            }]
-          },
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true
+  //     if (ctx) {
+  //       const myChart = new Chart(ctx, {
+  //         type: 'bar',
+  //         data: {
+  //           labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+  //           datasets: [{
+  //             label: '# of Votes',
+  //             data: [12, 19, 3, 5, 2, 3],
+  //             borderWidth: 1
+  //           }]
+  //         },
+  //         options: {
+  //           scales: {
+  //             y: {
+  //               beginAtZero: true
+  //             }
+  //           }
+  //         }
+  //       });
+  //     } else {
+  //       console.error("Canvas com id 'myChart' não encontrado.");
+  //     }
+  //   }
+
+  if (typeof document !== 'undefined') {
+  const ctx = document.getElementById('myChart') as HTMLCanvasElement;
+
+  if (ctx) {
+    const valores = [12, 19, 3, 5, 2, 3];
+    const total = valores.reduce((a, b) => a + b, 0);
+    const porcentagens = valores.map(v => ((v / total) * 100).toFixed(2));
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+          label: '% de votos',
+          data: porcentagens,
+          backgroundColor: 'rgba(54, 162, 235, 0.5)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100,
+            ticks: {
+                callback: (tickValue) => `${tickValue}%`
+            }
+          }
+        },
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return context.parsed.y + '%';
               }
             }
           }
-        });
-      } else {
-        console.error("Canvas com id 'myChart' não encontrado.");
+        }
       }
-    }
+    });
+  } else {
+    console.error("Canvas com id 'myChart' não encontrado.");
   }
+}
+   }
 
   GraficoLinha() {
     if (typeof document !== 'undefined') {
@@ -83,6 +129,7 @@ export class Grafico implements OnInit {
                 type: 'linear',
                 display: true,
                 position: 'left',
+                
               },
               y1: {
                 type: 'linear',
