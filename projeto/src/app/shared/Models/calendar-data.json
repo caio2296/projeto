@@ -1,8 +1,48 @@
 {
   "type": "calendarBar",
   "calendarBar": {
-    "datetime": { "visible": false, "range": true, "rangeStart": "", "rangeEnd": "" },
-    "day": { "visible": true, "range": true, "rangeStart": "01", "rangeEnd": "1" }
+    "datetime": {
+      "visible": false,
+      "range": true,
+      "rangeStart": "",
+      "rangeEnd": ""
+    },
+    "day": {
+      "visible": true,
+      "range": true,
+      "rangeStart": "01",
+      "rangeEnd": "1"
+    },
+    "week": {
+      "visible": true,
+      "range": true,
+      "rangeStart": "",
+      "rangeEnd": ""
+    },
+    "month": {
+      "visible": true,
+      "range": true,
+      "rangeStart": "11",
+      "rangeEnd": "1"
+    },
+    "year": {
+      "visible": true,
+      "range": true,
+      "rangeStart": "",
+      "rangeEnd": ""
+    },
+    "fiscalYear": {
+      "visible": true,
+      "range": true,
+      "rangeStart": "",
+      "rangeEnd": ""
+    },
+    "defaultSelection": {
+      "selection": "day",
+      "range": false,
+      "dateStart": "09/12/2012",
+      "dateEnd": ""
+    }
   },
   "shiftBar": {
     "descriptions": ["Mañana", "Tarde", "Noche", "Todos"],
@@ -16,3 +56,4 @@
   "dateMax": "31/12/2012",
   "fiscalYearStart": "01/07"
 }
+

@@ -2,31 +2,27 @@
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-    
-    
-  <!-- Position Column -->
-  <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef> Id </th>
-    <td mat-cell *matCellDef="let element"> {{element[0]}} </td>
+  <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+    <th mat-header-cell *matHeaderCellDef>
+      {{ column !== 'acao' ? column : 'Ação' }}
+    </th>
+    <td mat-cell *matCellDef="let element">
+      <ng-container *ngIf="column !== 'acao'; else acaoTemplate">
+        {{ element[column] }}
+      </ng-container>
+      <ng-template #acaoTemplate>
+        <button mat-button color="accent" (click)="abrirModalEditar(element, $event)">
+          Editar
+        </button>
+        <button mat-button color="primary" (click)="abrirModal(element, $event)">
+          Ver Detalhes
+        </button>
+        <button mat-button color="warn" (click)="deletarItem(element)">
+          Deletar
+        </button>
+      </ng-template>
+    </td>
   </ng-container>
-
-  <!-- Name Column -->
-  <ng-container matColumnDef="descricao">
-    <th mat-header-cell *matHeaderCellDef> Descrição </th>
-    <td mat-cell *matCellDef="let element"> {{element[1]}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="acao">
-  <th mat-header-cell *matHeaderCellDef> Ação </th>
-  <td mat-cell *matCellDef="let element">
-    <button mat-button color="primary" (click)="abrirModal(element,$event)">
-      Ver Detalhes
-    </button>
-  </td>
-</ng-container>
-
-
-  <!-- Header and Row definitions -->
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>

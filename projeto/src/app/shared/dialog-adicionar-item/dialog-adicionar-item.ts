@@ -11,25 +11,31 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   styleUrl: './dialog-adicionar-item.scss'
 })
 export class DialogAdicionarItem implements OnInit {
-  selected = 'Médio';
   cadastroForm!: FormGroup;
 
   constructor(
     public dialogRef: MatDialogRef<DialogAdicionarItem>,
-    @Inject(MAT_DIALOG_DATA) public data: { descricao: string; tamanho: string },
-    private formBuilder: FormBuilder,
-  ) { }
+    @Inject(MAT_DIALOG_DATA)
+    public data: { id?: string; descricao: string; tamanho: string; cor: string },
+    private formBuilder: FormBuilder
+  ) {}
+
   ngOnInit(): void {
     this.cadastroForm = this.formBuilder.group({
-      descricao: [null, Validators.required],
-      tamanho: ['Médio', Validators.required]
+      descricao: [this.data?.descricao || '', Validators.required],
+      tamanho: [this.data?.tamanho || 'Pequeno', Validators.required],
+      cor: [this.data?.cor || '', Validators.required]
     });
   }
 
   salvar() {
     if (this.cadastroForm.valid) {
-      this.dialogRef.close(this.cadastroForm.value); // envia os dados para o componente pai
+      const resultado = this.data?.id
+        ? { id: this.data.id, ...this.cadastroForm.value } // caso edição
+        : this.cadastroForm.value; // caso criação
+
+      this.dialogRef.close(resultado);
     }
   }
-
 }
+
