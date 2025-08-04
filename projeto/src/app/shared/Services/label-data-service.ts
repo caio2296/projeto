@@ -18,7 +18,6 @@ private intervaloSubject = new BehaviorSubject<boolean>(false);
   label$ = this.labelSubject.asObservable();
 
   public setTipoData(tipo: string) {
-     console.log('chamando tipo');
     this.tipoDataSubject.next(tipo);
   }
 
@@ -27,7 +26,6 @@ private intervaloSubject = new BehaviorSubject<boolean>(false);
   }
 
   public setLabel(labelData: string) {
-        console.log(labelData);
     this.labelSubject.next(labelData);
   }
 

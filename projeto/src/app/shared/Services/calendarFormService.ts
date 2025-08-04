@@ -34,7 +34,6 @@ export class CalendarFormService {
 
     const defaultSelection = this.calendarBarModel.dados.calendarBar.defaultSelection.selection as any;
     calendarMode = this.labelDataService.getCalendarMode();
-    // console.log(this.labelDataService.getLabel().split('/'));
     console.log(this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart.split('/'));
     // const partes = this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart.split('/');
     var partes: any;
@@ -51,15 +50,6 @@ export class CalendarFormService {
     }
     let partesPadrao;
     this.labelDataService.setTipoData(calendarMode);
-    // this.labelDataService.setLabel(this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart);
-
-    // console.log(this.form = this.fb.group({
-    //   data: [this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart],
-    //   day: [dataJs],
-    //   month: [new Date(+partes[1], +partes[0] - 1)],
-    //   year: [`${partes[2]}`],
-    //   fiscalYear: [`${partes[2]}`]
-    // }));
 
     switch (calendarMode) {
       case 'day':
@@ -127,7 +117,6 @@ export class CalendarFormService {
 
     if (this.labelDataService.getLabel().toString().includes('/')) {
       partes = this.labelDataService.getLabel().split(/\/|-/);
-      console.log(partes);
       dataJs = new Date(+partes[2], +partes[1] - 1, +partes[0]);
     }
     switch (unidade) {
@@ -147,21 +136,6 @@ export class CalendarFormService {
           anoInicio: [`${partesPadrao[2]}`],
           anoFim: ['']
         });
-        console.log(this.fb.group({
-          dataInicio: [dataJs],
-          dataFim: [dataFim, [dataFimMinValidator(() => this.intervaloForm?.get('dataInicio')?.value.toString())]],
-          unidade: [unidade],
-          dataInicioMes: [moment({
-            year: parseInt(partesPadrao[2], 10),
-            month: parseInt(partesPadrao[1], 10) - 1 // lembre que o mês começa em 0 (jan)
-          })],
-          dataFimMes: [moment({
-            year: parseInt(partesPadrao[2], 10),
-            month: parseInt(partesPadrao[1], 10) - 1 // lembre que o mês começa em 0 (jan)
-          })],
-          anoInicio: [`${partesPadrao[2]}`],
-          anoFim: ['']
-        }));
 
         break;
 
@@ -365,8 +339,6 @@ export class CalendarFormService {
         const dataFimValor = this.intervaloForm.get(inputFim)?.value;
 
         if (dataFim instanceof Date && dataInicio instanceof Date && dataFim > dataInicio) {
-          console.log(dataFim);
-          console.log(dataInicio);
 
           const label = `${dataInicioValor.toLocaleDateString('pt-BR')} - ${dataFimValor.toLocaleDateString('pt-BR')}`;
           this.labelDataService.setLabel(label);
