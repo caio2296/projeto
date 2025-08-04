@@ -1,11 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { CalendarBarModel } from '../Models/calendarBarModel';
-import { DateHelperService } from '../Services/dateHelperService';
-import { CalendarFormService } from '../Services/calendarFormService';
-import { InputConfig } from '../Services/InputConfig';
-import { LabelDataService } from '../Services/label-data-service';
+import { CalendarBarModel } from '../../Models/calendarBarModel';
+import { DateHelperService } from '../../Services/dateHelperService';
+import { CalendarFormService } from '../../Services/calendarFormService';
+import { InputConfig } from '../../Services/InputConfig';
+import { LabelDataService } from '../../Services/label-data-service';
 
 @Component({
   selector: 'app-calendario-dialog',
@@ -45,7 +45,6 @@ export class CalendarioDialog implements OnInit {
 
     }
     this.form = this.calendarFormService.inicializarFormulario(this.labelService.getCalendarMode());
-    console.log(this.form);
     this.intervaloForm = this.calendarFormService.InicialiarFormularioIntervalor();
 
     this.dateHelperServices.populateYears();
