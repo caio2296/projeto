@@ -2,10 +2,10 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-   display: block;
+  display: block;
   margin: 0 auto;
-  max-width: 1048px;
-  width: 90%;
+  min-width: 100%;
+  width: 100%;
 }
 
 // /* 🔥 BLOQUEIO DE ORIENTAÇÃO - PAISAGEM */

@@ -23,13 +23,15 @@ export class SeletorAnoIntervalo implements OnInit {
 
   }
   ngOnInit(): void {
-   this.intervaloForm = this.calendarFormServices.InicialiarFormularioIntervalor();
+  if (!this.intervaloForm) {
+     this.intervaloForm = this.calendarFormServices.InicialiarFormularioIntervalor();
+  }
 
-    this.inputConfigs.updateInputConfig(this.intervaloForm.get('unidade')?.value, this.intervaloForm);
+    this.inputConfigs.updateInputConfig(this.intervaloForm.get('unidade')?.value);
      this.intervaloForm.get('unidade')?.valueChanges.subscribe(value => {
       // this.updateInputConfig(value);
 
-      this.inputConfigs.updateInputConfig(value,this.intervaloForm);
+      this.inputConfigs.updateInputConfig(value);
     });
   }
 

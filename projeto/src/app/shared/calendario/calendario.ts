@@ -9,6 +9,10 @@ import { CalendarFormService } from '../Services/calendarFormService';
 import { DateHelperService } from '../Services/dateHelperService';
 import { InputConfig } from '../Services/InputConfig';
 
+import { MatDialog } from '@angular/material/dialog';
+import { CalendarioDialog } from '../calendario-dialog/calendario-dialog';
+
+
 @Component({
   selector: 'app-calendario',
   standalone: false,
@@ -20,7 +24,6 @@ export class Calendario implements OnInit {
 
   form!: FormGroup;
   resultadoIntervalo: number | null = null;
-  public intervaloForm!: FormGroup;
   intervaloAtivo = false;
 
   inputConfig = {
@@ -38,28 +41,36 @@ export class Calendario implements OnInit {
     protected dateHelperServices: DateHelperService,
     protected calendarFormService: CalendarFormService,
     protected inputConfings: InputConfig,
-    private breakpointObserver: BreakpointObserver) {
+    private breakpointObserver: BreakpointObserver,
+    private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
-    this.form = this.calendarFormService.inicializarFormulario(this.calendarMode);
-    this.dateHelperServices.populateYears();
-    this.dateHelperServices.populateFiscalYears();
-    this.intervaloForm = this.calendarFormService.InicialiarFormularioIntervalor();
-    this.breakpointObserver.observe(['(max-width: 932px)'])
-      .subscribe(result => {
-        if (result.matches) {
-          this.isMenuOpen = false; // Escondido no mobile
-        } else {
-          this.isMenuOpen = true; // Aberto no desktop
-        }
-      });
+    // this.form = this.calendarFormService.inicializarFormulario(this.calendarMode);
+    // this.dateHelperServices.populateYears();
+    // this.dateHelperServices.populateFiscalYears();
+    // this.intervaloForm = this.calendarFormService.InicialiarFormularioIntervalor();
+    // this.breakpointObserver.observe(['(max-width: 932px)'])
+    //   .subscribe(result => {
+    //     if (result.matches) {
+    //       this.isMenuOpen = false; // Escondido no mobile
+    //     } else {
+    //       this.isMenuOpen = true; // Aberto no desktop
+    //     }
+    //   });
   }
 
+  abrirDialogCalendario(): void {
+  this.dialog.open(CalendarioDialog, {
+    width: '100%',
+    maxWidth: '500px',
+    data: {} // pode passar dados se quiser
+  });
+}
 
-  toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
-  }
+  // toggleMenu() {
+  //   this.isMenuOpen = !this.isMenuOpen;
+  // }
   public setCalendarMode(mode: 'day' | 'month' | 'year' | 'fiscalYear' | 'week' | 'datetime') {
     if (!this.calendarBarModel.dados.calendarBar[mode]?.visible) {
       return;

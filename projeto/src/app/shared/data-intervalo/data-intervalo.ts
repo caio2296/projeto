@@ -27,14 +27,18 @@ constructor(protected calendarFormService : CalendarFormService,  protected date
 }
 
   ngOnInit(): void {
-    this.intervaloForm = this.calendarFormService.InicialiarFormularioIntervalor();
+  if (!this.intervaloForm) {
+     this.intervaloForm = this.calendarFormService.InicialiarFormularioIntervalor();
+  }
+
+  console.log(this.intervaloForm.get('dataInicio')?.value);
  // Atualiza a configuração inicial
-    this.inputConfigs.updateInputConfig(this.intervaloForm.get('unidade')?.value,this.intervaloForm);
+    this.inputConfigs.updateInputConfig(this.intervaloForm.get('unidade')?.value);
 
     // Observa mudança da unidade
     this.intervaloForm.get('unidade')?.valueChanges.subscribe(value => {
 
-     this.inputConfigs.updateInputConfig(value,this.intervaloForm);
+     this.inputConfigs.updateInputConfig(value);
     });
 }
 }

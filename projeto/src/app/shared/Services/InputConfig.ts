@@ -21,24 +21,24 @@ export class InputConfig{
 
   }
 
-   updateInputConfig(unidade: string, intervaloForm:FormGroup):FormGroup {
+   updateInputConfig(unidade: string) {
     switch (unidade) {
-      case 'dias':{
+      case 'day':{
         this.inputConfig = {
           type: 'data',
           min: this.dateHelperServices.dateMinISO().toString(),
           max: this.dateHelperServices.dateMaxISO().toString()
         };
        const parte = this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart.split('/');
-        setTimeout(()=>{
-          intervaloForm.patchValue({
-          dataInicio: new Date( `${parte[1]}-${parte[0]}-${parte[2]}`),
-          dataFim:  new Date( `${parte[1]}-${parte[0]}-${parte[2]}`)
-          });
-        });
+        // setTimeout(()=>{
+        //   intervaloForm.patchValue({
+        //   dataInicio: new Date( `${parte[1]}-${parte[0]}-${parte[2]}`),
+        //   dataFim:  new Date( `${parte[1]}-${parte[0]}-${parte[2]}`)
+        //   });
+        // });
         break;
       }
-      case 'meses':{
+      case 'month':{
          const partes = this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart.split('/');
         this.inputConfig = {
           type: 'month',
@@ -47,16 +47,16 @@ export class InputConfig{
         };
 
         console.log(this.dateHelperServices.dateMonthMinISO());
-        setTimeout(() => {
-          intervaloForm.patchValue({
-          dataInicio:`${partes[0]}-${partes[1]}-${partes[2]}`,
-          dataFim: `${partes[2]}-${partes[1]}`
-          });
-        });
+        // setTimeout(() => {
+        //   intervaloForm.patchValue({
+        //   dataInicio:`${partes[0]}-${partes[1]}-${partes[2]}`,
+        //   dataFim: `${partes[2]}-${partes[1]}`
+        //   });
+        // });
         break;
       }
 
-      case 'anos':
+      case 'year':
         {
         this.inputConfig = {
           type: 'number',
@@ -67,17 +67,17 @@ export class InputConfig{
 
           // Seleciona o primeiro ano disponível como padrão
           const anoPadrao = this.dateHelperServices.anosDisponiveis[0];
-          setTimeout(()=>{
-           intervaloForm.patchValue({
-              dataInicio: anoPadrao,
-              dataFim: anoPadrao
-            });
-          });
+          // setTimeout(()=>{
+          //  intervaloForm.patchValue({
+          //     dataInicio: anoPadrao,
+          //     dataFim: anoPadrao
+          //   });
+          // });
         break;
         }
 
     }
 
-     return intervaloForm;
+    
   }
 }
