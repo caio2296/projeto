@@ -1,3 +1,21 @@
 table {
   width: 10%;
 }
+
+.mat-mdc-table {
+  width: 100%;
+  max-width: 700px;     /* Limita a largura máxima em telas grandes */
+  min-width: 320px;       /* Impede que fique pequeno demais */
+  margin: 0 auto;         /* Centraliza horizontalmente */
+  overflow-x: auto;       /* Adiciona rolagem horizontal se necessário */
+}
+
+@media (min-width: 1200px){
+.mat-mdc-table {
+  width: 50%;
+  max-width: 700px;     /* Limita a largura máxima em telas grandes */
+  min-width: 320px;       /* Impede que fique pequeno demais */
+  margin: 0 auto;         /* Centraliza horizontalmente */
+  overflow-x: auto;       /* Adiciona rolagem horizontal se necessário */
+}
+}

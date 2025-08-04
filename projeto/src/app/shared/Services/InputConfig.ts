@@ -1,5 +1,4 @@
 /* eslint-disable @angular-eslint/prefer-inject */
-import { FormGroup } from "@angular/forms";
 
 import { DateHelperService } from "./dateHelperService";
 import { Injectable } from "@angular/core";
@@ -29,17 +28,9 @@ export class InputConfig{
           min: this.dateHelperServices.dateMinISO().toString(),
           max: this.dateHelperServices.dateMaxISO().toString()
         };
-       const parte = this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart.split('/');
-        // setTimeout(()=>{
-        //   intervaloForm.patchValue({
-        //   dataInicio: new Date( `${parte[1]}-${parte[0]}-${parte[2]}`),
-        //   dataFim:  new Date( `${parte[1]}-${parte[0]}-${parte[2]}`)
-        //   });
-        // });
         break;
       }
       case 'month':{
-         const partes = this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart.split('/');
         this.inputConfig = {
           type: 'month',
           min: this.dateHelperServices.dateMonthMinISO(),
@@ -47,12 +38,6 @@ export class InputConfig{
         };
 
         console.log(this.dateHelperServices.dateMonthMinISO());
-        // setTimeout(() => {
-        //   intervaloForm.patchValue({
-        //   dataInicio:`${partes[0]}-${partes[1]}-${partes[2]}`,
-        //   dataFim: `${partes[2]}-${partes[1]}`
-        //   });
-        // });
         break;
       }
 
@@ -64,15 +49,6 @@ export class InputConfig{
           max: this.dateHelperServices.getYearMax().toString()
         };
            this.dateHelperServices.gerarAnosDisponiveis();
-
-          // Seleciona o primeiro ano disponível como padrão
-          const anoPadrao = this.dateHelperServices.anosDisponiveis[0];
-          // setTimeout(()=>{
-          //  intervaloForm.patchValue({
-          //     dataInicio: anoPadrao,
-          //     dataFim: anoPadrao
-          //   });
-          // });
         break;
         }
 

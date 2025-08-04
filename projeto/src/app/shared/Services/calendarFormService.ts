@@ -1,3 +1,4 @@
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/prefer-inject */
 import { Injectable } from "@angular/core";
@@ -32,19 +33,19 @@ export class CalendarFormService {
 
   inicializarFormulario(calendarMode: any): FormGroup {
 
-    const defaultSelection = this.calendarBarModel.dados.calendarBar.defaultSelection.selection as any;
+    // const defaultSelection = this.calendarBarModel.dados.calendarBar.defaultSelection.selection as any;
     calendarMode = this.labelDataService.getCalendarMode();
     console.log(this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart.split('/'));
-    // const partes = this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart.split('/');
-    var partes: any;
-    var dataJs;
-    var dataM;
-    var ano;
+
+    let partes: any;
+    let dataJs;
+    let dataM;
+    let ano;
     if (this.labelDataService.getLabel().toString().includes('/')) {
-      partes = this.labelDataService.getLabel().split(/[/\-]/);
+      partes = this.labelDataService.getLabel().split(/[/\\-]/);
       dataJs = new Date(+partes[2], +partes[1] - 1, +partes[0]);
       dataM = new Date(+partes[2], +partes[1] - 1);
-      ano = this.labelDataService.getLabel();
+      ano = this.labelDataService.getLabel().split('/')[2];
     } else {
       ano = this.labelDataService.getLabel();
     }
@@ -53,15 +54,15 @@ export class CalendarFormService {
 
     switch (calendarMode) {
       case 'day':
-        partesPadrao = this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart.split('/');
 
-        console.log(partes)
+        partesPadrao = this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart.split('/');
+        console.log(partes);
         return this.form = this.fb.group({
           data: [this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart],
           day: [dataJs],
           month: [dataM],
-          year: [`${partesPadrao[2]}`],
-          fiscalYear: [`${partesPadrao[2]}`]
+          year: [parseInt(partesPadrao[2])],
+          fiscalYear: [parseInt(partesPadrao[2])]
         });
       case 'month':
         partesPadrao = this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart.split('/');
@@ -70,8 +71,8 @@ export class CalendarFormService {
           data: [this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart],
           day: [dataJs],
           month: [new Date(+partes[1], +partes[0] - 1)],
-          year: [`${partes[2]}`],
-          fiscalYear: [`${partes[2]}`]
+          year: [parseInt(partesPadrao[2])],
+          fiscalYear: [parseInt(partesPadrao[2])]
         });
       default:
         partesPadrao = this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart.split('/');
@@ -89,11 +90,11 @@ export class CalendarFormService {
 
   InicialiarFormularioIntervalor(): FormGroup {
     const partesPadrao = this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart.split('/');
-    let partes
+    let partes;
     let partesMeses;
     let partesAno;
     let dataJs!: Date;
-    var dataFimInicializacao!: Array<string>;
+    let Ano;
 
     let dataFim: Date;
 
@@ -110,7 +111,7 @@ export class CalendarFormService {
       dataFim = new Date(+ano, +mes - 1, +dia);
     }
 
-    var unidade = this.labelDataService.getCalendarMode();
+    let unidade = this.labelDataService.getCalendarMode();
     if (this.labelDataService.getTipoData() == 'fiscalYear') {
       unidade = 'year';
     }
@@ -161,7 +162,6 @@ export class CalendarFormService {
         break;
 
       case 'year':
-        let Ano;
         dataJs = new Date(+partesPadrao[2], +partesPadrao[1] - 1, +partesPadrao[0]);
         if (this.labelDataService.getLabel().toString().includes('-')) {
           partesAno = this.labelDataService.getLabel().split("-");

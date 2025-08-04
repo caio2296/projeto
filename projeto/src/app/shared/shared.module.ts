@@ -1,6 +1,6 @@
 import { LOCALE_ID, NgModule } from "@angular/core";
 import { CommonModule, DatePipe } from "@angular/common";
-
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { DataIntervalo } from "./nav-bar/calendario-dialog/componentes/data-intervalo/data-intervalo";
 import { Grafico } from "./grafico/grafico";
@@ -11,10 +11,9 @@ import { LabelData } from "./label-data/label-data";
 import { SeletorAno } from "./nav-bar/calendario-dialog/componentes/seletor-ano/seletor-ano";
 import { SeletorAnoIntervalo } from "./nav-bar/calendario-dialog/componentes/seletor-ano-intervalo/seletor-ano-intervalo";
 import { MaterialModule } from "../core/material/material.module";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Tabela } from './tabela/tabela';
-import { Dialog } from './dialog/dialog';
-import { DialogAdicionarItem } from './dialog-adicionar-item/dialog-adicionar-item';
+import { Dialog } from './tabela/dialog/dialog';
+import { DialogAdicionarItem } from './tabela/dialog-adicionar-item/dialog-adicionar-item';
 import { CalendarioDialog } from './nav-bar/calendario-dialog/calendario-dialog';
 import { NavBar } from './nav-bar/nav-bar';
 
