@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @angular-eslint/prefer-inject */
 import { Component, OnInit, OnDestroy } from '@angular/core';

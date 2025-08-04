@@ -3,10 +3,10 @@
 /* eslint-disable @angular-eslint/prefer-standalone */
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Dialog } from '../dialog/dialog';
+import { Dialog } from './dialog/dialog';
 
 
-import { DialogAdicionarItem } from '../dialog-adicionar-item/dialog-adicionar-item';
+import { DialogAdicionarItem } from './dialog-adicionar-item/dialog-adicionar-item';
 import { ApiService } from '../../Services/api-service';
 import { frutas } from '../Models/type';
 

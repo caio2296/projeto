@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/prefer-inject */
 /* eslint-disable @angular-eslint/prefer-standalone */
-import { AfterViewInit, Component, Inject } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Chart } from 'chart.js/auto';
 
@@ -11,7 +11,7 @@ import { Chart } from 'chart.js/auto';
   templateUrl: './dialog.html',
   styleUrl: './dialog.scss'
 })
-export class Dialog implements AfterViewInit {
+export class Dialog implements AfterViewInit, OnInit {
  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
 campos: { chave: string, valor: any }[] = [];
 

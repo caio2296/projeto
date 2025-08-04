@@ -1,3 +1,5 @@
+/* eslint-disable @angular-eslint/prefer-standalone */
+/* eslint-disable @angular-eslint/prefer-inject */
 import { ChangeDetectorRef, Component, DOCUMENT, Inject, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -14,22 +16,17 @@ import { InputConfig } from '../Services/InputConfig';
   styleUrl: './nav-bar.scss'
 })
 export class NavBar implements OnInit {
-  
- form!: FormGroup;
+
+  form!: FormGroup;
   resultadoIntervalo: number | null = null;
   intervaloAtivo = false;
 
-  inputConfig = {
-    type: 'data',
-    min: '',
-    max: ''
-  };
 
   isMenuOpen = false;
 
   public calendarMode: 'day' | 'month' | 'year' | 'fiscalYear' | 'week' | 'datetime' = 'day';
 
-   isDarkMode = false;
+  isDarkMode = false;
 
   constructor(private fb: FormBuilder, private cdRef: ChangeDetectorRef,
     protected calendarBarModel: CalendarBarModel,
@@ -38,42 +35,42 @@ export class NavBar implements OnInit {
     protected inputConfings: InputConfig,
     private dialog: MatDialog,
     private renderer: Renderer2,
-     @Inject(DOCUMENT) private document: Document) {
+    @Inject(DOCUMENT) private document: Document) {
     ;
 
   }
   ngOnInit(): void {
-        const temaSalvo = localStorage.getItem('tema');
+    const temaSalvo = localStorage.getItem('tema');
     if (temaSalvo === 'dark') {
       this.setDarkTheme(true);
     }
   }
 
 
-    abrirDialogCalendario(): void {
+  abrirDialogCalendario(): void {
     this.dialog.open(CalendarioDialog, {
       width: '100%',
       maxWidth: '500px',
       data: {} // pode passar dados se quiser
     });
   }
-  
-    // toggleMenu() {
-    //   this.isMenuOpen = !this.isMenuOpen;
-    // }
-    public setCalendarMode(mode: 'day' | 'month' | 'year' | 'fiscalYear' | 'week' | 'datetime') {
-      if (!this.calendarBarModel.dados.calendarBar[mode]?.visible) {
-        return;
-      }
-      this.intervaloAtivo = false;
-      this.calendarMode = mode;
-    }
-  
-    public MudarTipoFormulario(): boolean {
-      return this.intervaloAtivo = true;
-    }
 
-    toggleTheme(): void {
+  // toggleMenu() {
+  //   this.isMenuOpen = !this.isMenuOpen;
+  // }
+  public setCalendarMode(mode: 'day' | 'month' | 'year' | 'fiscalYear' | 'week' | 'datetime') {
+    if (!this.calendarBarModel.dados.calendarBar[mode]?.visible) {
+      return;
+    }
+    this.intervaloAtivo = false;
+    this.calendarMode = mode;
+  }
+
+  public MudarTipoFormulario(): boolean {
+    return this.intervaloAtivo = true;
+  }
+
+  toggleTheme(): void {
     this.setDarkTheme(!this.isDarkMode);
   }
 
@@ -86,7 +83,7 @@ export class NavBar implements OnInit {
       this.renderer.removeClass(body, 'light-theme');
       localStorage.setItem('tema', 'dark');
     } else {
-            this.renderer.addClass(body, 'light-theme');
+      this.renderer.addClass(body, 'light-theme');
       this.renderer.removeClass(body, 'dark-theme');
       localStorage.setItem('tema', 'light');
     }

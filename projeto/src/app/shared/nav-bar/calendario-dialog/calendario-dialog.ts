@@ -1,4 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
+/* eslint-disable @angular-eslint/prefer-standalone */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @angular-eslint/prefer-inject */
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CalendarBarModel } from '../../Models/calendarBarModel';
@@ -15,7 +18,7 @@ import { LabelDataService } from '../../Services/label-data-service';
 })
 
 
-export class CalendarioDialog implements OnInit {
+export class CalendarioDialog implements OnInit, OnDestroy {
   form!: FormGroup;
   intervaloForm!: FormGroup;
   intervaloAtivo = false;
@@ -41,12 +44,14 @@ export class CalendarioDialog implements OnInit {
 
     } else {
 
-      this.MudarTipoFormulario()
+      this.MudarTipoFormulario();
 
     }
     this.form = this.calendarFormService.inicializarFormulario(this.labelService.getCalendarMode());
     this.intervaloForm = this.calendarFormService.InicialiarFormularioIntervalor();
 
+    console.log(typeof this.form.get('year')?.value );
+    console.log( this.intervaloForm.get('anoInicio')?.value);
     this.dateHelperServices.populateYears();
     this.dateHelperServices.populateFiscalYears();
     console.log("iniciando");
