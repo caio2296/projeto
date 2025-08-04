@@ -15,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Tabela } from './tabela/tabela';
 import { Dialog } from './dialog/dialog';
 import { DialogAdicionarItem } from './dialog-adicionar-item/dialog-adicionar-item';
+import { CalendarioDialog } from './calendario-dialog/calendario-dialog';
 
 @NgModule({
     declarations: [
@@ -29,7 +30,8 @@ import { DialogAdicionarItem } from './dialog-adicionar-item/dialog-adicionar-it
         LabelData,
         Tabela,
         Dialog,
-        DialogAdicionarItem
+        DialogAdicionarItem,
+        CalendarioDialog
     ],
     imports: [
         CommonModule,

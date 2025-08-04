@@ -49,13 +49,16 @@ export class InputMesAnoIntervalo implements OnInit {
 
   }
   ngOnInit(): void {
-    this.intervaloForm = this.calendarFormService.InicialiarFormularioIntervalor();
+    if (!this.intervaloForm) {
+     this.intervaloForm = this.calendarFormService.InicialiarFormularioIntervalor();
+  }
+   
 
-    this.inputConfigs.updateInputConfig(this.intervaloForm.get('unidade')?.value, this.intervaloForm);
+    this.inputConfigs.updateInputConfig(this.intervaloForm.get('unidade')?.value);
     this.intervaloForm.get('unidade')?.valueChanges.subscribe(value => {
       // this.updateInputConfig(value);
 
-      this.inputConfigs.updateInputConfig(value, this.intervaloForm);
+      this.inputConfigs.updateInputConfig(value);
     });
   }
 

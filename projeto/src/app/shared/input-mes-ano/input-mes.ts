@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/prefer-inject */
 /* eslint-disable @angular-eslint/prefer-standalone */
-import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDatepicker } from '@angular/material/datepicker';
 import moment from 'moment';
@@ -11,6 +11,8 @@ import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import { MY_FORMATS } from '../Models/Formats';
 import { CalendarFormService } from '../Services/calendarFormService';
 import { DateHelperService } from '../Services/dateHelperService';
+import { InputConfig } from '../Services/InputConfig';
+import { LabelDataService } from '../Services/label-data-service';
 
 @Component({
   selector: 'app-input-mes',
@@ -27,16 +29,21 @@ import { DateHelperService } from '../Services/dateHelperService';
 
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InputMes   {
+export class InputMes implements OnInit  {
   @Input() form!: FormGroup;
 
   public calendarMode: 'day' | 'month' | 'year' | 'fiscalYear' | 'week' | 'datetime' = 'day';
   /**
    *
    */
-  constructor(protected calendarFormService: CalendarFormService, protected dateHelperServices: DateHelperService) {
+  constructor(protected calendarFormService: CalendarFormService, protected dateHelperServices: DateHelperService,
+    protected inputConfigs:InputConfig, protected labelDataService: LabelDataService
+  ) {
 
 
+  }
+  ngOnInit(): void {
+      this.inputConfigs.updateInputConfig(this.labelDataService.getCalendarMode());
   }
 
 

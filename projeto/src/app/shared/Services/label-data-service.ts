@@ -9,10 +9,16 @@ export class LabelDataService {
   private tipoDataSubject = new BehaviorSubject<string>('');
   tipoData$ = this.tipoDataSubject.asObservable(); // Exposição do observable
 
+private intervaloSubject = new BehaviorSubject<boolean>(false);
+
+   calendarModeSubJect = new BehaviorSubject<string>('day');
+   calendarMode$ = this.calendarModeSubJect.asObservable();
+
   private labelSubject = new BehaviorSubject<string>('');
   label$ = this.labelSubject.asObservable();
 
   public setTipoData(tipo: string) {
+     console.log('chamando tipo');
     this.tipoDataSubject.next(tipo);
   }
 
@@ -21,11 +27,29 @@ export class LabelDataService {
   }
 
   public setLabel(labelData: string) {
+        console.log(labelData);
     this.labelSubject.next(labelData);
   }
 
   public getLabel(): string {
     return this.labelSubject.value;
+  }
+
+  public getInterval(): boolean {
+    return this.intervaloSubject.value;
+  }
+
+  public setInterval(valor: boolean): void {
+    this.intervaloSubject.next(valor);
+  }
+
+  public setCalendarMode(mode:string){
+       
+    this.calendarModeSubJect.next(mode);
+  }
+
+  public getCalendarMode():string{
+    return this.calendarModeSubJect.value;
   }
 
 }

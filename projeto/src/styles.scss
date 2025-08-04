@@ -1,8 +1,52 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@use '@angular/material' as mat;
 
-.mat-mdc-snack-bar-label {
-     background-color: orange;
+.dark-theme{
+  @include mat.theme((
+    color: (
+      theme-type: light,
+      primary: mat.$red-palette,
+      tertiary: mat.$green-palette
+    ),
+    typography: Roboto,
+    density: 0
+  ));
+}
+
+.light-theme {
+  @include mat.theme((
+    color: (
+      theme-type: dark,
+      primary: mat.$cyan-palette,
+      tertiary: mat.$orange-palette
+    ),
+    typography: Roboto,
+    density: 0
+  ));
+}
+
+body .light-theme{
+      background-color: blue;
+}
+
+body.dark-theme{
+ background-color: red;
+}
+
+// Estilos base
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: var(--md-sys-color-surface);
+  color: var(--md-sys-color-on-surface);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+     background-color: blue;
+  color: var(--md-sys-color-on-surface);
 }

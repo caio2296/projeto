@@ -3,6 +3,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { LabelDataService } from '../Services/label-data-service';
+import { CalendarBarModel } from '../Models/calendarBarModel';
 
 @Component({
   selector: 'app-label-data',
@@ -17,9 +18,16 @@ export class LabelData implements OnInit, OnDestroy {
 
   private subscriptions = new Subscription();
 
-  constructor(public labelDataService: LabelDataService) {}
+  constructor(public labelDataService: LabelDataService,  protected calendarBarModel: CalendarBarModel) {}
 
   ngOnInit(): void {
+        const defaultSelection = this.calendarBarModel.dados.calendarBar.defaultSelection.selection as any;
+        const calendarMode = defaultSelection;
+
+     this.labelDataService.setTipoData(calendarMode);
+    this.labelDataService.setLabel(this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart);
+
+
     this.subscriptions.add(
       this.labelDataService.tipoData$.subscribe(tipo => {
         switch(tipo){
@@ -53,6 +61,9 @@ export class LabelData implements OnInit, OnDestroy {
         this.label = label;
       })
     );
+    
+     // this.ApiService.chamarApi();
+          console.log(this.label,this.tipo);
   }
 
   ngOnDestroy(): void {
