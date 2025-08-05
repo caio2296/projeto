@@ -79,6 +79,7 @@
           <mat-option value="day">Dias</mat-option>
           <mat-option value="month">Meses</mat-option>
           <mat-option value="year">Anos</mat-option>
+          <mat-option value="fiscalYear">Ano fiscal</mat-option>
         </mat-select>
       </mat-form-field>
 
@@ -98,6 +99,9 @@
 
         <app-seletor-ano-intervalo [intervaloForm]="intervaloForm"></app-seletor-ano-intervalo>
 
+      </div>
+      <div  *ngIf="intervaloForm.get('unidade')?.value === 'fiscalYear'">
+       <app-seletor-ano-fiscal-intervalo [intervaloForm]="intervaloForm"></app-seletor-ano-fiscal-intervalo>
       </div>
     </form>
 

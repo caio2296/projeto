@@ -1,32 +1,29 @@
-/* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @angular-eslint/prefer-inject */
+/* eslint-disable @angular-eslint/prefer-standalone */
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { DateHelperService } from '../../../../Services/dateHelperService';
 import { InputConfig } from '../../../../Services/InputConfig';
 import { FormularioService } from '../../../../Services/formulario-service';
+import { DateHelperService } from '../../../../Services/dateHelperService';
 import { CalendarFormService } from '../../../../Services/calendarFormService';
 
-
-
 @Component({
-  selector: 'app-seletor-ano-intervalo',
+  selector: 'app-seletor-ano-fiscal-intervalo',
   standalone: false,
-  templateUrl: './seletor-ano-intervalo.html',
-  styleUrl: './seletor-ano-intervalo.scss'
+  templateUrl: './seletor-ano-fiscal-intervalo.html',
+  styleUrl: './seletor-ano-fiscal-intervalo.scss'
 })
-export class SeletorAnoIntervalo implements OnInit {
- @Input() intervaloForm!: FormGroup;
+export class SeletorAnoFiscalIntervalo implements OnInit {
+   @Input() intervaloForm!: FormGroup;
+   @Input() calendarMode: 'year' | 'fiscalYear' = 'year';
 
-  public selectedValue!: string;
-
-  constructor(protected inputConfigs:InputConfig, protected formularioService:FormularioService, protected dateHelperServices:DateHelperService,
-     protected calendarFormServices: CalendarFormService) {
-
-
-  }
+   constructor(protected inputConfigs:InputConfig, protected formularioService:FormularioService, protected dateHelperServices:DateHelperService,
+        protected calendarFormServices: CalendarFormService) {
+   
+   
+     }
   ngOnInit(): void {
-  if (!this.intervaloForm) {
+    if (!this.intervaloForm) {
      this.intervaloForm = this.formularioService.InicialiarFormularioIntervalor();
   }
 

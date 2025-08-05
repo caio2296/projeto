@@ -8,52 +8,52 @@ import { CalendarBarModel } from '../Models/calendarBarModel';
 
 @Component({
   selector: 'app-label-data',
-  standalone:false,
+  standalone: false,
   templateUrl: './label-data.html',
   styleUrl: './label-data.scss'
 })
 export class LabelData implements OnInit, OnDestroy {
 
- tipo = '';
+  tipo = '';
   label = '';
 
   private subscriptions = new Subscription();
 
-  constructor(public labelDataService: LabelDataService,  protected calendarBarModel: CalendarBarModel) {}
+  constructor(public labelDataService: LabelDataService, protected calendarBarModel: CalendarBarModel) { }
 
   ngOnInit(): void {
-        const defaultSelection = this.calendarBarModel.dados.calendarBar.defaultSelection.selection as any;
-        const calendarMode = defaultSelection;
+    const defaultSelection = this.calendarBarModel.dados.calendarBar.defaultSelection.selection as any;
+    const calendarMode = defaultSelection;
 
-     this.labelDataService.setTipoData(calendarMode);
+    this.labelDataService.setTipoData(calendarMode);
     this.labelDataService.setLabel(this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart);
 
 
     this.subscriptions.add(
       this.labelDataService.tipoData$.subscribe(tipo => {
-        switch(tipo){
-          case'day':{
-           this.tipo = 'Dia';
-           break;
+        switch (tipo) {
+          case 'day': {
+            this.tipo = 'Dia';
+            break;
           }
-          case'month':{
-             this.tipo = 'Mes';
-             break;
+          case 'month': {
+            this.tipo = 'Mes';
+            break;
           }
-          case'year':{
+          case 'year': {
             this.tipo = 'Ano';
             break;
           }
-          case'fiscalYear':{
+          case 'fiscalYear': {
             this.tipo = 'Ano fiscal';
             break;
           }
-          default:{
+          default: {
             this.tipo = tipo;
             break;
           }
         }
-       
+
       })
     );
 
@@ -62,9 +62,9 @@ export class LabelData implements OnInit, OnDestroy {
         this.label = label;
       })
     );
-    
-     // this.ApiService.chamarApi();
-          console.log(this.label,this.tipo);
+
+    // this.ApiService.chamarApi();
+    console.log(this.label, this.tipo);
   }
 
   ngOnDestroy(): void {

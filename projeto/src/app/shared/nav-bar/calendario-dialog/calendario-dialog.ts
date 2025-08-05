@@ -4,11 +4,13 @@
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup } from '@angular/forms';
+
 import { CalendarBarModel } from '../../Models/calendarBarModel';
 import { DateHelperService } from '../../Services/dateHelperService';
 import { CalendarFormService } from '../../Services/calendarFormService';
 import { InputConfig } from '../../Services/InputConfig';
 import { LabelDataService } from '../../Services/label-data-service';
+import { FormularioService } from '../../Services/formulario-service';
 
 @Component({
   selector: 'app-calendario-dialog',
@@ -31,6 +33,7 @@ export class CalendarioDialog implements OnInit, OnDestroy {
     public calendarBarModel: CalendarBarModel,
     public dateHelperServices: DateHelperService,
     public calendarFormService: CalendarFormService,
+    public formularioService: FormularioService,
     public inputConfings: InputConfig,
     protected labelService: LabelDataService
   ) { }
@@ -47,18 +50,15 @@ export class CalendarioDialog implements OnInit, OnDestroy {
       this.MudarTipoFormulario();
 
     }
-    this.form = this.calendarFormService.inicializarFormulario(this.labelService.getCalendarMode());
-    this.intervaloForm = this.calendarFormService.InicialiarFormularioIntervalor();
+    this.form = this.formularioService.inicializarFormulario(this.labelService.getCalendarMode());
+    this.intervaloForm = this.formularioService.InicialiarFormularioIntervalor();
 
-    console.log(typeof this.form.get('year')?.value );
-    console.log( this.intervaloForm.get('anoInicio')?.value);
     this.dateHelperServices.populateYears();
     this.dateHelperServices.populateFiscalYears();
-    console.log("iniciando");
   }
 
   ngOnDestroy(): void {
-
+    this.dateHelperServices.fiscalYearOptions =[];
     console.log(this.labelService.getCalendarMode());
     // Aqui você pode resetar estados ou fazer limpeza
     this.labelService.setInterval(this.intervaloAtivo);

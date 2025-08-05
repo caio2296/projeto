@@ -16,6 +16,7 @@ import { Dialog } from './tabela/dialog/dialog';
 import { DialogAdicionarItem } from './tabela/dialog-adicionar-item/dialog-adicionar-item';
 import { CalendarioDialog } from './nav-bar/calendario-dialog/calendario-dialog';
 import { NavBar } from './nav-bar/nav-bar';
+import { SeletorAnoFiscalIntervalo } from './nav-bar/calendario-dialog/componentes/seletor-ano-fiscal-intervalo/seletor-ano-fiscal-intervalo';
 
 @NgModule({
     declarations: [
@@ -32,7 +33,8 @@ import { NavBar } from './nav-bar/nav-bar';
         Dialog,
         DialogAdicionarItem,
         CalendarioDialog,
-        NavBar
+        NavBar,
+        SeletorAnoFiscalIntervalo
     ],
     imports: [
         CommonModule,
@@ -52,7 +54,8 @@ import { NavBar } from './nav-bar/nav-bar';
         Tabela,
         Dialog,
         DialogAdicionarItem,
-        NavBar
+        NavBar,
+        SeletorAnoFiscalIntervalo
     ],
      providers: [
     DatePipe, { provide: LOCALE_ID, useValue: 'pt' } 

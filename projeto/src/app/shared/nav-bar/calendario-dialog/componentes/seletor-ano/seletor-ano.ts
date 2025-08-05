@@ -29,6 +29,7 @@ constructor( protected dateHelperServices:DateHelperService, protected calendarF
   ngOnInit(): void {
         this.inputConfigs.updateInputConfig(this.labelDataService.getCalendarMode());
   }
+  
 
 
 }
