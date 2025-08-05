@@ -2,9 +2,10 @@
 /* eslint-disable @angular-eslint/prefer-standalone */
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { CalendarFormService } from '../../../../Services/calendarFormService';
 import { DateHelperService } from '../../../../Services/dateHelperService';
 import { InputConfig } from '../../../../Services/InputConfig';
+import { FormularioService } from '../../../../Services/formulario-service';
+import { CalendarFormService } from '../../../../Services/calendarFormService';
 
 
 @Component({
@@ -21,14 +22,16 @@ export class DataIntervalo implements OnInit {
     max: ''
   };
 
-constructor(protected calendarFormService : CalendarFormService,  protected dateHelperServices:DateHelperService, protected inputConfigs:InputConfig) {
+constructor(
+  protected formularioService:FormularioService,  protected dateHelperServices:DateHelperService, protected inputConfigs:InputConfig, 
+  protected calendarFormServices: CalendarFormService) {
 
 
 }
 
   ngOnInit(): void {
   if (!this.intervaloForm) {
-     this.intervaloForm = this.calendarFormService.InicialiarFormularioIntervalor();
+     this.intervaloForm = this.formularioService.InicialiarFormularioIntervalor();
   }
 
   console.log(this.intervaloForm.get('dataInicio')?.value);

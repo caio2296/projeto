@@ -10,7 +10,7 @@
     <mat-label>Fim</mat-label>
     <input matInput [matDatepicker]="pickerFim" formControlName="dataFim" [min]="dateHelperServices.dateMinISO()"
       [max]="dateHelperServices.dateMaxISO()"
-      (dateInput)="this.calendarFormService.onDateChangeInterval($event,'dataInicio','dataFim')" [readonly]="true" />
+      (dateInput)="this.calendarFormServices.onDateChangeInterval($event,'dataInicio','dataFim')" [readonly]="true" />
     <mat-error *ngIf="this.intervaloForm.get('dataFim')?.errors  && intervaloForm.get('dataFim')?.touched">
       Data inválida.
     </mat-error>

@@ -1,210 +1,27 @@
+/* eslint-disable no-var */
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/prefer-inject */
 import { Injectable } from "@angular/core";
-
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { DateHelperService } from "./dateHelperService";
-import { dataFimMinValidator } from "./Validators/dataFimMinValidator";
+import { MatSelectChange } from "@angular/material/select";
 import { MatDatepickerInputEvent } from "@angular/material/datepicker";
 import { startWith } from "rxjs/operators";
-import moment from "moment";
 import { Subscription } from "rxjs";
-import { MatSelectChange } from "@angular/material/select";
+
 import { LabelDataService } from "./label-data-service";
 import { ApiService } from "C:/Users/user/Desktop/Caio/projeto/projeto/src/app/Services/api-service";
-import { CalendarBarModel } from "../Models/calendarBarModel";
+import { FormularioService } from "./formulario-service";
 
 @Injectable({ providedIn: 'root' })
 
 export class CalendarFormService {
 
-  form!: FormGroup;
-  intervaloForm!: FormGroup;
   private subscription?: Subscription;
 
-
-  constructor(private fb: FormBuilder,
-    protected calendarBarModel: CalendarBarModel,
-    protected dateHelperServices: DateHelperService,
+  constructor(
     public labelDataService: LabelDataService,
+    public formularioService:FormularioService,
     protected ApiService: ApiService) {
-  }
-
-  inicializarFormulario(calendarMode: any): FormGroup {
-
-    // const defaultSelection = this.calendarBarModel.dados.calendarBar.defaultSelection.selection as any;
-    calendarMode = this.labelDataService.getCalendarMode();
-    console.log(this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart.split('/'));
-
-    let partes: any;
-    let dataJs;
-    let dataM;
-    let ano;
-    if (this.labelDataService.getLabel().toString().includes('/')) {
-      partes = this.labelDataService.getLabel().split(/[/\\-]/);
-      dataJs = new Date(+partes[2], +partes[1] - 1, +partes[0]);
-      dataM = new Date(+partes[2], +partes[1] - 1);
-      ano = this.labelDataService.getLabel().split('/')[2];
-    } else {
-      ano = this.labelDataService.getLabel();
-    }
-    let partesPadrao;
-    this.labelDataService.setTipoData(calendarMode);
-
-    switch (calendarMode) {
-      case 'day':
-
-        partesPadrao = this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart.split('/');
-        console.log(partes);
-        return this.form = this.fb.group({
-          data: [this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart],
-          day: [dataJs],
-          month: [dataM],
-          year: [parseInt(partesPadrao[2])],
-          fiscalYear: [parseInt(partesPadrao[2])]
-        });
-      case 'month':
-        partesPadrao = this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart.split('/');
-        dataJs = new Date(+partesPadrao[2], +partesPadrao[1] - 1, +partesPadrao[0]);
-        return this.form = this.fb.group({
-          data: [this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart],
-          day: [dataJs],
-          month: [new Date(+partes[1], +partes[0] - 1)],
-          year: [parseInt(partesPadrao[2])],
-          fiscalYear: [parseInt(partesPadrao[2])]
-        });
-      default:
-        partesPadrao = this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart.split('/');
-        dataJs = new Date(+partesPadrao[2], +partesPadrao[1] - 1, +partesPadrao[0]);
-        dataM = new Date(+partesPadrao[2], +partesPadrao[1] - 1);
-        return this.form = this.fb.group({
-          data: [this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart],
-          day: [dataJs],
-          month: [dataM],
-          year: [ano],
-          fiscalYear: [`${ano}/`]
-        });
-    }
-  }
-
-  InicialiarFormularioIntervalor(): FormGroup {
-    const partesPadrao = this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart.split('/');
-    let partes;
-    let partesMeses;
-    let partesAno;
-    let dataJs!: Date;
-    let Ano;
-
-    let dataFim: Date;
-
-    const label = String(this.labelDataService.getLabel());
-
-    if (label.includes('-')) {
-      const partes = this.labelDataService.getLabel().split('-');
-      const dataStr = partes[1].trim(); // remove espaços
-
-      const [dia, mes, ano] = dataStr.split('/');
-      dataFim = new Date(+ano, +mes - 1, +dia);
-    } else {
-      const [dia, mes, ano] = label.split('/');
-      dataFim = new Date(+ano, +mes - 1, +dia);
-    }
-
-    let unidade = this.labelDataService.getCalendarMode();
-    if (this.labelDataService.getTipoData() == 'fiscalYear') {
-      unidade = 'year';
-    }
-
-    if (this.labelDataService.getLabel().toString().includes('/')) {
-      partes = this.labelDataService.getLabel().split(/\/|-/);
-      dataJs = new Date(+partes[2], +partes[1] - 1, +partes[0]);
-    }
-    switch (unidade) {
-      case 'day':
-        this.intervaloForm = this.fb.group({
-          dataInicio: [dataJs],
-          dataFim: [dataFim, [dataFimMinValidator(() => this.intervaloForm?.get('dataInicio')?.value.toString())]],
-          unidade: [unidade],
-          dataInicioMes: [moment({
-            year: parseInt(partesPadrao[2], 10),
-            month: parseInt(partesPadrao[1], 10) - 1 // lembre que o mês começa em 0 (jan)
-          })],
-          dataFimMes: [moment({
-            year: parseInt(partesPadrao[2], 10),
-            month: parseInt(partesPadrao[1], 10) - 1 // lembre que o mês começa em 0 (jan)
-          })],
-          anoInicio: [`${partesPadrao[2]}`],
-          anoFim: ['']
-        });
-
-        break;
-
-      case 'month':
-        dataJs = new Date(+partesPadrao[2], +partesPadrao[1] - 1, +partesPadrao[0]);
-        partesMeses = this.labelDataService.getLabel().split('/');
-        this.intervaloForm = this.fb.group({
-          dataInicio: [dataJs],
-          dataFim: ['', [dataFimMinValidator(() => this.intervaloForm?.get('dataInicio')?.value)]],
-          unidade: [unidade],
-          dataInicioMes: [moment({
-            year: parseInt(partesMeses[1], 10),
-            month: parseInt(partesMeses[0], 10) - 1 // lembre que o mês começa em 0 (jan)
-          })],
-          dataFimMes: [moment({
-            year: parseInt(partesMeses[1], 10),
-            month: parseInt(partesMeses[0], 10) - 1 // lembre que o mês começa em 0 (jan)
-          })],
-          anoInicio: [`${partesPadrao[2]}`],
-          anoFim: ['']
-        });
-
-        break;
-
-      case 'year':
-        dataJs = new Date(+partesPadrao[2], +partesPadrao[1] - 1, +partesPadrao[0]);
-        if (this.labelDataService.getLabel().toString().includes('-')) {
-          partesAno = this.labelDataService.getLabel().split("-");
-          Ano = partesAno[0];
-        } else {
-          Ano = this.labelDataService.getLabel().toString();
-        }
-        this.intervaloForm = this.fb.group({
-          dataInicio: [dataJs],
-          dataFim: ['', [dataFimMinValidator(() => this.intervaloForm?.get('dataInicio')?.value)]],
-          unidade: [unidade],
-          dataInicioMes: [moment({
-            year: parseInt(partesPadrao[2], 10),
-            month: parseInt(partesPadrao[1], 10) - 1 // lembre que o mês começa em 0 (jan)
-          })],
-          dataFimMes: [moment({
-            year: parseInt(partesPadrao[2], 10),
-            month: parseInt(partesPadrao[1], 10) - 1 // lembre que o mês começa em 0 (jan)
-          })],
-          anoInicio: [`${parseInt(Ano)}`],
-          anoFim: ['']
-        });
-
-
-        break;
-
-    }
-
-    this.intervaloForm.get('dataInicio')?.valueChanges.subscribe(dataInicio => {
-
-      const dataFimControl = this.intervaloForm.get('dataFim');
-      const dataFim = dataFimControl?.value;
-
-      // Se quiser ajustar automaticamente:
-      if (dataFim && dataFim < dataInicio) {
-        dataFimControl?.setValue(this.intervaloForm?.get('dataInicio')?.value);
-      }
-
-      // Sempre forçar revalidação:
-      dataFimControl?.updateValueAndValidity();
-    });
-
-    return this.intervaloForm;
   }
 
   public onYearChange(event: MatSelectChange, inputName: string): void {
@@ -241,9 +58,8 @@ export class CalendarFormService {
       case 'day': {
         this.labelDataService.setInterval(false);
         this.labelDataService.setTipoData(input);
-        const controlInput = this.form.get(input);
+        const controlInput = this.formularioService.form.get(input);
         this.labelDataService.setCalendarMode('day');
-
 
         // Cria uma nova inscrição
         this.subscription = controlInput?.valueChanges
@@ -260,7 +76,7 @@ export class CalendarFormService {
       case 'month': {
         this.labelDataService.setInterval(false);
         this.labelDataService.setTipoData(input);
-        const controlInput = this.form.get(input);
+        const controlInput = this.formularioService.form.get(input);
         this.labelDataService.setCalendarMode('month');
 
         // Cria uma nova inscrição
@@ -289,8 +105,8 @@ export class CalendarFormService {
   }
 
   onDateChangeMonthInterval(event: MatDatepickerInputEvent<Date>, inputInicio: string, inputFim: string): void {
-    const controlInicio = this.intervaloForm.get(inputInicio);
-    const controlFim = this.intervaloForm.get(inputFim);
+    const controlInicio = this.formularioService.intervaloForm.get(inputInicio);
+    const controlFim = this.formularioService.intervaloForm.get(inputFim);
 
     controlInicio?.valueChanges
       .pipe(startWith(controlInicio.value))
@@ -328,15 +144,15 @@ export class CalendarFormService {
     this.labelDataService.setInterval(true);
     this.labelDataService.setTipoData("Dia");
     this.labelDataService.setCalendarMode('day');
-    this.intervaloForm.get(inputInicio)?.valueChanges
-      .pipe(startWith(this.intervaloForm.get(inputInicio)?.value))
+    this.formularioService.intervaloForm.get(inputInicio)?.valueChanges
+      .pipe(startWith(this.formularioService.intervaloForm.get(inputInicio)?.value))
       .subscribe(dataInicio => {
 
-        const dataFimControl = this.intervaloForm.get(inputFim);
+        const dataFimControl = this.formularioService.intervaloForm.get(inputFim);
         const dataFim = dataFimControl?.value;
 
-        const dataInicioValor = this.intervaloForm.get(inputInicio)?.value;
-        const dataFimValor = this.intervaloForm.get(inputFim)?.value;
+        const dataInicioValor = this.formularioService.intervaloForm.get(inputInicio)?.value;
+        const dataFimValor = this.formularioService.intervaloForm.get(inputFim)?.value;
 
         if (dataFim instanceof Date && dataInicio instanceof Date && dataFim > dataInicio) {
 
@@ -350,11 +166,33 @@ export class CalendarFormService {
       });
   }
 
-  public onYearChangeInterval(event: MatSelectChange, inputInicio: string, inputFim: string): void {
-    const controlInicio = this.intervaloForm.get(inputInicio);
+  public onYearFiscalChangeInterval(event: MatSelectChange, inputInicio: string, inputFim: string): void {
+    const controlInicio = this.formularioService.intervaloForm.get(inputInicio);
 
-    this.intervaloForm.get(inputFim)?.valueChanges
-      .pipe(startWith(this.intervaloForm.get(inputFim)?.value))
+   this.formularioService.intervaloForm.get(inputFim)?.valueChanges
+      .pipe(startWith(this.formularioService.intervaloForm.get(inputFim)?.value))
+      .subscribe(dataFim => {
+        const dataInicio = controlInicio?.value;
+
+        if (dataFim && dataFim > dataInicio) {
+          this.labelDataService.setInterval(true);
+          this.labelDataService.setTipoData("Ano fiscal");
+          this.labelDataService.setCalendarMode('fiscalYear');
+          
+          this.labelDataService
+            .setLabel(`${this.formularioService.intervaloForm.get(inputInicio)?.value}/${parseInt(this.formularioService.intervaloForm.get(inputInicio)?.value) + 1}
+             - ${dataFim}/${dataFim + 1}`);
+          console.log("evento! enviando...");
+          console.log(`${this.formularioService.intervaloForm.get(inputInicio)?.value}/${parseInt(this.formularioService.intervaloForm.get(inputInicio)?.value) + 1}
+             - ${dataFim}/${dataFim + 1}`);
+        }
+      });
+  }
+  public onYearChangeInterval(event: MatSelectChange, inputInicio: string, inputFim: string): void {
+    const controlInicio = this.formularioService.intervaloForm.get(inputInicio);
+
+   this.formularioService.intervaloForm.get(inputFim)?.valueChanges
+      .pipe(startWith(this.formularioService.intervaloForm.get(inputFim)?.value))
       .subscribe(dataFim => {
         const dataInicio = controlInicio?.value;
 
@@ -362,10 +200,13 @@ export class CalendarFormService {
           this.labelDataService.setInterval(true);
           this.labelDataService.setTipoData("Ano");
           this.labelDataService.setCalendarMode('year');
+          // this.labelDataService.setTipoData("Ano fiscal");
+          // this.labelDataService.setCalendarMode('fiscalYear');
+          
           this.labelDataService
-            .setLabel(`${this.intervaloForm.get(inputInicio)?.value} - ${dataFim}`);
+            .setLabel(`${this.formularioService.intervaloForm.get(inputInicio)?.value} - ${dataFim}`);
           console.log("evento! enviando...");
-          console.log(`${this.intervaloForm.get(inputInicio)?.value} - ${dataFim}`);
+          console.log(`${this.formularioService.intervaloForm.get(inputInicio)?.value} - ${dataFim}`);
         }
       });
   }

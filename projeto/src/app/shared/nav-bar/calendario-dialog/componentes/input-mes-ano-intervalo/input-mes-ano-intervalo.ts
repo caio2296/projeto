@@ -13,6 +13,7 @@ import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import { CalendarFormService } from '../../../../Services/calendarFormService';
 import { DateHelperService } from '../../../../Services/dateHelperService';
 import { InputConfig } from '../../../../Services/InputConfig';
+import { FormularioService } from '../../../../Services/formulario-service';
 
 
 
@@ -46,12 +47,12 @@ export class InputMesAnoIntervalo implements OnInit {
   readonly date = new FormControl(moment());
   data = '';
 
-  constructor(protected inputConfigs: InputConfig, protected calendarFormService: CalendarFormService, protected dateHelperService: DateHelperService) {
+  constructor(protected inputConfigs: InputConfig, protected formularioService:FormularioService,protected calendarFormService: CalendarFormService, protected dateHelperService: DateHelperService) {
 
   }
   ngOnInit(): void {
     if (!this.intervaloForm) {
-     this.intervaloForm = this.calendarFormService.InicialiarFormularioIntervalor();
+     this.intervaloForm = this.formularioService.InicialiarFormularioIntervalor();
   }
    
 

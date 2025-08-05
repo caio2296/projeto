@@ -1,0 +1,18 @@
+<div class="input-container" [formGroup]="intervaloForm">
+
+  <mat-form-field>
+    <mat-label>Ano Inicial</mat-label>
+    <mat-select formControlName="anoIntervaloInicio">
+      <mat-option *ngFor="let year of dateHelperServices.yearOptions" [value]="year"> {{ year }}/{{ year + 1 }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Ano Final</mat-label>
+    <mat-select formControlName="anoIntervaloFim" (selectionChange)="this.calendarFormServices.onYearFiscalChangeInterval($event,'anoIntervaloInicio', 'anoIntervaloFim')">
+      <mat-option *ngFor="let year of dateHelperServices.yearOptions" [value]="year">{{ year }}/{{ year + 1 }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

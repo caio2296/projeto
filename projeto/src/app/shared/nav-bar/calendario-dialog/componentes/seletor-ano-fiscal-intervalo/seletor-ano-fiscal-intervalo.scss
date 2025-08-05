@@ -1,0 +1,6 @@
+.input-container {
+  display: flex;
+  gap: 1rem; // espaçamento entre os inputs (pode ser 8px, 16px, 24px)
+  flex-wrap: wrap;
+  justify-content: center;
+}
