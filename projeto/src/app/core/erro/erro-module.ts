@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PaginaNaoEncontrada } from './pagina-nao-encontrada/pagina-nao-encontrada';
 import { ErroRoutingModule } from './erro-routing.module';
 import { RouterModule } from '@angular/router';
+import { SharedModule } from '../../shared/shared.module';
 
 
 
@@ -13,7 +14,8 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     ErroRoutingModule,
-    RouterModule
+    RouterModule,
+    SharedModule
   ]
 })
 export class ErroModule { }
