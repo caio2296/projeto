@@ -57,6 +57,9 @@ html, body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 body {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;

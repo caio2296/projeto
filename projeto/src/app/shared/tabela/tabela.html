@@ -1,5 +1,5 @@
-<div>
-<button mat-raised-button color="primary" (click)="abrirModalAdicionar($event)">Adicionar Item</button>
+<div class="Tabela">
+
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
@@ -27,4 +27,5 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+<button mat-raised-button color="primary" (click)="abrirModalAdicionar($event)">Adicionar Item</button>
 </div>

@@ -9,6 +9,8 @@
 </button>
   <span>My App</span>
   <button mat-raised-button (click)="toggleTheme()">
-  {{ this.temaService.isDarkMode ? 'Modo Escuro' : 'Modo Claro' }}
+    <!-- <mat-icon class="spin-animation">settings</mat-icon> -->
+    <mat-icon class="spin-animation">wb_sunny</mat-icon>
+  <!-- {{ this.temaService.isDarkMode ? 'Dark Mode' : 'Light Mode' }} -->
 </button>
 </mat-toolbar>
