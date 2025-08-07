@@ -4,3 +4,23 @@
   color: #000000;
   text-align: center;
 }
+
+.central-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.labelBox{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 20%;
+  border: 1px solid #ccc;       // Borda cinza clara
+  border-radius: 8px;           // Cantos arredondados
+  padding: 16px;                // Espaçamento interno
+  margin: 16px 0;               // Espaçamento externo
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); // Sombra leve
+  background-color: #fff;       // Fundo branco
+}

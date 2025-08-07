@@ -183,8 +183,7 @@ export class CalendarFormService {
             .setLabel(`${this.formularioService.intervaloForm.get(inputInicio)?.value}/${parseInt(this.formularioService.intervaloForm.get(inputInicio)?.value) + 1}
              - ${dataFim}/${dataFim + 1}`);
           console.log("evento! enviando...");
-          console.log(`${this.formularioService.intervaloForm.get(inputInicio)?.value}/${parseInt(this.formularioService.intervaloForm.get(inputInicio)?.value) + 1}
-             - ${dataFim}/${dataFim + 1}`);
+          console.log(`${this.formularioService.intervaloForm.get(inputInicio)?.value}/${parseInt(this.formularioService.intervaloForm.get(inputInicio)?.value) + 1} - ${dataFim}/${dataFim + 1}`);
         }
       });
   }
