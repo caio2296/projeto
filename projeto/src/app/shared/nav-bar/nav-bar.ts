@@ -1,6 +1,6 @@
 /* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @angular-eslint/prefer-inject */
-import { ChangeDetectorRef, Component, DOCUMENT, Inject, OnInit, Renderer2 } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { CalendarioDialog } from './calendario-dialog/calendario-dialog';
@@ -8,6 +8,7 @@ import { CalendarBarModel } from '../Models/calendarBarModel';
 import { CalendarFormService } from '../Services/calendarFormService';
 import { DateHelperService } from '../Services/dateHelperService';
 import { InputConfig } from '../Services/InputConfig';
+import { TemaService } from './Services/tema-service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -15,7 +16,7 @@ import { InputConfig } from '../Services/InputConfig';
   templateUrl: './nav-bar.html',
   styleUrl: './nav-bar.scss'
 })
-export class NavBar implements OnInit {
+export class NavBar {
 
   form!: FormGroup;
   resultadoIntervalo: number | null = null;
@@ -26,7 +27,7 @@ export class NavBar implements OnInit {
 
   public calendarMode: 'day' | 'month' | 'year' | 'fiscalYear' | 'week' | 'datetime' = 'day';
 
-  isDarkMode = false;
+
 
   constructor(private fb: FormBuilder, private cdRef: ChangeDetectorRef,
     protected calendarBarModel: CalendarBarModel,
@@ -34,18 +35,14 @@ export class NavBar implements OnInit {
     protected calendarFormService: CalendarFormService,
     protected inputConfings: InputConfig,
     private dialog: MatDialog,
-    private renderer: Renderer2,
-    @Inject(DOCUMENT) private document: Document) {
-    ;
+    protected temaService: TemaService
+    ) {
 
-  }
-  ngOnInit(): void {
-    const temaSalvo = localStorage.getItem('tema');
-    if (temaSalvo === 'dark') {
-      this.setDarkTheme(true);
     }
-  }
 
+  toggleTheme(): void {
+    this.temaService.toggleTheme();
+  }
 
   abrirDialogCalendario(): void {
     this.dialog.open(CalendarioDialog, {
@@ -55,9 +52,6 @@ export class NavBar implements OnInit {
     });
   }
 
-  // toggleMenu() {
-  //   this.isMenuOpen = !this.isMenuOpen;
-  // }
   public setCalendarMode(mode: 'day' | 'month' | 'year' | 'fiscalYear' | 'week' | 'datetime') {
     if (!this.calendarBarModel.dados.calendarBar[mode]?.visible) {
       return;
@@ -70,22 +64,7 @@ export class NavBar implements OnInit {
     return this.intervaloAtivo = true;
   }
 
-  toggleTheme(): void {
-    this.setDarkTheme(!this.isDarkMode);
-  }
 
-  private setDarkTheme(isDark: boolean): void {
-    this.isDarkMode = isDark;
-    const body = this.document.body;
 
-    if (isDark) {
-      this.renderer.addClass(body, 'dark-theme');
-      this.renderer.removeClass(body, 'light-theme');
-      localStorage.setItem('tema', 'dark');
-    } else {
-      this.renderer.addClass(body, 'light-theme');
-      this.renderer.removeClass(body, 'dark-theme');
-      localStorage.setItem('tema', 'light');
-    }
-  }
+
 }

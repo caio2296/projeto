@@ -17,7 +17,7 @@
 }
 
 button {
-  color: white;
+  // color: white;
   background-color: transparent;
 }
 
@@ -79,6 +79,19 @@ button {
 
 }
 
+// body .light-theme{
+//     .mat-mdc-icon-button .mdc-button__label, .mat-mdc-icon-button .mat-icon{
+//      --icon-color: black;
+//    }
+
+
+// }
+
+// body.dark-theme{
+
+//   --icon-color: white;
+
+// }
 
 .example-button-row {
   display: flex;
