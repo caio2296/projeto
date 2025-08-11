@@ -38,7 +38,7 @@
 
 body .light-theme{
      --icon-color: black;
-      background-color: rgb(175, 175, 175);
+      background-color: rgb(226, 226, 226);
 }
 
 body.dark-theme{
@@ -63,6 +63,6 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
-     background-color: rgb(175, 175, 175);
+     background-color: rgb(226, 226, 226);
   color: var(--md-sys-color-on-surface);
 }

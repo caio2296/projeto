@@ -1,6 +1,3 @@
-/* eslint-disable no-var */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/prefer-inject */
 import { Injectable } from "@angular/core";
 import { MatSelectChange } from "@angular/material/select";
@@ -131,7 +128,7 @@ export class CalendarFormService {
           this.labelDataService.setInterval(true);
           this.labelDataService.setTipoData("Mes");
           this.labelDataService.setCalendarMode('month');
-          this.labelDataService.setLabel(`${dataFormatadaInicio} - ${dataFormatadaFim}`);
+          this.labelDataService.setLabel(`${dataFormatadaInicio}-${dataFormatadaFim}`);
 
 
           console.log("evento! enviando...");

@@ -27,7 +27,6 @@ export class FormularioService {
 
   public inicializarFormulario(calendarMode: any): FormGroup {
 
-    // const defaultSelection = this.calendarBarModel.dados.calendarBar.defaultSelection.selection as any;
     console.log(this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart.split('/'));
 
     var { partes, dataJs, dataM, partesPadrao, ano }: { partes: any; dataJs: any; dataM: any; partesPadrao: any; ano: any; } = this.ObtarDataAnoLabel();

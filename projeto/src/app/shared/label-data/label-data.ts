@@ -16,17 +16,28 @@ export class LabelData implements OnInit, OnDestroy {
 
   tipo = '';
   label = '';
+  //  dados!: CalendarModel;
 
   private subscriptions = new Subscription();
 
   constructor(public labelDataService: LabelDataService, protected calendarBarModel: CalendarBarModel) { }
 
   ngOnInit(): void {
-    const defaultSelection = this.calendarBarModel.dados.calendarBar.defaultSelection.selection as any;
+    //   this.calendarBarModel.dados.subscribe(data => {
+    // console.log(data.calendarBar.defaultSelection.selection);
+
+    //    });
+
+        this.calendarBarModel.carregarDados().subscribe(data=>{
+      const defaultSelection =  data.calendarBar.defaultSelection.selection as any;
+
     const calendarMode = defaultSelection;
 
     this.labelDataService.setTipoData(calendarMode);
-    this.labelDataService.setLabel(this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart);
+    this.labelDataService.setLabel(data.calendarBar.defaultSelection.dateStart);
+
+
+        });
 
 
     this.subscriptions.add(
