@@ -128,7 +128,7 @@ export class CalendarFormService {
           this.labelDataService.setInterval(true);
           this.labelDataService.setTipoData("Mes");
           this.labelDataService.setCalendarMode('month');
-          this.labelDataService.setLabel(`${dataFormatadaInicio} - ${dataFormatadaFim}`);
+          this.labelDataService.setLabel(`${dataFormatadaInicio}-${dataFormatadaFim}`);
 
 
           console.log("evento! enviando...");

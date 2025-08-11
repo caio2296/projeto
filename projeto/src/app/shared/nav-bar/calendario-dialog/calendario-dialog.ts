@@ -12,6 +12,8 @@ import { InputConfig } from '../../Services/InputConfig';
 import { LabelDataService } from '../../Services/label-data-service';
 import { FormularioService } from '../../Services/formulario-service';
 
+type Modo = 'day' | 'month' | 'year' | 'fiscalYear' | 'week' | 'datetime';
+
 @Component({
   selector: 'app-calendario-dialog',
   standalone: false,
@@ -19,12 +21,13 @@ import { FormularioService } from '../../Services/formulario-service';
   styleUrl: './calendario-dialog.scss'
 })
 
-
 export class CalendarioDialog implements OnInit, OnDestroy {
   form!: FormGroup;
   intervaloForm!: FormGroup;
   intervaloAtivo = false;
   calendarMode!: 'day' | 'month' | 'year' | 'fiscalYear' | 'week' | 'datetime';
+
+  
 
   constructor(
     private fb: FormBuilder,
@@ -71,7 +74,7 @@ export class CalendarioDialog implements OnInit, OnDestroy {
   onCalendarModeChange(mode: any): void {
     this.calendarMode = mode;
   }
-  setCalendarMode(mode: any) {
+  setCalendarMode(mode: Modo) {
     if (!this.calendarBarModel.dados.calendarBar[mode]?.visible) return;
     this.intervaloAtivo = false;
     this.calendarMode = mode;
