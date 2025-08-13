@@ -4,7 +4,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { CalendarioDialog } from './calendario-dialog/calendario-dialog';
-import { CalendarBarModel } from '../Models/calendarBarModel';
+import { CalendarBarModelService } from '../Services/calendarBarModel';
 import { CalendarFormService } from '../Services/calendarFormService';
 import { DateHelperService } from '../Services/dateHelperService';
 import { InputConfig } from '../Services/InputConfig';
@@ -30,7 +30,7 @@ export class NavBar {
 
 
   constructor(private fb: FormBuilder, private cdRef: ChangeDetectorRef,
-    protected calendarBarModel: CalendarBarModel,
+    protected calendarBarModelService: CalendarBarModelService,
     protected dateHelperServices: DateHelperService,
     protected calendarFormService: CalendarFormService,
     protected inputConfings: InputConfig,
@@ -53,7 +53,7 @@ export class NavBar {
   }
 
   public setCalendarMode(mode: 'day' | 'month' | 'year' | 'fiscalYear' | 'week' | 'datetime') {
-    if (!this.calendarBarModel.dados.calendarBar[mode]?.visible) {
+    if (!this.calendarBarModelService.dados.calendarBar[mode]?.visible) {
       return;
     }
     this.intervaloAtivo = false;

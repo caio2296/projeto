@@ -4,7 +4,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { LabelDataService } from '../Services/label-data-service';
-import { CalendarBarModel } from '../Models/calendarBarModel';
+import { CalendarBarModelService } from '../Services/calendarBarModel';
 
 @Component({
   selector: 'app-label-data',
@@ -20,7 +20,7 @@ export class LabelData implements OnInit, OnDestroy {
 
   private subscriptions = new Subscription();
 
-  constructor(public labelDataService: LabelDataService, protected calendarBarModel: CalendarBarModel) { }
+  constructor(public labelDataService: LabelDataService, protected calendarBarModelService: CalendarBarModelService) { }
 
   ngOnInit(): void {
     //   this.calendarBarModel.dados.subscribe(data => {
@@ -28,7 +28,7 @@ export class LabelData implements OnInit, OnDestroy {
 
     //    });
 
-        this.calendarBarModel.carregarDados().subscribe(data=>{
+        this.calendarBarModelService.carregarDados().subscribe(data=>{
       const defaultSelection =  data.calendarBar.defaultSelection.selection as any;
 
     const calendarMode = defaultSelection;

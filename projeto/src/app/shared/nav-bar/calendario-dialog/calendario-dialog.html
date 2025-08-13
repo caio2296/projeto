@@ -8,22 +8,22 @@
 
   <section class="Sessao-Botoes">
     <div class="example-button-row">
-      <button matButton="elevated" *ngIf="this.calendarBarModel.dados.calendarBar.day.visible" type="button"
+      <button matButton="elevated" *ngIf="this.calendarBarModelService.dados.calendarBar.day.visible" type="button"
         (click)="setCalendarMode('day')" [disabled]="calendarMode === 'day' && !intervaloAtivo">
         Dia
       </button>
 
-      <button matButton="elevated" *ngIf="this.calendarBarModel.dados.calendarBar.month.visible" type="button"
+      <button matButton="elevated" *ngIf="this.calendarBarModelService.dados.calendarBar.month.visible" type="button"
         (click)="setCalendarMode('month')" [disabled]="calendarMode === 'month' && !intervaloAtivo">
         Mês
       </button>
 
-      <button matButton="elevated" *ngIf="this.calendarBarModel.dados.calendarBar.year.visible" type="button"
+      <button matButton="elevated" *ngIf="this.calendarBarModelService.dados.calendarBar.year.visible" type="button"
         (click)="setCalendarMode('year')" [disabled]="calendarMode === 'year' && !intervaloAtivo">
         Ano
       </button>
 
-      <button matButton="elevated" *ngIf="this.calendarBarModel.dados.calendarBar.fiscalYear.visible" type="button"
+      <button matButton="elevated" *ngIf="this.calendarBarModelService.dados.calendarBar.fiscalYear.visible" type="button"
         (click)="setCalendarMode('fiscalYear')" [disabled]="calendarMode === 'fiscalYear' && !intervaloAtivo">
         Ano Fiscal
       </button>

@@ -1,6 +1,6 @@
 /* eslint-disable @angular-eslint/prefer-inject */
 import { Injectable } from "@angular/core";
-import { CalendarBarModel } from "../Models/calendarBarModel";
+import { CalendarBarModelService } from "./calendarBarModel";
 
 
 @Injectable({ providedIn: 'root' })
@@ -11,35 +11,35 @@ export class DateHelperService {
     public fiscalYearOptions: number[] = [];
     anosDisponiveis: string[] = [];
 
-constructor(private calendarBarModel: CalendarBarModel) { 
+constructor(private calendarBarModelService: CalendarBarModelService) { 
 }
     public dateMaxISO(): Date { 
-      const partes = this.calendarBarModel.dados.dateMax.split('/');
+      const partes = this.calendarBarModelService.dados.calendarBar.defaultSelection.dateStart.split('/');
       return new Date(+partes[2], +partes[1] - 1, +partes[0]);
     }
 
     public dateMinISO():Date {
-      const partes = this.calendarBarModel.dados.dateMin.split('/');
+      const partes = this.calendarBarModelService.dados.dateMin.split('/');
       return new Date(+partes[2], +partes[1] - 1, +partes[0]);
     }
 
     public dateMonthMaxISO() {
-      const partes = this.calendarBarModel.dados.dateMax.split('/');
+      const partes = this.calendarBarModelService.dados.dateMax.split('/');
       return `${partes[2]}-${partes[1]}`;
     }
 
     public dateMonthMinISO() {
-      const partes = this.calendarBarModel.dados.dateMin.split('/');
+      const partes = this.calendarBarModelService.dados.dateMin.split('/');
       return `${partes[2]}-${partes[1]}`;
     }
 
     getYearMin() {
-      const partes = this.calendarBarModel.dados.dateMin.split('/');
+      const partes = this.calendarBarModelService.dados.dateMin.split('/');
       return parseInt(partes[2], 10);  
     }
 
     getYearMax() {
-      const partes = this.calendarBarModel.dados.dateMax.split('/');
+      const partes = this.calendarBarModelService.dados.dateMax.split('/');
       return parseInt(partes[2], 10);
     }
 
@@ -54,8 +54,8 @@ constructor(private calendarBarModel: CalendarBarModel) {
     }
 
     populateFiscalYears() {
-      const minDateParts = this.calendarBarModel.dados.dateMin.split('/'); 
-      const maxDateParts = this.calendarBarModel.dados.dateMax.split('/'); 
+      const minDateParts = this.calendarBarModelService.dados.dateMin.split('/'); 
+      const maxDateParts = this.calendarBarModelService.dados.dateMax.split('/'); 
 
       const minYear = parseInt(minDateParts[2], 10);
       const maxYear = parseInt(maxDateParts[2], 10);
