@@ -4,13 +4,13 @@ import { Injectable } from '@angular/core';
 
 import { environment } from '../../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
-import { CalendarModel } from './type';
+import { CalendarModel } from '../Models/type';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root' // Faz com que esse service seja um singleton global
 })
-export class CalendarBarModel{
+export class CalendarBarModelService{
 
     private readonly apiBaseUrl= environment["apiUrl"];
     dados!: CalendarModel;

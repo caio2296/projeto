@@ -5,7 +5,7 @@ import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { CalendarBarModel } from '../../Models/calendarBarModel';
+import { CalendarBarModelService } from '../../Services/calendarBarModel';
 import { DateHelperService } from '../../Services/dateHelperService';
 import { CalendarFormService } from '../../Services/calendarFormService';
 import { InputConfig } from '../../Services/InputConfig';
@@ -33,7 +33,7 @@ export class CalendarioDialog implements OnInit, OnDestroy {
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<CalendarioDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public calendarBarModel: CalendarBarModel,
+    public calendarBarModelService: CalendarBarModelService,
     public dateHelperServices: DateHelperService,
     public calendarFormService: CalendarFormService,
     public formularioService: FormularioService,
@@ -75,7 +75,7 @@ export class CalendarioDialog implements OnInit, OnDestroy {
     this.calendarMode = mode;
   }
   setCalendarMode(mode: Modo) {
-    if (!this.calendarBarModel.dados.calendarBar[mode]?.visible) return;
+    if (!this.calendarBarModelService.dados.calendarBar[mode]?.visible) return;
     this.intervaloAtivo = false;
     this.calendarMode = mode;
   }

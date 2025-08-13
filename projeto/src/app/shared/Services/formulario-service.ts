@@ -7,7 +7,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 
 import moment from "moment";
 import { dataFimMinValidator } from "./Validators/dataFimMinValidator";
-import { CalendarBarModel } from "../Models/calendarBarModel";
+import { CalendarBarModelService } from "./calendarBarModel";
 import { DateHelperService } from './dateHelperService';
 import { LabelDataService } from './label-data-service';
 
@@ -21,13 +21,13 @@ export class FormularioService {
   public intervaloForm!: FormGroup;
 
   constructor(private fb: FormBuilder,
-    protected calendarBarModel: CalendarBarModel,
-    protected dateHelperServices: DateHelperService,
-    public labelDataService: LabelDataService) { }
+              protected calendarBarModelService: CalendarBarModelService,
+              protected dateHelperServices: DateHelperService,
+              public labelDataService: LabelDataService) { }
 
   public inicializarFormulario(calendarMode: any): FormGroup {
 
-    console.log(this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart.split('/'));
+    console.log(this.calendarBarModelService.dados.calendarBar.defaultSelection.dateStart.split('/'));
 
     var { partes, dataJs, dataM, partesPadrao, ano }: { partes: any; dataJs: any; dataM: any; partesPadrao: any; ano: any; } = this.ObtarDataAnoLabel();
 
@@ -37,7 +37,7 @@ export class FormularioService {
       case 'day':
         console.log(partes);
         return this.form = this.fb.group({
-          data: [this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart],
+          data: [this.calendarBarModelService.dados.calendarBar.defaultSelection.dateStart],
           day: [dataJs],
           month: [dataM],
           year: [parseInt(partesPadrao[2])],
@@ -46,7 +46,7 @@ export class FormularioService {
       case 'month':
         dataJs = new Date(+partesPadrao[2], +partesPadrao[1] - 1, +partesPadrao[0]);
         return this.form = this.fb.group({
-          data: [this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart],
+          data: [this.calendarBarModelService.dados.calendarBar.defaultSelection.dateStart],
           day: [dataJs],
           month: [new Date(+partes[1], +partes[0] - 1)],
           year: [parseInt(partesPadrao[2])],
@@ -57,7 +57,7 @@ export class FormularioService {
         dataJs = new Date(+partesPadrao[2], +partesPadrao[1] - 1, +partesPadrao[0]);
         dataM = new Date(+partesPadrao[2], +partesPadrao[1] - 1);
         return this.form = this.fb.group({
-          data: [this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart],
+          data: [this.calendarBarModelService.dados.calendarBar.defaultSelection.dateStart],
           day: [dataJs],
           month: [dataM],
           year: [parseInt(String(ano))],
@@ -200,7 +200,7 @@ export class FormularioService {
     let dataJs;
     let dataM;
     let ano;
-    const partesPadrao = this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart.split('/');
+    const partesPadrao = this.calendarBarModelService.dados.calendarBar.defaultSelection.dateStart.split('/');
 
     if (this.labelDataService.getLabel().toString().includes('/')) {
       partes = this.labelDataService.getLabel().split(/[/\\-]/);
@@ -219,7 +219,7 @@ export class FormularioService {
   }
 
   private ObterDataAnoIntervaloLabel() {
-    const partesPadrao = this.calendarBarModel.dados.calendarBar.defaultSelection.dateStart.split('/');
+    const partesPadrao = this.calendarBarModelService.dados.calendarBar.defaultSelection.dateStart.split('/');
     let partes;
     let partesMeses;
     let partesAno;

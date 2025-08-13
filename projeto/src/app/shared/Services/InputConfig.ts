@@ -2,7 +2,7 @@
 
 import { DateHelperService } from "./dateHelperService";
 import { Injectable } from "@angular/core";
-import { CalendarBarModel } from "../Models/calendarBarModel";
+import { CalendarBarModelService } from "./calendarBarModel";
 
 @Injectable({
   providedIn: 'root' // Isso já registra automaticamente como provider global
@@ -16,7 +16,7 @@ export class InputConfig{
     max: ''
   };
   constructor(protected dateHelperServices: DateHelperService,
-     protected calendarBarModel: CalendarBarModel) {
+     protected calendarBarModelService: CalendarBarModelService) {
 
   }
 
