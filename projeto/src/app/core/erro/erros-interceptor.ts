@@ -44,7 +44,7 @@ export class ErrosInterceptor implements HttpInterceptor {
         console.error( error);
         console.error(errorMessage);
 
-        return throwError(()=> new Error('Ops, ocorreu um erro!'));
+        return throwError(()=> new Error(errorMessage));
       })
     );
 
