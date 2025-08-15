@@ -1,5 +1,4 @@
 /* eslint-disable @angular-eslint/prefer-inject */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
 
 import { environment } from '../../../environments/environment.development';
@@ -10,17 +9,25 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root' // Faz com que esse service seja um singleton global
 })
-export class CalendarBarModelService{
+export class CalendarBarModelService {
 
-    private readonly apiBaseUrl= environment["apiUrl"];
-    dados!: CalendarModel;
+  private readonly apiBaseUrl = environment["apiUrl"];
+  dados!: CalendarModel;
 
-  constructor(private http:HttpClient) {
-       this.carregarDados().subscribe(data => {
+  constructor(private http: HttpClient) {
+    this.carregarDados().subscribe({
+      next: (data) => {
         this.dados = data;
         console.log(this.dados);
-      });
-      console.log(this.carregarDados());
+      },
+      error: (err) => {
+        alert(`Erro ao carregar dados:${err.message}`);
+      },
+      complete: () => {
+        console.log("Requisição finalizada.");
+      }
+    });
+    console.log(this.carregarDados());
   }
 
   carregarDados(): Observable<CalendarModel> {

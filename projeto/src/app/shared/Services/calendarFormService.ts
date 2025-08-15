@@ -17,7 +17,7 @@ export class CalendarFormService {
 
   constructor(
     public labelDataService: LabelDataService,
-    public formularioService:FormularioService,
+    public formularioService: FormularioService,
     protected ApiService: ApiService) {
   }
 
@@ -138,9 +138,7 @@ export class CalendarFormService {
   }
 
   public onDateChangeInterval(event: MatDatepickerInputEvent<Date>, inputInicio: string, inputFim: string): void {
-    this.labelDataService.setInterval(true);
-    this.labelDataService.setTipoData("Dia");
-    this.labelDataService.setCalendarMode('day');
+
     this.formularioService.intervaloForm.get(inputInicio)?.valueChanges
       .pipe(startWith(this.formularioService.intervaloForm.get(inputInicio)?.value))
       .subscribe(dataInicio => {
@@ -153,6 +151,9 @@ export class CalendarFormService {
 
         if (dataFim instanceof Date && dataInicio instanceof Date && dataFim > dataInicio) {
 
+          this.labelDataService.setInterval(true);
+          this.labelDataService.setTipoData("Dia");
+          this.labelDataService.setCalendarMode('day');
           const label = `${dataInicioValor.toLocaleDateString('pt-BR')} - ${dataFimValor.toLocaleDateString('pt-BR')}`;
           this.labelDataService.setLabel(label);
 
@@ -166,7 +167,7 @@ export class CalendarFormService {
   public onYearFiscalChangeInterval(event: MatSelectChange, inputInicio: string, inputFim: string): void {
     const controlInicio = this.formularioService.intervaloForm.get(inputInicio);
 
-   this.formularioService.intervaloForm.get(inputFim)?.valueChanges
+    this.formularioService.intervaloForm.get(inputFim)?.valueChanges
       .pipe(startWith(this.formularioService.intervaloForm.get(inputFim)?.value))
       .subscribe(dataFim => {
         const dataInicio = controlInicio?.value;
@@ -175,7 +176,7 @@ export class CalendarFormService {
           this.labelDataService.setInterval(true);
           this.labelDataService.setTipoData("Ano fiscal");
           this.labelDataService.setCalendarMode('fiscalYear');
-          
+
           this.labelDataService
             .setLabel(`${this.formularioService.intervaloForm.get(inputInicio)?.value}/${parseInt(this.formularioService.intervaloForm.get(inputInicio)?.value) + 1}
              - ${dataFim}/${dataFim + 1}`);
@@ -187,7 +188,7 @@ export class CalendarFormService {
   public onYearChangeInterval(event: MatSelectChange, inputInicio: string, inputFim: string): void {
     const controlInicio = this.formularioService.intervaloForm.get(inputInicio);
 
-   this.formularioService.intervaloForm.get(inputFim)?.valueChanges
+    this.formularioService.intervaloForm.get(inputFim)?.valueChanges
       .pipe(startWith(this.formularioService.intervaloForm.get(inputFim)?.value))
       .subscribe(dataFim => {
         const dataInicio = controlInicio?.value;
@@ -198,7 +199,7 @@ export class CalendarFormService {
           this.labelDataService.setCalendarMode('year');
           // this.labelDataService.setTipoData("Ano fiscal");
           // this.labelDataService.setCalendarMode('fiscalYear');
-          
+
           this.labelDataService
             .setLabel(`${this.formularioService.intervaloForm.get(inputInicio)?.value} - ${dataFim}`);
           console.log("evento! enviando...");
