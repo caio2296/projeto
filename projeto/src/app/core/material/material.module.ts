@@ -10,6 +10,7 @@ import { MatSelectModule } from "@angular/material/select";
 import {MatTableModule} from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
     exports:[
@@ -23,7 +24,10 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     MatIconModule,
     MatTableModule,
     MatDialogModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatCardModule
+
+    
     ]
 })
 

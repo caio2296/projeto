@@ -21,7 +21,7 @@ export class CalendarBarModelService {
         console.log(this.dados);
       },
       error: (err) => {
-        alert(`Erro ao carregar dados:${err.message}`);
+        alert(`Erro ao carregar dados do calendário: ${err.message}`);
       },
       complete: () => {
         console.log("Requisição finalizada.");

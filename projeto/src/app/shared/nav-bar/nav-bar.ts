@@ -9,6 +9,7 @@ import { CalendarFormService } from '../Services/calendarFormService';
 import { DateHelperService } from '../Services/dateHelperService';
 import { InputConfig } from '../Services/InputConfig';
 import { TemaService } from './Services/tema-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav-bar',
@@ -35,7 +36,8 @@ export class NavBar {
     protected calendarFormService: CalendarFormService,
     protected inputConfings: InputConfig,
     private dialog: MatDialog,
-    protected temaService: TemaService
+    protected temaService: TemaService,
+    protected router: Router
     ) {
 
     }
@@ -64,7 +66,12 @@ export class NavBar {
     return this.intervaloAtivo = true;
   }
 
+    logout() {
+    // remover token
+    localStorage.removeItem('token');
 
-
+    // redirecionar para login
+    this.router.navigate(['/login']);
+  }
 
 }

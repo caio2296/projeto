@@ -9,6 +9,8 @@ import {
 } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { MensagemService } from '../services/mensagemService';
+import { TokenService } from '../../autenticacao/Services/token-service';
+import { Router } from '@angular/router';
 
 @Injectable()
 
@@ -17,7 +19,7 @@ export class ErrosInterceptor implements HttpInterceptor {
   /**
    *
    */
-  constructor(private mensagemService:MensagemService) {
+  constructor(private mensagemService:MensagemService, private tokenService:TokenService, private router:Router) {
 
   }
 
@@ -37,6 +39,8 @@ export class ErrosInterceptor implements HttpInterceptor {
             errorMessage = 'Erro interno do servidor';
         } else if (error.status === 401) {
             // Não autorizado (erro 401)
+            this.tokenService.excluirToken();
+            this.router.navigate(['/']);
             errorMessage = 'Você não está autorizado a acessar este recurso';
         }
 
