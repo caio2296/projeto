@@ -18,6 +18,8 @@ import { SharedModule } from './shared/shared.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { ErroModule } from './core/erro/erro-module';
 import { ErrosInterceptor } from './core/erro/erros-interceptor';
+import { autenticacaoInterceptor } from './autenticacao/autenticacao-interceptor';
+import { AutenticacaoModule } from './autenticacao/autenticacao-module';
 
 
 const moment = _rollupMoment || _moment;
@@ -36,9 +38,16 @@ const moment = _rollupMoment || _moment;
     MaterialModule,
     SharedModule,
     DashboardModule,
-    ErroModule
+    ErroModule,
+    AutenticacaoModule
   ],
   providers: [
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: autenticacaoInterceptor,
+    multi: true
+  }
+    ,
     // DatePipe, { provide: LOCALE_ID, useValue: 'pt' },
     provideBrowserGlobalErrorListeners(),
     {
