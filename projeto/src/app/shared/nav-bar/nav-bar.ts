@@ -10,7 +10,6 @@ import { DateHelperService } from '../Services/dateHelperService';
 import { InputConfig } from '../Services/InputConfig';
 import { TemaService } from './Services/tema-service';
 import { Router } from '@angular/router';
-import { UsuarioService } from '../../autenticacao/Services/usuarioService';
 import { TokenService } from '../../autenticacao/Services/token-service';
 
 @Component({
@@ -44,7 +43,7 @@ export class NavBar {
     private dialog: MatDialog,
     protected temaService: TemaService,
     protected router: Router,
-    protected userService: UsuarioService,
+
     private tokenService: TokenService
     ) {
 
@@ -74,16 +73,12 @@ export class NavBar {
     return this.intervaloAtivo = true;
   }
 
-    logout() {
-    // remover token
-    this.userService.logout();
-
-    // redirecionar para login
-    this.router.navigate(['/login']);
-  }
-
    get isAdmin(): boolean {
     return this.tokenService.isAdmin();
+  }
+
+  get logado():boolean{
+    return this.tokenService.possuiToken();
   }
 
   // Retorna true se está na página de cadastro

@@ -1,5 +1,5 @@
 .login-component {
-  max-width: 50%;
+  max-width: 78%;
   min-height: 74%;
   overflow-y: hidden;
   display: flex;
@@ -11,6 +11,15 @@
     flex-direction: row;
     justify-content: center;
     margin-top: 68px;
+  }
+
+  .header-login{
+    padding: 16px 60px;
+  }
+
+  .form-login{
+
+    margin: 16px 40px;
   }
 
   .image-container {
@@ -63,4 +72,17 @@
       }
     }
   }
+}
+
+@media (min-width: 660px) {
+ .login-component {
+  max-width: 50%;
+
+}
+}
+@media (min-width: 900px) {
+ .login-component {
+  max-width: 30%;
+ 
+}
 }

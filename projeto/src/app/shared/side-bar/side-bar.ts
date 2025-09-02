@@ -1,11 +1,10 @@
-import { Component } from '@angular/core';
+/* eslint-disable @angular-eslint/prefer-standalone */
+/* eslint-disable @angular-eslint/prefer-inject */
+import { Component, EventEmitter, Output } from '@angular/core';
 import {MediaMatcher} from '@angular/cdk/layout';
 import { OnDestroy, inject, signal} from '@angular/core';
-import {MatListModule} from '@angular/material/list';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
-import {MatToolbarModule} from '@angular/material/toolbar';
+import { UsuarioService } from '../../autenticacao/Services/usuarioService';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-side-bar',
@@ -15,24 +14,16 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 })
 export class SideBar implements OnDestroy {
 
-   protected readonly fillerNav = Array.from({length: 50}, (_, i) => `Nav Item ${i + 1}`);
-
-  protected readonly fillerContent = Array.from(
-    {length: 50},
-    () =>
-      `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-       labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-       laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-       voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-       cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
-  );
+  
+  @Output() deslogou = new EventEmitter<void>(); // <<< evento para o NavBar
+  
 
   protected readonly isMobile = signal(true);
 
   private readonly _mobileQuery: MediaQueryList;
   private readonly _mobileQueryListener: () => void;
 
-  constructor() {
+  constructor(protected userService: UsuarioService,    protected router: Router) {
     const media = inject(MediaMatcher);
 
     this._mobileQuery = media.matchMedia('(max-width: 600px)');
@@ -43,6 +34,17 @@ export class SideBar implements OnDestroy {
 
   ngOnDestroy(): void {
     this._mobileQuery.removeEventListener('change', this._mobileQueryListener);
+  }
+
+    logout() {
+    // remover token
+    this.userService.logout();
+
+        // emitir evento pro NavBar
+    this.deslogou.emit();
+
+    // redirecionar para login
+    this.router.navigate(['/login']);
   }
 
   // protected readonly shouldRun = /(^|.)(stackblitz|webcontainer).(io|com)$/.test(
