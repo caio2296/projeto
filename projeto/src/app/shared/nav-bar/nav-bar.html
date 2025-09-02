@@ -1,6 +1,6 @@
 <mat-toolbar class="navbar">
   <button matIconButton class="mat-elevation-z3"  type="button" 
-    aria-label="" (click)="collapsed.set(!collapsed())">
+    aria-label=""  *ngIf="logado" (click)="collapsed.set(!collapsed())">
     <mat-icon>menu</mat-icon>
   </button>
   <button matIconButton *ngIf="isDashboardPage" class="sandwich-menu" type="button" (click)="abrirDialogCalendario()"
@@ -14,15 +14,16 @@
     {{ this.temaService.isDarkMode ? 'Dark Mode' : 'Light Mode' }}
   </button> 
 
-  <button mat-raised-button (click)="logout()"> <mat-icon>exit_to_app</mat-icon></button>
+ 
 
   <button mat-raised-button *ngIf=" !isCadastroPage && isAdmin" routerLink="/cadastro" class="btn btn-primary">
     Cadastro Usuário
   </button>
 </mat-toolbar>
+
 <mat-sidenav-container class="layout">
   <mat-sidenav [opened]="collapsed()" mode="side" [style.width]="sideNavWidth()" class="layout">
-    <app-side-bar></app-side-bar>
+    <app-side-bar (deslogou)="collapsed.set(!collapsed())"></app-side-bar>
   </mat-sidenav>
   <mat-sidenav-content class="content" [style.margin-left]="sideNavWidth()">
        <router-outlet></router-outlet>
