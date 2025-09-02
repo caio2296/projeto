@@ -19,6 +19,11 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path:'cadastro',
+    redirectTo: 'cadastro',
+    pathMatch: 'full',
+  },
+  {
     path: '**',
     redirectTo: 'pagina-nao-encontrada',
     pathMatch: 'full'

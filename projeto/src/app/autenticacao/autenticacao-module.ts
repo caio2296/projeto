@@ -7,11 +7,13 @@ import { MaterialModule } from '../core/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
+import { Cadastro } from './cadastro/cadastro';
 
 
 @NgModule({
   declarations: [
-    Login
+    Login,
+    Cadastro
   ],
   imports: [
     CommonModule,

@@ -29,8 +29,7 @@ export class AutenticacaoService {
       { observe: 'response'}
     ).pipe(
       tap((response) => {
-        const authToken = response.body?.tokenJWT || '';
-        console.log(response.body);
+        const authToken = String(response.body) || '';
         this.userService.salvarToken(authToken);
       })
     );

@@ -11,6 +11,8 @@ import {MatTableModule} from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatListModule } from "@angular/material/list";
 
 @NgModule({
     exports:[
@@ -25,7 +27,9 @@ import { MatCardModule } from '@angular/material/card';
     MatTableModule,
     MatDialogModule,
     MatToolbarModule,
-    MatCardModule
+    MatCardModule,
+    MatSidenavModule,
+    MatListModule
 
     
     ]
