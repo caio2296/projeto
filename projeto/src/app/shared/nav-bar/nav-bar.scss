@@ -14,3 +14,37 @@
 //     transform: rotate(360deg);
 //   }
 // }
+
+mat-toolbar{
+  position: relative;
+  z-index: 5;
+}
+
+.content{
+   padding-top: 64px; // empurra o conteúdo pra baixo da navbar
+  // padding: 24px;
+}
+.layout{
+   padding-top: 64px; // empurra o conteúdo pra baixo da navbar
+  // padding: 24px;
+}
+
+
+mat-sidenav-content{
+  height: calc(100vh - 64px);
+}
+
+mat-toolbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px; // altura padrão da toolbar
+  z-index: 1000; // sempre por cima do conteúdo
+}
+
+mat-sidenav-container {
+  height: 100vh;
+}
+
+

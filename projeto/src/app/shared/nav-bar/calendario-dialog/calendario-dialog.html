@@ -1,4 +1,4 @@
-<section class="calendario" >
+<section class="calendario" *ngIf="this.calendarBarModelService.dados as dados">
   <div class="dialog-header">
     <button mat-icon-button (click)="fecharDialog()" aria-label="Fechar" matTooltip="Fechar">
       <mat-icon class="icon-theme">close</mat-icon>
@@ -8,22 +8,22 @@
 
   <section class="Sessao-Botoes">
     <div class="example-button-row">
-      <button matButton="elevated" *ngIf="this.calendarBarModelService.dados.calendarBar.day.visible" type="button"
+      <button matButton="elevated" *ngIf="dados.calendarBar.day.visible" type="button"
         (click)="setCalendarMode('day')" [disabled]="calendarMode === 'day' && !intervaloAtivo">
         Dia
       </button>
 
-      <button matButton="elevated" *ngIf="this.calendarBarModelService.dados.calendarBar.month.visible" type="button"
+      <button matButton="elevated" *ngIf="dados.calendarBar.month.visible" type="button"
         (click)="setCalendarMode('month')" [disabled]="calendarMode === 'month' && !intervaloAtivo">
         Mês
       </button>
 
-      <button matButton="elevated" *ngIf="this.calendarBarModelService.dados.calendarBar.year.visible" type="button"
+      <button matButton="elevated" *ngIf="dados.calendarBar.year.visible" type="button"
         (click)="setCalendarMode('year')" [disabled]="calendarMode === 'year' && !intervaloAtivo">
         Ano
       </button>
 
-      <button matButton="elevated" *ngIf="this.calendarBarModelService.dados.calendarBar.fiscalYear.visible" type="button"
+      <button matButton="elevated" *ngIf="dados.calendarBar.fiscalYear.visible" type="button"
         (click)="setCalendarMode('fiscalYear')" [disabled]="calendarMode === 'fiscalYear' && !intervaloAtivo">
         Ano Fiscal
       </button>
@@ -33,7 +33,7 @@
     </div>
   </section>
   <section>
-    <form class="form-Calendar" *ngIf="!intervaloAtivo" [formGroup]="form">
+    <form class="form-Calendar" *ngIf="form && !intervaloAtivo" [formGroup]="form">
       <!-- Input para dia -->
       <div class= "day" *ngIf="calendarMode === 'day'">
 
@@ -67,7 +67,7 @@
 
 
   <section>
-    <form class="intervalo-form" *ngIf="intervaloAtivo" [formGroup]="intervaloForm" style=" display:flex">
+    <form class="intervalo-form" *ngIf="intervaloForm && intervaloAtivo" [formGroup]="intervaloForm" style=" display:flex">
 
 
       <mat-form-field class="inputUnidade"

@@ -56,5 +56,5 @@ export interface Usuarios {
   id: number;
   email: string;
   tokenJWT: string;
-  tipoUsuario: string; // padrão "comum" pode ser definido na hora de usar
+  UsuarioTipo: string; // padrão "comum" pode ser definido na hora de usar
 }

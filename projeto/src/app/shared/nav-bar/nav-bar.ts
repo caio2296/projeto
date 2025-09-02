@@ -1,6 +1,6 @@
 /* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @angular-eslint/prefer-inject */
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, computed, signal } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { CalendarioDialog } from './calendario-dialog/calendario-dialog';
@@ -10,6 +10,8 @@ import { DateHelperService } from '../Services/dateHelperService';
 import { InputConfig } from '../Services/InputConfig';
 import { TemaService } from './Services/tema-service';
 import { Router } from '@angular/router';
+import { UsuarioService } from '../../autenticacao/Services/usuarioService';
+import { TokenService } from '../../autenticacao/Services/token-service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -28,6 +30,10 @@ export class NavBar {
 
   public calendarMode: 'day' | 'month' | 'year' | 'fiscalYear' | 'week' | 'datetime' = 'day';
 
+  collapsed = signal(false);
+
+  sideNavWidth = computed(()=> this.collapsed()? '250px':' 10px'); 
+
 
 
   constructor(private fb: FormBuilder, private cdRef: ChangeDetectorRef,
@@ -37,7 +43,9 @@ export class NavBar {
     protected inputConfings: InputConfig,
     private dialog: MatDialog,
     protected temaService: TemaService,
-    protected router: Router
+    protected router: Router,
+    protected userService: UsuarioService,
+    private tokenService: TokenService
     ) {
 
     }
@@ -68,10 +76,23 @@ export class NavBar {
 
     logout() {
     // remover token
-    localStorage.removeItem('token');
+    this.userService.logout();
 
     // redirecionar para login
     this.router.navigate(['/login']);
+  }
+
+   get isAdmin(): boolean {
+    return this.tokenService.isAdmin();
+  }
+
+  // Retorna true se está na página de cadastro
+  get isCadastroPage(): boolean {
+    return this.router.url === '/cadastro';
+  }
+
+  get isDashboardPage():boolean{
+    return this.router.url === '/auth/dashboard';
   }
 
 }

@@ -27,7 +27,7 @@ export class CalendarioDialog implements OnInit, OnDestroy {
   intervaloAtivo = false;
   calendarMode!: 'day' | 'month' | 'year' | 'fiscalYear' | 'week' | 'datetime';
 
-  
+
 
   constructor(
     private fb: FormBuilder,
@@ -41,8 +41,15 @@ export class CalendarioDialog implements OnInit, OnDestroy {
     protected labelService: LabelDataService
   ) { }
 
-  ngOnInit(): void {
-    this.calendarMode = this.labelService.getCalendarMode() as 'day' | 'month' | 'year' | 'fiscalYear' | 'week' | 'datetime';
+ ngOnInit(): void {
+
+     this.calendarBarModelService.carregarDados().subscribe({
+      next: (data) => {
+        this.calendarBarModelService.dados = data;
+        console.log(this.calendarBarModelService.dados);
+
+         this.calendarMode = this.labelService.getCalendarMode() as 'day' | 'month' | 'year' | 'fiscalYear' | 'week' | 'datetime';
+
 
     if (!this.labelService.getInterval()) {
       this.setCalendarMode(this.calendarMode);
@@ -58,16 +65,28 @@ export class CalendarioDialog implements OnInit, OnDestroy {
 
     this.dateHelperServices.populateYears();
     this.dateHelperServices.populateFiscalYears();
+        console.log( this.calendarBarModelService.dados.calendarBar.day.visible);
+      },
+      error: (err) => {
+        alert(`Erro ao carregar dados do calendário: ${err.message}`);
+      },
+      complete: () => {
+        console.log("Requisição finalizada.");
+      }
+    });
+
+
+   
   }
 
   ngOnDestroy(): void {
-    this.dateHelperServices.fiscalYearOptions =[];
+    this.dateHelperServices.fiscalYearOptions = [];
     console.log(this.labelService.getCalendarMode());
     // Aqui você pode resetar estados ou fazer limpeza
     this.labelService.setInterval(this.intervaloAtivo);
   }
 
-   fecharDialog(): void {
+  fecharDialog(): void {
     this.dialogRef.close(); // fecha o dialog
   }
 

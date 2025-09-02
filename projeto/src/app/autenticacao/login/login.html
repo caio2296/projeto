@@ -1,15 +1,12 @@
- <section class="login-component">
+<!-- <app-nav-bar></app-nav-bar> -->
+
+<section class="login-component">
   <mat-card class="login">
-    <div class="image-container">
-      <figure>
-        <img src="assets/imagens/simbolo-bussola.png" alt="Símbolo de uma bússola laranja">
-      </figure>
-    </div>
     <div class="form-container">
       <mat-card-header>
         <mat-card-title>Login</mat-card-title>
       </mat-card-header>
- <form [formGroup]="loginForm">
+      <form [formGroup]="loginForm">
         <mat-card-content>
           <mat-form-field appearance="outline">
             <mat-label>E-mail</mat-label>
@@ -25,6 +22,6 @@
         </mat-card-actions>
       </form>
 
-       </div>
+    </div>
   </mat-card>
 </section>

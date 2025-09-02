@@ -17,6 +17,8 @@ import { DialogAdicionarItem } from './tabela/dialog-adicionar-item/dialog-adici
 import { CalendarioDialog } from './nav-bar/calendario-dialog/calendario-dialog';
 import { NavBar } from './nav-bar/nav-bar';
 import { SeletorAnoFiscalIntervalo } from './nav-bar/calendario-dialog/componentes/seletor-ano-fiscal-intervalo/seletor-ano-fiscal-intervalo';
+import { RouterModule } from "@angular/router";
+import { SideBar } from './side-bar/side-bar';
 
 @NgModule({
     declarations: [
@@ -34,13 +36,15 @@ import { SeletorAnoFiscalIntervalo } from './nav-bar/calendario-dialog/component
         DialogAdicionarItem,
         CalendarioDialog,
         NavBar,
-        SeletorAnoFiscalIntervalo
+        SeletorAnoFiscalIntervalo,
+        SideBar
     ],
     imports: [
         CommonModule,
         MaterialModule,
         ReactiveFormsModule,
         FormsModule,
+        RouterModule
     ],
     exports: [
         Grafico,
@@ -55,7 +59,8 @@ import { SeletorAnoFiscalIntervalo } from './nav-bar/calendario-dialog/component
         Dialog,
         DialogAdicionarItem,
         NavBar,
-        SeletorAnoFiscalIntervalo
+        SeletorAnoFiscalIntervalo,
+        SideBar
     ],
      providers: [
     DatePipe, { provide: LOCALE_ID, useValue: 'pt' } 

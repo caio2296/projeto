@@ -28,16 +28,16 @@ export class LabelData implements OnInit, OnDestroy {
 
     //    });
 
-        this.calendarBarModelService.carregarDados().subscribe(data=>{
-      const defaultSelection =  data.calendarBar.defaultSelection.selection as any;
+    this.calendarBarModelService.carregarDados().subscribe(data => {
+      const defaultSelection = data.calendarBar.defaultSelection.selection as any;
 
-    const calendarMode = defaultSelection;
+      const calendarMode = defaultSelection;
 
-    this.labelDataService.setTipoData(calendarMode);
-    this.labelDataService.setLabel(data.calendarBar.defaultSelection.dateStart);
+      this.labelDataService.setTipoData(calendarMode);
+      this.labelDataService.setLabel(data.calendarBar.defaultSelection.dateStart);
 
 
-        });
+    });
 
 
     this.subscriptions.add(
