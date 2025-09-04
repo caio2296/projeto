@@ -11,17 +11,12 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { MensagemService } from '../services/mensagemService';
 import { TokenService } from '../../autenticacao/Services/token-service';
 import { Router } from '@angular/router';
-import { CalendarBarModelService } from '../../shared/Services/calendarBarModel';
 
 @Injectable()
 
 export class ErrosInterceptor implements HttpInterceptor {
 
-  /**
-   *
-   */
   constructor(private mensagemService: MensagemService, private tokenService: TokenService, private router: Router, private injector: Injector) {
-
   }
 
   intercept(req: HttpRequest<HttpErrorResponse>, next: HttpHandler): Observable<HttpEvent<HttpErrorResponse>> {
@@ -44,9 +39,11 @@ export class ErrosInterceptor implements HttpInterceptor {
           this.router.navigate(['/']);
           window.location.href = '/';
           errorMessage = 'Você não está autorizado a acessar este recurso';
+        } else if(error.status === 400){
+            errorMessage = 'O e-mail informado está incorreto ou não cadastrado.';
         }
 
-        this.mensagemService.openSnackBar(errorMessage);
+        this.mensagemService.openSnackBar(errorMessage,'erro');
         console.error(error);
         console.error(errorMessage);
 
@@ -55,13 +52,4 @@ export class ErrosInterceptor implements HttpInterceptor {
     );
 
   }
-
-
 }
-
-// export const errosInterceptor: HttpInterceptorFn = (req, next) => {
-//   return next(req).pipe(
-
-
-//   );
-// };

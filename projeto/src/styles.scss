@@ -14,18 +14,38 @@
     color: (
       theme-type: light,
       primary: mat.$blue-palette,
-      tertiary: mat.$azure-palette
+      tertiary: mat.$azure-palette,
     ),
     typography: Roboto,
     density: 0
   ));
+
+  mat-toolbar{
+      background-color: #d7e3ff;
+ @include mat.theme((
+    color: (
+            theme-type: light,
+      primary: mat.$blue-palette,
+      secondary: mat.$rose-palette,
+      tertiary: mat.$azure-palette,
+       neutral: mat.$orange-palette,
+    ),
+    typography: Roboto,
+    density: 0
+  ));
+
+
+
+  }
 
    mat-sidenav {
   @include mat.theme((
     color: (
       theme-type: dark,
       primary: mat.$cyan-palette ,
-      tertiary: mat.$orange-palette
+      tertiary: mat.$orange-palette,
+    
+      
     ),
     typography: Roboto,
     density: 0
@@ -42,11 +62,26 @@
     color: (
       theme-type: dark,
       primary: mat.$cyan-palette ,
-      tertiary: mat.$orange-palette
+      tertiary: mat.$orange-palette,
     ),
     typography: Roboto,
     density: 0
   ));
+
+   mat-toolbar{
+ @include mat.theme((
+    color: (
+      theme-type: light,
+      primary: mat.$red-palette,
+      secondary: mat.$rose-palette,
+      tertiary: mat.$azure-palette,
+       neutral: mat.$orange-palette,
+    ),
+    typography: Roboto,
+    density: 0
+  ));
+
+  }
 
    mat-sidenav{
   @include mat.theme((
@@ -60,6 +95,29 @@
   ));
 
 }
+
+}
+
+.snackbar-sucesso {
+    .mat-mdc-snack-bar-label {
+  background-color: #4caf50 !important; // verde
+  color: #fff !important;
+  }
+
+}
+
+.snackbar-erro {
+  .mat-mdc-snack-bar-label {
+  background-color: #f44336 !important; // vermelho
+    color: #fff !important;
+  }
+}
+
+.snackbar-aviso {
+   .mat-mdc-snack-bar-label {
+  background-color: #ff9800 !important; // laranja
+  color: #fff !important;
+  }
 
 }
 

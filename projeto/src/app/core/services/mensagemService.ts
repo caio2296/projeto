@@ -12,11 +12,17 @@ export class MensagemService {
 
   constructor(private _snackBar: MatSnackBar) {}
 
-  openSnackBar(message: string) {
+  openSnackBar(message: string, tipo: 'sucesso' | 'erro' | 'aviso' = 'aviso') {
+     let cssClass = 'snackbar-aviso';
+
+
+  if (tipo === 'sucesso') cssClass = 'snackbar-sucesso';
+  if (tipo === 'erro') cssClass = 'snackbar-erro';
     this._snackBar.open(message, undefined, {
         duration: 3000,
         horizontalPosition: this.horizontalPosition,
         verticalPosition: this.verticalPosition,
+        panelClass: [cssClass]
     });
 }
 }
