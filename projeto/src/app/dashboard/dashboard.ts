@@ -1,3 +1,4 @@
+/* eslint-disable @angular-eslint/prefer-inject */
 /* eslint-disable @angular-eslint/prefer-standalone */
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';

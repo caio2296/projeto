@@ -20,6 +20,7 @@ import { ErroModule } from './core/erro/erro-module';
 import { ErrosInterceptor } from './core/erro/erros-interceptor';
 import { autenticacaoInterceptor } from './autenticacao/autenticacao-interceptor';
 import { AutenticacaoModule } from './autenticacao/autenticacao-module';
+import { MensagemInterceptor } from './core/services/mensagemInterceptor';
 
 
 const moment = _rollupMoment || _moment;
@@ -54,6 +55,11 @@ const moment = _rollupMoment || _moment;
       provide:HTTP_INTERCEPTORS,
       useClass:ErrosInterceptor,
       multi: true
+    },
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass:MensagemInterceptor,
+      multi:true
     }
   ],
   bootstrap: [App]
