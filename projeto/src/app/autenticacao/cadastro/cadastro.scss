@@ -1,6 +1,6 @@
 .cadastro-component {
   max-width: 50%;
-  min-height: 74%;
+  min-height: 47%;
   overflow-y: hidden;
   display: flex;
   flex-direction: column;
@@ -63,4 +63,29 @@
       }
     }
   }
+}
+
+
+.Tabela {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mat-mdc-table {
+  width: 100%;
+  max-width: 700px;     /* Limita a largura máxima em telas grandes */
+  min-width: 300px;       /* Impede que fique pequeno demais */
+  margin: 0 auto;         /* Centraliza horizontalmente */
+  overflow-x: auto;       /* Adiciona rolagem horizontal se necessário */
+}
+
+@media (min-width: 1200px){
+.mat-mdc-table {
+  width: 50%;
+  max-width: 700px;     /* Limita a largura máxima em telas grandes */
+  min-width: 320px;       /* Impede que fique pequeno demais */
+  margin: 0 auto;         /* Centraliza horizontalmente */
+  overflow-x: auto;       /* Adiciona rolagem horizontal se necessário */
+}
 }

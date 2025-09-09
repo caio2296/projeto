@@ -3,7 +3,7 @@
     aria-label=""  *ngIf="logado" (click)="collapsed.set(!collapsed())">
     <mat-icon>menu</mat-icon>
   </button>
-  <button matIconButton *ngIf="isDashboardPage" class="sandwich-menu" type="button" (click)="abrirDialogCalendario()"
+  <button matIconButton *ngIf="isDashboardPage" class="sandwich-menu" type="button" (click)="collapsed.set(!collapsed()); abrirDialogCalendario()"
     aria-label="Abrir calendário">
     <mat-icon>calendar_today</mat-icon>
   </button>
@@ -11,7 +11,7 @@
   <button mat-raised-button (click)="toggleTheme()">
     <!-- <mat-icon class="spin-animation">settings</mat-icon>  -->
     <mat-icon class="spin-animation">wb_sunny</mat-icon>
-    {{ this.temaService.isDarkMode ? 'Dark Mode' : 'Light Mode' }}
+    {{ this.temaService.isDarkMode ? 'Light Mode' : 'Dark Mode' }}
   </button> 
 
  

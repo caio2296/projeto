@@ -68,7 +68,8 @@ export class CalendarioDialog implements OnInit, OnDestroy {
         console.log( this.calendarBarModelService.dados.calendarBar.day.visible);
       },
       error: (err) => {
-        alert(`Erro ao carregar dados do calendário: ${err.message}`);
+        // alert(`Erro ao carregar dados do calendário: ${err.message}`);
+        this.fecharDialog();
       },
       complete: () => {
         console.log("Requisição finalizada.");
