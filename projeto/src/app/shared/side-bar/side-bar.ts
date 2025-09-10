@@ -14,10 +14,8 @@ import { Router } from '@angular/router';
 })
 export class SideBar implements OnDestroy {
 
-  
   @Output() deslogou = new EventEmitter<void>(); // <<< evento para o NavBar
   
-
   protected readonly isMobile = signal(true);
 
   private readonly _mobileQuery: MediaQueryList;
@@ -46,8 +44,4 @@ export class SideBar implements OnDestroy {
     // redirecionar para login
     this.router.navigate(['/login']);
   }
-
-  // protected readonly shouldRun = /(^|.)(stackblitz|webcontainer).(io|com)$/.test(
-  //   window.location.host,
-  // );
 }

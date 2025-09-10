@@ -33,14 +33,10 @@ export class InputMes implements OnInit  {
   @Input() form!: FormGroup;
 
   public calendarMode: 'day' | 'month' | 'year' | 'fiscalYear' | 'week' | 'datetime' = 'day';
-  /**
-   *
-   */
+
   constructor(protected calendarFormService: CalendarFormService, protected dateHelperServices: DateHelperService,
     protected inputConfigs:InputConfig, protected labelDataService: LabelDataService
   ) {
-
-
   }
   ngOnInit(): void {
       this.inputConfigs.updateInputConfig(this.labelDataService.getCalendarMode());

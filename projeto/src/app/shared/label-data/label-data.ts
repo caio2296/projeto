@@ -23,11 +23,6 @@ export class LabelData implements OnInit, OnDestroy {
   constructor(public labelDataService: LabelDataService, protected calendarBarModelService: CalendarBarModelService) { }
 
   ngOnInit(): void {
-    //   this.calendarBarModel.dados.subscribe(data => {
-    // console.log(data.calendarBar.defaultSelection.selection);
-
-    //    });
-
     this.calendarBarModelService.carregarDados().subscribe(data => {
       const defaultSelection = data.calendarBar.defaultSelection.selection as any;
 

@@ -2,7 +2,6 @@
 /* eslint-disable @angular-eslint/prefer-standalone */
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { TokenService } from '../autenticacao/Services/token-service';
 import { UsuarioService } from '../autenticacao/Services/usuarioService';
@@ -28,14 +27,11 @@ export class Dashboard {
     protected dateHelperServices: DateHelperService,
     protected calendarFormService: CalendarFormService,
     protected inputConfings: InputConfig,
-    private dialog: MatDialog,
     protected temaService: TemaService,
     protected router: Router,
     protected userService: UsuarioService,
     private tokenService: TokenService
-    ) {
-
-    }
+    ) {  }
 
       toggleTheme(): void {
     this.temaService.toggleTheme();

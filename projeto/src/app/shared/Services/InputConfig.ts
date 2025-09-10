@@ -16,10 +16,7 @@ export class InputConfig{
     max: ''
   };
   constructor(protected dateHelperServices: DateHelperService,
-     protected calendarBarModelService: CalendarBarModelService) {
-
-  }
-
+     protected calendarBarModelService: CalendarBarModelService) { }
    updateInputConfig(unidade: string) {
     switch (unidade) {
       case 'day':{
@@ -51,9 +48,6 @@ export class InputConfig{
            this.dateHelperServices.gerarAnosDisponiveis();
         break;
         }
-
     }
-
-    
   }
 }

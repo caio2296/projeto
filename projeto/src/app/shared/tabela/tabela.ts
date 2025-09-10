@@ -5,10 +5,10 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Dialog } from './dialog/dialog';
 
-
 import { DialogAdicionarItem } from './dialog-adicionar-item/dialog-adicionar-item';
 import { ApiService } from '../../Services/api-service';
 import { frutas } from '../Models/type';
+import { DialogConfirmeDelete } from './dialog-confirme-delete/dialog-confirme-delete';
 
 @Component({
   selector: 'app-tabela',
@@ -28,16 +28,7 @@ export class Tabela implements OnInit {
     return this.displayedColumns.indexOf(column);
   }
   ngOnInit(): void {
-    this.apiService.listarFrutas().subscribe({
-      next: (res) => {
-        this.dataSource = res;
-        if (res.length > 0) {
-          this.displayedColumns = Object.keys(res[0]);
-          this.displayedColumns.push('acao');
-        }
-      },
-      error: (err) => console.error("Erro ao carregar frutas:", err)
-    });
+    this.BuscarListaFrutas();
   }
 
   getCampos(obj: any): { chave: string, valor: any }[] {
@@ -67,11 +58,12 @@ export class Tabela implements OnInit {
           cor: result.cor || 'Indefinido'
         };
 
-
         this.dataSource = [...this.dataSource, novoItem];
         this.apiService.adicionarFruta(novoItem).subscribe({
           next: (res) => {
             console.log("Fruta adicionada com sucesso:", res);
+
+            this.BuscarListaFrutas();
           },
           error: (err) => {
             console.error("Erro ao adicionar fruta:", err);
@@ -82,20 +74,33 @@ export class Tabela implements OnInit {
     });
   }
 
+  private BuscarListaFrutas() {
+    this.apiService.listarFrutas().subscribe({
+      next: (res) => {
+        this.dataSource = res;
+        if (res.length > 0) {
+          this.displayedColumns = Object.keys(res[0]);
+          this.displayedColumns.push('acao');
+        }
+      },
+      error: (err) => console.error("Erro ao carregar frutas:", err)
+    });
+  }
+
   deletarItem(element: any): void {
-    // Confirmação simples (pode ser substituída por dialog Angular Material)
-    const confirmacao = confirm(`Deseja realmente deletar o item: ${element.descricao}?`);
+    const dialogRef = this.dialog.open(DialogConfirmeDelete, {
+      data: { mensagem: `Deseja realmente deletar o item: ${element.descricao}?` }
+    });
 
-    if (confirmacao) {
-      // Remove do dataSource
-      this.dataSource = this.dataSource.filter(item => item.id !== element.id);
-
-      this.apiService.deletarFruta(element).subscribe({
-        next: () => console.log("Item deletado com sucesso"),
-        error: err => console.error("Erro ao deletar item:", err)
-      });
-
-    }
+    dialogRef.afterClosed().subscribe(confirmado => {
+      if (confirmado) {
+        this.dataSource = this.dataSource.filter(item => item.id !== element.id);
+        this.apiService.deletarFruta(element).subscribe({
+          next: () => console.log("Item deletado com sucesso"),
+          error: err => console.error("Erro ao deletar item:", err)
+        });
+      }
+    });
   }
 
   abrirModal(element: any, event: Event) {
@@ -114,32 +119,31 @@ export class Tabela implements OnInit {
   }
 
   abrirModalEditar(element: frutas, event: Event): void {
-  event.stopPropagation();
+    event.stopPropagation();
 
-  const dialogRef = this.dialog.open(DialogAdicionarItem, {
-    width: '400px',
-    data: {
-      id: element.id,
-      descricao: element.descricao,
-      tamanho: element.tamanho,
-      cor: element.cor
-    }
-  });
-
-  dialogRef.afterClosed().subscribe(result => {
-    if (result) {
-      const index = this.dataSource.findIndex(item => item.id === element.id);
-      if (index !== -1) {
-        this.dataSource[index] = result;
-        this.dataSource = [...this.dataSource];
-
-        this.apiService.atualizarFruta(result).subscribe({
-          next: () => console.log("Item atualizado com sucesso"),
-          error: err => console.error("Erro ao atualizar item:", err)
-        });
+    const dialogRef = this.dialog.open(DialogAdicionarItem, {
+      width: '400px',
+      data: {
+        id: element.id,
+        descricao: element.descricao,
+        tamanho: element.tamanho,
+        cor: element.cor
       }
-    }
-  });
-}
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const index = this.dataSource.findIndex(item => item.id === element.id);
+        if (index !== -1) {
+          this.dataSource[index] = result;
+          this.dataSource = [...this.dataSource];
+
+          this.apiService.atualizarFruta(result).subscribe({
+            next: () => console.log("Item atualizado com sucesso"),
+            error: err => console.error("Erro ao atualizar item:", err)
+          });
+        }
+      }
+    });
+  }
 }

@@ -7,8 +7,6 @@ import { CalendarFormService } from '../../../../Services/calendarFormService';
 import { DateHelperService } from '../../../../Services/dateHelperService';
 import { InputConfig } from '../../../../Services/InputConfig';
 
-
-
 @Component({
   selector: 'app-seletor-ano',
   standalone: false,
@@ -24,12 +22,8 @@ export class SeletorAno implements OnInit  {
 constructor( protected dateHelperServices:DateHelperService, protected calendarFormServices:CalendarFormService,
   protected inputConfigs:InputConfig, protected labelDataService:LabelDataService
 ) {
-
 }
   ngOnInit(): void {
         this.inputConfigs.updateInputConfig(this.labelDataService.getCalendarMode());
   }
-  
-
-
 }

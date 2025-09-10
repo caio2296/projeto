@@ -24,7 +24,6 @@ export class NavBar {
   resultadoIntervalo: number | null = null;
   intervaloAtivo = false;
 
-
   isMenuOpen = false;
 
   public calendarMode: 'day' | 'month' | 'year' | 'fiscalYear' | 'week' | 'datetime' = 'day';
@@ -32,8 +31,6 @@ export class NavBar {
   collapsed = signal(false);
 
   sideNavWidth = computed(()=> this.collapsed()? '250px':' 10px'); 
-
-
 
   constructor(private fb: FormBuilder, private cdRef: ChangeDetectorRef,
     protected calendarBarModelService: CalendarBarModelService,
@@ -45,9 +42,7 @@ export class NavBar {
     protected router: Router,
 
     private tokenService: TokenService
-    ) {
-
-    }
+    ) { }
 
   toggleTheme(): void {
     this.temaService.toggleTheme();

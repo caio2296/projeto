@@ -27,8 +27,6 @@ export class CalendarioDialog implements OnInit, OnDestroy {
   intervaloAtivo = false;
   calendarMode!: 'day' | 'month' | 'year' | 'fiscalYear' | 'week' | 'datetime';
 
-
-
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<CalendarioDialog>,
@@ -41,33 +39,32 @@ export class CalendarioDialog implements OnInit, OnDestroy {
     protected labelService: LabelDataService
   ) { }
 
- ngOnInit(): void {
+  ngOnInit(): void {
 
-     this.calendarBarModelService.carregarDados().subscribe({
+    this.calendarBarModelService.carregarDados().subscribe({
       next: (data) => {
         this.calendarBarModelService.dados = data;
         console.log(this.calendarBarModelService.dados);
 
-         this.calendarMode = this.labelService.getCalendarMode() as 'day' | 'month' | 'year' | 'fiscalYear' | 'week' | 'datetime';
+        this.calendarMode = this.labelService.getCalendarMode() as 'day' | 'month' | 'year' | 'fiscalYear' | 'week' | 'datetime';
 
+        if (!this.labelService.getInterval()) {
+          this.setCalendarMode(this.calendarMode);
+          this.intervaloAtivo = this.labelService.getInterval();
 
-    if (!this.labelService.getInterval()) {
-      this.setCalendarMode(this.calendarMode);
-      this.intervaloAtivo = this.labelService.getInterval();
+        } else {
 
-    } else {
+          this.MudarTipoFormulario();
 
-      this.MudarTipoFormulario();
+        }
+        this.form = this.formularioService.inicializarFormulario(this.labelService.getCalendarMode());
+        this.intervaloForm = this.formularioService.InicialiarFormularioIntervalor();
 
-    }
-    this.form = this.formularioService.inicializarFormulario(this.labelService.getCalendarMode());
-    this.intervaloForm = this.formularioService.InicialiarFormularioIntervalor();
-
-    this.dateHelperServices.populateYears();
-    this.dateHelperServices.populateFiscalYears();
-        console.log( this.calendarBarModelService.dados.calendarBar.day.visible);
+        this.dateHelperServices.populateYears();
+        this.dateHelperServices.populateFiscalYears();
+        console.log(this.calendarBarModelService.dados.calendarBar.day.visible);
       },
-      error: (err) => {
+      error: () => {
         // alert(`Erro ao carregar dados do calendário: ${err.message}`);
         this.fecharDialog();
       },
@@ -75,9 +72,6 @@ export class CalendarioDialog implements OnInit, OnDestroy {
         console.log("Requisição finalizada.");
       }
     });
-
-
-   
   }
 
   ngOnDestroy(): void {

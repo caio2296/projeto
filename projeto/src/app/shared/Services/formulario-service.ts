@@ -11,7 +11,6 @@ import { CalendarBarModelService } from "./calendarBarModel";
 import { DateHelperService } from './dateHelperService';
 import { LabelDataService } from './label-data-service';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -242,9 +241,7 @@ export class FormularioService {
     }
 
     const unidade = this.labelDataService.getCalendarMode();
-    // if (this.labelDataService.getTipoData() == 'fiscalYear') {
-    //   unidade = 'year';
-    // }
+
     if (this.labelDataService.getLabel().toString().includes('/')) {
       partes = this.labelDataService.getLabel().split(/\/|-/);
       dataJs = new Date(+partes[2], +partes[1] - 1, +partes[0]);

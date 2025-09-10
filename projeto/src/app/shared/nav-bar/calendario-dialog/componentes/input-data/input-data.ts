@@ -26,6 +26,4 @@ constructor(protected calendarFormService:CalendarFormService, protected dateHel
   ngOnInit(): void {
     this.inputConfigs.updateInputConfig(this.labelDataService.getCalendarMode());
   }
-
-
 }

@@ -3,7 +3,7 @@
     aria-label=""  *ngIf="logado" (click)="collapsed.set(!collapsed())">
     <mat-icon>menu</mat-icon>
   </button>
-  <button matIconButton *ngIf="isDashboardPage" class="sandwich-menu" type="button" (click)="collapsed.set(!collapsed()); abrirDialogCalendario()"
+  <button matIconButton *ngIf="isDashboardPage" class="sandwich-menu" type="button" (click)="collapsed.set(false); abrirDialogCalendario()"
     aria-label="Abrir calendário">
     <mat-icon>calendar_today</mat-icon>
   </button>

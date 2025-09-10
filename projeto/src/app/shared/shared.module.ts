@@ -19,10 +19,10 @@ import { NavBar } from './nav-bar/nav-bar';
 import { SeletorAnoFiscalIntervalo } from './nav-bar/calendario-dialog/componentes/seletor-ano-fiscal-intervalo/seletor-ano-fiscal-intervalo';
 import { RouterModule } from "@angular/router";
 import { SideBar } from './side-bar/side-bar';
+import { DialogConfirmeDelete } from './tabela/dialog-confirme-delete/dialog-confirme-delete';
 
 @NgModule({
     declarations: [
-
         Grafico,
         InputMesAnoIntervalo,
         SeletorAnoIntervalo,
@@ -37,7 +37,8 @@ import { SideBar } from './side-bar/side-bar';
         CalendarioDialog,
         NavBar,
         SeletorAnoFiscalIntervalo,
-        SideBar
+        SideBar,
+        DialogConfirmeDelete
     ],
     imports: [
         CommonModule,
