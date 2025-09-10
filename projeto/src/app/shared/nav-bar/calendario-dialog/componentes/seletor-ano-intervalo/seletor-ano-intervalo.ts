@@ -7,8 +7,6 @@ import { InputConfig } from '../../../../Services/InputConfig';
 import { FormularioService } from '../../../../Services/formulario-service';
 import { CalendarFormService } from '../../../../Services/calendarFormService';
 
-
-
 @Component({
   selector: 'app-seletor-ano-intervalo',
   standalone: false,
@@ -21,10 +19,7 @@ export class SeletorAnoIntervalo implements OnInit {
   public selectedValue!: string;
 
   constructor(protected inputConfigs:InputConfig, protected formularioService:FormularioService, protected dateHelperServices:DateHelperService,
-     protected calendarFormServices: CalendarFormService) {
-
-
-  }
+     protected calendarFormServices: CalendarFormService) { }
   ngOnInit(): void {
   if (!this.intervaloForm) {
      this.intervaloForm = this.formularioService.InicialiarFormularioIntervalor();
@@ -37,5 +32,4 @@ export class SeletorAnoIntervalo implements OnInit {
       this.inputConfigs.updateInputConfig(value);
     });
   }
-
 }

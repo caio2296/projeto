@@ -25,50 +25,31 @@ export class ErrosInterceptor implements HttpInterceptor {
         let errorMessage = "Ocorreu um erro desconhecido!";
         const body = error.error;   
 
+        const mensagensPorStatus: Record<number, string> = {
+          400: 'O e-mail informado está incorreto ou não cadastrado.',
+          401: 'Você não está autorizado a acessar este recurso',
+          404: 'Recurso não encontrado',
+          500: 'Erro interno do servidor',
+          409: typeof body === 'string' ? body : 'Conflito ao processar a requisição'
+        };
+
         if (error.error instanceof ErrorEvent) {
-          // Erro do lado do cliente, como uma rede interrompida
+          // Erro do lado do cliente
           errorMessage = `Erro do cliente: ${error.error.message}`;
-          this.mensagemService.openSnackBar(errorMessage, 'erro');
-          console.error(error);
-          console.error(errorMessage);
-        } else if (error.status === 404) {
-          // Recurso não encontrado (erro 404)
-          errorMessage = 'Recurso não encontrado';
-          this.mensagemService.openSnackBar(errorMessage, 'erro');
-          console.error(error);
-          console.error(errorMessage);
-        } else if (error.status === 500) {
-          // Erro interno do servidor (erro 500)
-          errorMessage = 'Erro interno do servidor';
-          this.mensagemService.openSnackBar(errorMessage, 'erro');
-          console.error(error);
-          console.error(errorMessage);
-        } else if (error.status === 401) {
-          // Não autorizado (erro 401)
-          this.tokenService.excluirToken();
-          this.router.navigate(['/']);
-          // window.location.href = '/';
-          errorMessage = 'Você não está autorizado a acessar este recurso';
-          this.mensagemService.openSnackBar(errorMessage, 'erro');
-          console.error(error);
-          console.error(errorMessage);
-        } else if (error.status === 400) {
-          errorMessage = 'O e-mail informado está incorreto ou não cadastrado.';
-          this.mensagemService.openSnackBar(errorMessage, 'erro');
-          console.error(error);
-          console.error(errorMessage);
-        } else if (error.status === 0) {
-          this.tokenService.excluirToken();
-          this.router.navigate(['/']);
-          // window.location.href = '/';
-          this.mensagemService.openSnackBar(errorMessage, 'erro');
-          console.error(error);
-          console.error(errorMessage);
-        }else if (error.status === 409){
-            this.mensagemService.openSnackBar(body, 'erro');
-          console.error(error);
-          console.error(errorMessage);
+        } else {
+          errorMessage = mensagensPorStatus[error.status] || errorMessage;
+
+          // Regras adicionais
+          if (error.status === 401 || error.status === 0) {
+            this.tokenService.excluirToken();
+            this.router.navigate(['/']);
+          }
         }
+
+        // Centralizado: sempre mostra a mensagem e loga
+        this.mensagemService.openSnackBar(errorMessage, 'erro');
+        console.error("Erro HTTP:", error);
+        console.error("Mensagem exibida:", errorMessage);
 
 
         return throwError(() => new Error(errorMessage));

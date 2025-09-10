@@ -18,10 +18,7 @@ export class SeletorAnoFiscalIntervalo implements OnInit {
    @Input() calendarMode: 'year' | 'fiscalYear' = 'year';
 
    constructor(protected inputConfigs:InputConfig, protected formularioService:FormularioService, protected dateHelperServices:DateHelperService,
-        protected calendarFormServices: CalendarFormService) {
-   
-   
-     }
+        protected calendarFormServices: CalendarFormService) { }
   ngOnInit(): void {
     if (!this.intervaloForm) {
      this.intervaloForm = this.formularioService.InicialiarFormularioIntervalor();
@@ -34,5 +31,4 @@ export class SeletorAnoFiscalIntervalo implements OnInit {
       this.inputConfigs.updateInputConfig(value);
     });
   }
-
 }

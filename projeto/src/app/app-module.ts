@@ -22,7 +22,6 @@ import { autenticacaoInterceptor } from './autenticacao/autenticacao-interceptor
 import { AutenticacaoModule } from './autenticacao/autenticacao-module';
 import { MensagemInterceptor } from './core/services/mensagemInterceptor';
 
-
 const moment = _rollupMoment || _moment;
 
 @NgModule({

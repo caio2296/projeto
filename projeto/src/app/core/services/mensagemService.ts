@@ -15,7 +15,6 @@ export class MensagemService {
   openSnackBar(message: string, tipo: 'sucesso' | 'erro' | 'aviso' = 'aviso') {
      let cssClass = 'snackbar-aviso';
 
-
   if (tipo === 'sucesso') cssClass = 'snackbar-sucesso';
   if (tipo === 'erro') cssClass = 'snackbar-erro';
     this._snackBar.open(message, undefined, {

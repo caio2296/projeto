@@ -15,10 +15,6 @@ import { DateHelperService } from '../../../../Services/dateHelperService';
 import { InputConfig } from '../../../../Services/InputConfig';
 import { FormularioService } from '../../../../Services/formulario-service';
 
-
-
-
-
 @Component({
   selector: 'app-input-mes-ano-intervalo',
   standalone: false,
@@ -54,8 +50,6 @@ export class InputMesAnoIntervalo implements OnInit {
     if (!this.intervaloForm) {
      this.intervaloForm = this.formularioService.InicialiarFormularioIntervalor();
   }
-   
-
     this.inputConfigs.updateInputConfig(this.intervaloForm.get('unidade')?.value);
     this.intervaloForm.get('unidade')?.valueChanges.subscribe(value => {
       // this.updateInputConfig(value);
@@ -63,8 +57,6 @@ export class InputMesAnoIntervalo implements OnInit {
       this.inputConfigs.updateInputConfig(value);
     });
   }
-
-
   setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>, inputControlName: string) {
     const ctrlValue = this.intervaloForm.get(inputControlName)?.value ?? moment();
 
@@ -86,8 +78,5 @@ export class InputMesAnoIntervalo implements OnInit {
         'dataFimMes'
       );
     }
-
-
-
   }
 }

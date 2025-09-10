@@ -7,7 +7,6 @@ import { InputConfig } from '../../../../Services/InputConfig';
 import { FormularioService } from '../../../../Services/formulario-service';
 import { CalendarFormService } from '../../../../Services/calendarFormService';
 
-
 @Component({
   selector: 'app-data-intervalo',
   standalone: false,
@@ -25,8 +24,6 @@ export class DataIntervalo implements OnInit {
 constructor(
   protected formularioService:FormularioService,  protected dateHelperServices:DateHelperService, protected inputConfigs:InputConfig, 
   protected calendarFormServices: CalendarFormService) {
-
-
 }
 
   ngOnInit(): void {

@@ -17,24 +17,41 @@ export class MensagemInterceptor implements HttpInterceptor {
     constructor(private mensagemService: MensagemService) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        // Mensagens fixas por rota
+        const mensagensPorRota: Record<string, string> = {
+            '/api/AtualizarFruta': 'Fruta atualizada com sucesso!',
+            '/api/CriarToken': 'Logado com sucesso!',
+            '/api/AdicionarFrutas': 'Nova Fruta foi adicionada!'
+        };
+
+        // Mensagens padrão por status
+        const mensagensPorStatus: Record<number, string> = {
+            201: 'Recurso criado com sucesso!'
+        };
+
         return next.handle(req).pipe(
             tap((event: HttpEvent<any>) => {
                 if (event instanceof HttpResponse) {
                     const status = event.status;   // exemplo: 200, 201
                     const body = event.body;       // pode ser string, objeto, array etc.
 
-                    if (req.url.includes('/api/CriarToken')) {
-
-                        this.mensagemService.openSnackBar('Logado com sucesso!', 'sucesso');
+                    // Checa se a rota tem mensagem definida
+                    for (const rota in mensagensPorRota) {
+                        if (req.url.includes(rota)) {
+                            this.mensagemService.openSnackBar(mensagensPorRota[rota], 'sucesso');
+                            return;
+                        }
                     }
-                    // Aqui você decide o que mostrar
-                    if (typeof body === 'string' && status >= 200 && status < 300 && !req.url.includes('/api/CriarToken')) {
+
+                    // Se o body é string e sucesso (exceto rotas especiais)
+                    if (typeof body === 'string' && status >= 200 && status < 300) {
                         this.mensagemService.openSnackBar(body, 'sucesso');
-
-
+                        return;
                     }
-                    else if (status === 201) {
-                        this.mensagemService.openSnackBar('Recurso criado com sucesso!', 'sucesso');
+
+                    // Mensagem padrão por status
+                    if (mensagensPorStatus[status]) {
+                        this.mensagemService.openSnackBar(mensagensPorStatus[status], 'sucesso');
                     }
                 }
             })

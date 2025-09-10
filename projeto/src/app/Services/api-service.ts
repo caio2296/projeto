@@ -45,12 +45,11 @@ export class ApiService {
 
 deletarFruta(fruta: frutas): Observable<any> {
   return this.http.request('Delete', `${this.apiBaseUrl}api/ExcluirFruta`, {
-    body: fruta
+    body: fruta,
+    responseType: 'text' as 'json'
   });
 }
-
 atualizarFruta(fruta: frutas): Observable<any> {
   return this.http.put(`${this.apiBaseUrl}api/AtualizarFruta`, fruta);
 }
-
 }

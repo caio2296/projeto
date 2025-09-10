@@ -1,5 +1,5 @@
 .cadastro-component {
-  max-width: 50%;
+  max-width: 78%;
   min-height: 47%;
   overflow-y: hidden;
   display: flex;
@@ -88,4 +88,16 @@
   margin: 0 auto;         /* Centraliza horizontalmente */
   overflow-x: auto;       /* Adiciona rolagem horizontal se necessário */
 }
+}
+
+@media (min-width: 660px) {
+ .cadastro-component {
+  max-width: 50%;
+
+}
+}
+@media (min-width: 900px) {
+ .cadastro-component {
+  max-width: 30%;
+ }
 }
