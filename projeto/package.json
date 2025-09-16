@@ -21,6 +21,7 @@
     "@angular/material-moment-adapter": "^20.0.2",
     "@angular/platform-browser": "^20.0.0",
     "@angular/router": "^20.0.0",
+    "@jsverse/transloco": "^7.6.1",
     "chart.js": "^4.4.9",
     "jwt-decode": "^4.0.0",
     "moment": "^2.30.1",

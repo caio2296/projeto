@@ -9,6 +9,8 @@ import { DialogAdicionarItem } from './dialog-adicionar-item/dialog-adicionar-it
 import { ApiService } from '../../Services/api-service';
 import { frutas } from '../Models/type';
 import { DialogConfirmeDelete } from './dialog-confirme-delete/dialog-confirme-delete';
+import { TranslocoService } from '@jsverse/transloco';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-tabela',
@@ -21,7 +23,15 @@ export class Tabela implements OnInit {
   displayedColumns: string[] = [];
   dataSource: frutas[] = [];
 
-  constructor(private dialog: MatDialog, private apiService: ApiService) {
+  columnLabels: Record<string, string> = {
+    id: 'Dashboard.TabelaHeader.Id',
+    descricao: 'Dashboard.TabelaHeader.Descricao',
+    tamanho: 'Dashboard.TabelaHeader.Tamanho',
+    cor: 'Dashboard.TabelaHeader.Cor',
+    acao: 'Dashboard.TabelaHeader.Acao'
+  };
+
+  constructor(private dialog: MatDialog, private apiService: ApiService, private translocoService:TranslocoService) {
   }
   getIndexFromColumn(column: string): number {
     // Pula a coluna de ação
@@ -74,33 +84,38 @@ export class Tabela implements OnInit {
     });
   }
 
-  private BuscarListaFrutas() {
-    this.apiService.listarFrutas().subscribe({
-      next: (res) => {
-        this.dataSource = res;
-        if (res.length > 0) {
-          this.displayedColumns = Object.keys(res[0]);
-          this.displayedColumns.push('acao');
-        }
-      },
-      error: (err) => console.error("Erro ao carregar frutas:", err)
-    });
-  }
-
   deletarItem(element: any): void {
-    const dialogRef = this.dialog.open(DialogConfirmeDelete, {
-      data: { mensagem: `Deseja realmente deletar o item: ${element.descricao}?` }
-    });
+    // const dialogRef = this.dialog.open(DialogConfirmeDelete, {
+    //   data: { mensagem: `Deseja realmente deletar o item: ${element.descricao}?` }
+    // });
 
-    dialogRef.afterClosed().subscribe(confirmado => {
-      if (confirmado) {
-        this.dataSource = this.dataSource.filter(item => item.id !== element.id);
-        this.apiService.deletarFruta(element).subscribe({
-          next: () => console.log("Item deletado com sucesso"),
-          error: err => console.error("Erro ao deletar item:", err)
+    // dialogRef.afterClosed().subscribe(confirmado => {
+    //   if (confirmado) {
+    //     this.dataSource = this.dataSource.filter(item => item.id !== element.id);
+    //     this.apiService.deletarFruta(element).subscribe({
+    //       next: () => console.log("Item deletado com sucesso"),
+    //       error: err => console.error("Erro ao deletar item:", err)
+    //     });
+    //   }
+    // });
+
+    this.translocoService.selectTranslate('Dashboard.TabelaDialog.Deletar.MensagemDelete', { item: element.descricao })
+      .pipe(take(1))
+      .subscribe(mensagemTraduzida => {
+    
+        const dialogRef = this.dialog.open(DialogConfirmeDelete, {
+          data: { mensagem: mensagemTraduzida }
         });
-      }
-    });
+        dialogRef.afterClosed().subscribe(confirmado => {
+        if (confirmado) {
+          this.dataSource = this.dataSource.filter(item => item.id !== element.id);
+          this.apiService.deletarFruta(element).subscribe({
+            next: () => console.log("Item deletado com sucesso"),
+            error: err => console.error("Erro ao deletar item:", err)
+          });
+        }
+      });
+      });
   }
 
   abrirModal(element: any, event: Event) {
@@ -146,4 +161,19 @@ export class Tabela implements OnInit {
       }
     });
   }
+
+  private BuscarListaFrutas() {
+    this.apiService.listarFrutas().subscribe({
+      next: (res) => {
+        this.dataSource = res;
+        if (res.length > 0) {
+          this.displayedColumns = Object.keys(res[0]);
+          console.log(this.displayedColumns);
+          this.displayedColumns.push('acao');
+        }
+      },
+      error: (err) => console.error("Erro ao carregar frutas:", err)
+    });
+  }
+
 }

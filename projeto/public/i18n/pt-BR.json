@@ -1,0 +1,84 @@
+{
+    "Autenticacao": {
+        "Login": {
+            "EmailPlaceHolder": "Digite seu e-mail",
+            "EmailObrigatorio": "E-mail é obrigatório",
+            "EmailInvalido": "E-mail inválido",
+            "Entrar": "Iniciar sessão"
+        },
+        "Cadastro": {
+            "EmailPlaceHolder": "Digite o novo e-mail",
+            "EmailObrigatorio": "E-mail é obrigatório",
+            "EmailInvalido": "E-mail inválido",
+            "Botao&HeaderCadastrar": "Cadastrar",
+            "MensagemDelete": "Deseja realmente deletar esse usuário: {{email}}?",
+            "TabelaHeader": {
+                "Id": "ID",
+                "Email": "E-mail",
+                "Token": "Token JWT",
+                "UsuarioTipo": "Tipo de Usuário",
+                "Acao": "Ação"
+            }
+        }
+    },
+    "NavBar":{
+        "RegistroUsuario":"Cadastro Usuário"
+    },
+    "Dashboard": {
+        "Calendario":{
+            "Intervalo":"Intervalo",
+            "Dia":"Dia",
+            "Mes":"Mes",
+            "Ano":"Ano",
+            "AnoFiscal":"Ano Fiscal",
+            "SelecioneAno":"Selecione o Ano:",
+            "SelecioneAnoFiscal":"Selecione o Ano Fiscal:",
+            "Unidade":"Unidade:"
+
+        },
+        "Label":{
+            "day":"Dia",
+            "month":"Mes",
+            "year":"Ano",
+            "fiscalYear":"Ano Fiscal"
+        },
+        "TabelaHeader": {
+            "Id": "ID",
+            "Descricao": "Descrição",
+            "Tamanho": "Tamanho",
+            "Cor": "Cor",
+            "Acao": "Ação"
+        },
+        "TabelaButtons":{
+            "Editar":"Editar",
+            "Detalhes":"Ver detalhes",
+            "Deletar":"Deletar",
+            "Adicionar":"Adicionar Item"
+        },
+        "TabelaDialog":{
+            "Detalhes":{
+              "Header":"Detalhes",
+              "ButtonFechar":"Fechar"
+            },
+            "Adicionar":{
+              "Titulo":"Adicionar Item",
+              "Header":"Descrição",
+              "Selecionar":"Selecionar tamanho",
+              "Cor":"Cor",
+              "Tamanho":{
+                "Pequeno":"Pequeno",
+                "Medio":"Médio",
+                "Grande":"Grande"
+              },
+              "ButtonSalvar":"Salvar",
+              "ButtonCancelar":"Cancelar"
+            },
+            "Deletar":{
+                "Header":"Confirmação",
+                "MensagemDelete": "Deseja realmente deletar esse item: {{item}}?",
+                "ButtonConfirmar":"Confirmar",
+              "ButtonCancelar":"Cancelar"
+            }
+        }
+    }
+}

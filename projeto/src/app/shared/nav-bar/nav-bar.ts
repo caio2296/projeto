@@ -11,6 +11,11 @@ import { InputConfig } from '../Services/InputConfig';
 import { TemaService } from './Services/tema-service';
 import { Router } from '@angular/router';
 import { TokenService } from '../../autenticacao/Services/token-service';
+import { TranslocoService } from '@jsverse/transloco';
+import { LabelDataService } from '../Services/label-data-service';
+import { take } from 'rxjs';
+import { LocaleService } from '../Services/LocaleService';
+import { DateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-nav-bar',
@@ -30,7 +35,20 @@ export class NavBar {
 
   collapsed = signal(false);
 
-  sideNavWidth = computed(()=> this.collapsed()? '250px':' 10px'); 
+  sideNavWidth = computed(() => this.collapsed() ? '250px' : ' 10px');
+
+  activeLang = '';
+
+  currentTipoLabel = ''; // label traduzida que será exibida
+  currentTipo = '';       // 'day', 'month', etc.
+
+  private tipoMap: Record<string, string> = {
+    Day: 'Dashboard.Label.day',
+    Month: 'Dashboard.Label.month',
+    Year: 'Dashboard.Label.year',
+    FiscalYear: 'Dashboard.Label.fiscalYear'
+  };
+
 
   constructor(private fb: FormBuilder, private cdRef: ChangeDetectorRef,
     protected calendarBarModelService: CalendarBarModelService,
@@ -40,9 +58,39 @@ export class NavBar {
     private dialog: MatDialog,
     protected temaService: TemaService,
     protected router: Router,
+    private translocoService: TranslocoService,
+    private tokenService: TokenService,
+    private labelDataService: LabelDataService,
+    private localeService:LocaleService,
+    private dateAdapter: DateAdapter<Date>
+  ) {
+    this.activeLang = this.translocoService.getActiveLang(); // pega o idioma ativo atual
 
-    private tokenService: TokenService
-    ) { }
+    this.labelDataService.tipoData$.subscribe(tipo => {
+      this.currentTipo = tipo;
+
+      const key = this.tipoMap[tipo] ?? tipo;
+      this.translocoService.selectTranslate(key).pipe(take(1)).subscribe(translated => {
+        this.currentTipoLabel = translated;
+      });
+    });
+
+  }
+
+  AlterarIdioma(lang: string) {
+    this.activeLang = lang;
+    this.translocoService.setActiveLang(lang);
+
+    this.labelDataService.AlterarLocalizacao(lang,this.localeService,this.dateAdapter);
+    // Atualiza o label do tipo atual após mudar o idioma
+    const key = this.tipoMap[this.currentTipo] ?? this.currentTipo;
+
+    this.translocoService.selectTranslate(key).pipe(take(1)).subscribe(translated => {
+      this.currentTipoLabel = translated;
+      this.labelDataService.setTipoData(this.currentTipoLabel);
+    });
+
+  }
 
   toggleTheme(): void {
     this.temaService.toggleTheme();
@@ -68,11 +116,11 @@ export class NavBar {
     return this.intervaloAtivo = true;
   }
 
-   get isAdmin(): boolean {
+  get isAdmin(): boolean {
     return this.tokenService.isAdmin();
   }
 
-  get logado():boolean{
+  get logado(): boolean {
     return this.tokenService.possuiToken();
   }
 
@@ -81,7 +129,7 @@ export class NavBar {
     return this.router.url === '/cadastro';
   }
 
-  get isDashboardPage():boolean{
+  get isDashboardPage(): boolean {
     return this.router.url === '/auth/dashboard';
   }
 

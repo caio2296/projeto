@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { Cadastro } from './cadastro/cadastro';
+import { TranslocoModule } from '@jsverse/transloco';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { Cadastro } from './cadastro/cadastro';
     FormsModule,
         RouterModule,
             SharedModule,
+            TranslocoModule
         
   ],
   exports:[

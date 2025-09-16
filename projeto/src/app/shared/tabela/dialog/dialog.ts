@@ -13,11 +13,22 @@ import { Chart } from 'chart.js/auto';
 })
 export class Dialog implements AfterViewInit, OnInit {
  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
-campos: { chave: string, valor: any }[] = [];
+campos: { chave: string, headerKey: string,valor: any }[] = [];
 
-getCampos(obj: any): { chave: string, valor: any }[] {
 
-  return Object.entries(obj).map(([chave, valor]) => ({ chave, valor }));
+private headerMap: Record<string, string> = {
+  id: 'Dashboard.TabelaHeader.Id',
+  descricao: 'Dashboard.TabelaHeader.Descricao',
+  tamanho: 'Dashboard.TabelaHeader.Tamanho',
+  cor: 'Dashboard.TabelaHeader.Cor',
+};
+
+getCampos(obj: any) {
+  return Object.entries(obj).map(([chave, valor]) => ({
+    chave,                 // chave original (caso precise)
+    valor,                 // valor do objeto
+    headerKey: this.headerMap[chave] ?? chave // chave de tradução
+  }));
 }
  ngOnInit() {
     // Calcula os campos uma vez

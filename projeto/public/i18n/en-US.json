@@ -1,0 +1,83 @@
+{
+    "Autenticacao": {
+        "Login": {
+            "EmailPlaceHolder": "Enter your email",
+            "EmailObrigatorio": "Email is required",
+            "EmailInvalido": "Invalid email",
+            "Entrar": "SIGN IN"
+        },
+        "Cadastro": {
+            "EmailPlaceHolder": "Enter your email",
+            "EmailObrigatorio": "Email is required",
+            "EmailInvalido": "Invalid email",
+            "Botao&HeaderCadastrar": "Sign Up",
+            "MensagemDelete": "Do you really want to delete this user: {{email}}?",
+            "TabelaHeader": {
+                "Id": "ID",
+                "Email": "Email",
+                "Token": "JWT Token",
+                "UsuarioTipo": "User Type",
+                "Acao": "Action"
+            }
+        }
+    },
+    "NavBar": {
+        "RegistroUsuario": "Register User"
+    },
+    "Dashboard": {
+        "Calendario": {
+            "Intervalo": "Interval",
+            "Dia": "Day",
+            "Mes": "Month",
+            "Ano": "Year",
+            "AnoFiscal": "Fiscal Year",
+            "SelecioneAno": "Select the Year:",
+            "SelecioneAnoFiscal": "Select the Year Fiscal:",
+            "Unidade": "Unit:"
+        },
+        "Label": {
+            "day": "Day",
+            "month": "Month",
+            "year": "Year",
+            "fiscalYear": "FiscalYear"
+        },
+        "TabelaHeader": {
+            "Id": "ID",
+            "Descricao": "Description",
+            "Tamanho": "Size",
+            "Cor": "Color",
+            "Acao": "Action"
+        },
+        "TabelaButtons": {
+            "Editar": "Edit",
+            "Detalhes": "Details",
+            "Deletar": "Delete",
+            "Adicionar": "Add Item"
+        },
+        "TabelaDialog": {
+            "Detalhes": {
+                "Header": "Details",
+                "ButtonFechar": "Close"
+            },
+            "Adicionar": {
+                "Titulo": "Add Item",
+                "Header": "Description",
+                "Selecionar": "Select size",
+                "Cor":"Color",
+                "Tamanho": {
+                    "Pequeno": "Small",
+                    "Medio": "Medium",
+                    "Grande": "Large"
+                },
+                "ButtonSalvar": "Save",
+                "ButtonCancelar": "Cancel"
+            },
+            "Deletar": {
+                "Header": "Confirmation",
+                "MensagemDelete": "Do you really want to delete this item: {{item}}?",
+                "ButtonConfirmar": "Confirm",
+                "ButtonCancelar": "Cancel"
+            }
+        }
+    }
+}

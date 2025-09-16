@@ -1,25 +1,25 @@
-<h1 mat-dialog-title>Adicionar Item</h1>
+<h1 mat-dialog-title>{{'Dashboard.TabelaDialog.Adicionar.Titulo' | transloco}}</h1>
 <form [formGroup]="cadastroForm">
     <div mat-dialog-content class="input-container">
         <mat-form-field>
-            <mat-label>Descrição</mat-label>
+            <mat-label>{{'Dashboard.TabelaDialog.Adicionar.Header' | transloco}}</mat-label>
             <input matInput formControlName="descricao">
         </mat-form-field>
         <mat-form-field>
-            <mat-label>Selecione o tamanho</mat-label>
+            <mat-label>{{'Dashboard.TabelaDialog.Adicionar.Selecionar' | transloco}}</mat-label>
             <mat-select formControlName="tamanho">
-                <mat-option value="Pequeno">Pequeno</mat-option>
-                <mat-option value="Médio">Médio</mat-option>
-                <mat-option value="Grande">Grande</mat-option>
+                <mat-option value="Pequeno">{{'Dashboard.TabelaDialog.Adicionar.Tamanho.Pequeno' | transloco}}</mat-option>
+                <mat-option value="Médio">{{'Dashboard.TabelaDialog.Adicionar.Tamanho.Medio' | transloco}}</mat-option>
+                <mat-option value="Grande">{{'Dashboard.TabelaDialog.Adicionar.Tamanho.Grande' | transloco}}</mat-option>
             </mat-select>
         </mat-form-field>
          <mat-form-field>
-            <mat-label>Cor</mat-label>
+            <mat-label>{{'Dashboard.TabelaDialog.Adicionar.Cor' | transloco}}</mat-label>
             <input matInput formControlName="cor">
         </mat-form-field>
     </div>
     <div mat-dialog-actions align="end">
-        <button mat-button (click)="dialogRef.close()" cdkFocusInitial>Cancelar</button>
-        <button mat-button [disabled]="cadastroForm.invalid" (click)="salvar()">Salvar</button>
+        <button mat-button (click)="dialogRef.close()" cdkFocusInitial>{{'Dashboard.TabelaDialog.Adicionar.ButtonCancelar' | transloco}}</button>
+        <button mat-button [disabled]="cadastroForm.invalid" (click)="salvar()">{{'Dashboard.TabelaDialog.Adicionar.ButtonSalvar' | transloco}}</button>
     </div>
 </form>

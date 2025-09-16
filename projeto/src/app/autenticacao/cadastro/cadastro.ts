@@ -8,6 +8,8 @@ import { CadastroService } from '../Services/cadastro-service';
 import { Usuarios } from '../../shared/Models/type';
 import { DialogConfirmeDelete } from '../../shared/tabela/dialog-confirme-delete/dialog-confirme-delete';
 import { MatDialog } from '@angular/material/dialog';
+import { TranslocoService } from '@jsverse/transloco';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-cadastro',
@@ -22,11 +24,19 @@ export class Cadastro implements OnInit {
   displayedColumns: string[] = [];
   dataSource: Usuarios[] = [];
 
+   columnLabels: Record<string, string> = {
+    id: 'Autenticacao.Cadastro.TabelaHeader.Id',
+    email: 'Autenticacao.Cadastro.TabelaHeader.Email',
+    usuarioTipo: 'Autenticacao.Cadastro.TabelaHeader.UsuarioTipo',
+    acao: 'Autenticacao.Cadastro.TabelaHeader.Acao'
+  };
+
   constructor(
     private formBuilder: FormBuilder,
     private cadastroService: CadastroService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private translocoService:TranslocoService
   ) { }
   ngOnInit(): void {
     this.cadastroFrom = this.formBuilder.group({
@@ -61,12 +71,24 @@ export class Cadastro implements OnInit {
   }
 
   deletarItem(element: any): void {
+//       const mensagem = this.translocoService.translate('Autenticacao.Cadastro.MensagemDelete', { email: element.email });
+
+//       console.log('ActiveLang:', this.translocoService.getActiveLang());
+// console.log('Available langs:', this.translocoService.getAvailableLangs());
+// console.log('Translate test key:', this.translocoService.translate('Autenticacao.Cadastro.MensagemDelete', { email: 'x' }));
+
+//     const dialogRef = this.dialog.open(DialogConfirmeDelete, {
+//         data: { mensagem: mensagem }
+//       });
+
+this.translocoService.selectTranslate('Autenticacao.Cadastro.MensagemDelete', { email: element.email })
+  .pipe(take(1))
+  .subscribe(mensagemTraduzida => {
 
     const dialogRef = this.dialog.open(DialogConfirmeDelete, {
-        data: { mensagem: `Deseja realmente deletar esse usuário: ${element.email}?` }
-      });
-
-      dialogRef.afterClosed().subscribe(confirmado => {
+      data: { mensagem: mensagemTraduzida }
+    });
+    dialogRef.afterClosed().subscribe(confirmado => {
     if (confirmado) {
       this.dataSource = this.dataSource.filter(item => item.id !== element.id);
       this.cadastroService.DeletarUsuario(element.id).subscribe({
@@ -75,6 +97,9 @@ export class Cadastro implements OnInit {
       });
     }
   });
+  });
+
+  
   }
 
     private ListarUsuarios() {
@@ -84,6 +109,8 @@ export class Cadastro implements OnInit {
         if (res.length > 0) {
           this.displayedColumns = Object.keys(res[0]);
           this.displayedColumns.push('acao');
+        }else{
+          this.dataSource = [];
         }
       },
       error: (err) => console.error("Erro ao carregar Usuarios:", err)

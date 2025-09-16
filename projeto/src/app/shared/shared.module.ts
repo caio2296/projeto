@@ -1,5 +1,5 @@
-import { LOCALE_ID, NgModule } from "@angular/core";
-import { CommonModule, DatePipe } from "@angular/common";
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { DataIntervalo } from "./nav-bar/calendario-dialog/componentes/data-intervalo/data-intervalo";
@@ -20,6 +20,10 @@ import { SeletorAnoFiscalIntervalo } from './nav-bar/calendario-dialog/component
 import { RouterModule } from "@angular/router";
 import { SideBar } from './side-bar/side-bar';
 import { DialogConfirmeDelete } from './tabela/dialog-confirme-delete/dialog-confirme-delete';
+import { Footer } from './footer/footer';
+import { TranslocoModule } from "@jsverse/transloco";
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+
 
 @NgModule({
     declarations: [
@@ -38,14 +42,16 @@ import { DialogConfirmeDelete } from './tabela/dialog-confirme-delete/dialog-con
         NavBar,
         SeletorAnoFiscalIntervalo,
         SideBar,
-        DialogConfirmeDelete
+        DialogConfirmeDelete,
+        Footer
     ],
     imports: [
         CommonModule,
         MaterialModule,
         ReactiveFormsModule,
         FormsModule,
-        RouterModule
+        RouterModule,
+        TranslocoModule
     ],
     exports: [
         Grafico,
@@ -61,10 +67,12 @@ import { DialogConfirmeDelete } from './tabela/dialog-confirme-delete/dialog-con
         DialogAdicionarItem,
         NavBar,
         SeletorAnoFiscalIntervalo,
-        SideBar
+        SideBar,
+        DialogConfirmeDelete,
+        Footer
     ],
      providers: [
-    DatePipe, { provide: LOCALE_ID, useValue: 'pt' } 
+     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }
   ],
 })
 

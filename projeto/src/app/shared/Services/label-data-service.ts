@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { LocaleService } from './LocaleService';
+import { DateAdapter } from '@angular/material/core';
+
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +10,8 @@ import { BehaviorSubject } from 'rxjs';
 export class LabelDataService {
 
   private tipoDataSubject = new BehaviorSubject<string>('');
+  private dateReordered = false;
+
   tipoData$ = this.tipoDataSubject.asObservable(); // Exposição do observable
 
 private intervaloSubject = new BehaviorSubject<boolean>(false);
@@ -48,6 +53,27 @@ private intervaloSubject = new BehaviorSubject<boolean>(false);
 
   public getCalendarMode():string{
     return this.calendarModeSubJect.value;
+  }
+
+  public AlterarLocalizacao(lang: string,localeService:LocaleService,dateAdapter:DateAdapter<Date>){
+     if (lang === 'en-US') {
+       if(this.getCalendarMode()=="day" && !this.dateReordered ){
+          const partes=this.getLabel().split('/');
+          this.setLabel(`${partes[1]}/${partes[0]}/${partes[2]}`);
+          this.dateReordered = true;
+         }
+         dateAdapter.setLocale('en-US'); // inglês
+         localeService.setLocale('en-US');
+        
+      } else {
+        if(this.dateReordered ){
+           const partes=this.getLabel().split('/');
+          this.setLabel(`${partes[1]}/${partes[0]}/${partes[2]}`);
+        }
+         dateAdapter.setLocale('pt-BR'); // português
+         localeService.setLocale('pt-BR');
+         this.dateReordered = false;
+      }
   }
 
 }

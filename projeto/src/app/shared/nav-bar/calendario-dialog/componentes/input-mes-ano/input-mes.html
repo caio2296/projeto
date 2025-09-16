@@ -1,7 +1,7 @@
 
 <div [formGroup]="form">
     <mat-form-field appearance="outline">
-        <mat-label>Mes</mat-label>
+        <mat-label>{{'Dashboard.Calendario.Mes'| transloco}}</mat-label>
         <input  matInput [matDatepicker]="pickerMonth" formControlName="month"
             [min]="dateHelperServices.dateMinISO()" [max]="dateHelperServices.dateMaxISO()"
             (dateInput)="this.calendarFormService.onDateChangeDataAndMonth($event, 'month')" [readonly]="true"/>
