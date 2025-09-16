@@ -53,10 +53,6 @@
 
 
 .light-theme {
-
-
-
-
  @include mat.theme((
     color: (
       theme-type: light,
@@ -80,12 +76,10 @@
     typography: Roboto,
     density: 0
   ));
-
-
-
   }
 
    mat-sidenav {
+     background-color: #2D323E;
   @include mat.theme((
     color: (
       theme-type: dark,

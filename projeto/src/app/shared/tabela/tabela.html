@@ -5,7 +5,7 @@
 
   <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
     <th mat-header-cell *matHeaderCellDef>
-      {{ column !== 'acao' ? column : 'Ação' }}
+        {{ columnLabels[column] | transloco }}
     </th>
     <td mat-cell *matCellDef="let element">
       <ng-container *ngIf="column !== 'acao'; else acaoTemplate">
@@ -13,13 +13,13 @@
       </ng-container>
       <ng-template #acaoTemplate>
         <button mat-button color="accent" (click)="abrirModalEditar(element, $event)">
-          Editar
+          {{'Dashboard.TabelaButtons.Editar' | transloco}}
         </button>
         <button mat-button color="primary" (click)="abrirModal(element, $event)">
-          Ver Detalhes
+          {{'Dashboard.TabelaButtons.Detalhes' | transloco}}
         </button>
         <button mat-button color="warn" (click)="deletarItem(element)">
-          Deletar
+          {{'Dashboard.TabelaButtons.Deletar' | transloco}}
         </button>
       </ng-template>
     </td>
@@ -27,5 +27,5 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-<button mat-raised-button color="primary" (click)="abrirModalAdicionar($event)">Adicionar Item</button>
+<button mat-raised-button color="primary" (click)="abrirModalAdicionar($event)">{{'Dashboard.TabelaButtons.Adicionar' | transloco}}</button>
 </div>

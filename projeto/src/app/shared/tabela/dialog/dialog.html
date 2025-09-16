@@ -1,14 +1,14 @@
-<h2 mat-dialog-title>Detalhes</h2>
+<h2 mat-dialog-title>{{'Dashboard.TabelaDialog.Detalhes.Header' | transloco}}</h2>
 <mat-dialog-content>
   <div *ngFor="let campo of campos">
-  <p><strong>{{ campo.chave | titlecase }}:</strong> {{ campo.valor }}</p>
+  <p><strong>{{ campo.headerKey | transloco | titlecase }}:</strong> {{ campo.valor }}</p>
   </div>
 
     <canvas id="myChart1"></canvas>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close class="fechar-dialog" cdkFocusInitial>Fechar</button>
+  <button mat-button mat-dialog-close class="fechar-dialog" cdkFocusInitial>{{'Dashboard.TabelaDialog.Detalhes.ButtonFechar' | transloco}}</button>
 
 </mat-dialog-actions>
 

@@ -8,6 +8,7 @@ import { Subscription } from "rxjs";
 import { LabelDataService } from "./label-data-service";
 import { ApiService } from "C:/Users/user/Desktop/Caio/projeto/projeto/src/app/Services/api-service";
 import { FormularioService } from "./formulario-service";
+import { LocaleService } from "./LocaleService";
 
 @Injectable({ providedIn: 'root' })
 
@@ -18,7 +19,8 @@ export class CalendarFormService {
   constructor(
     public labelDataService: LabelDataService,
     public formularioService: FormularioService,
-    protected ApiService: ApiService) {
+    protected ApiService: ApiService,
+    private localeService:LocaleService) {
   }
 
   public onYearChange(event: MatSelectChange, inputName: string): void {
@@ -62,9 +64,10 @@ export class CalendarFormService {
         this.subscription = controlInput?.valueChanges
           .pipe(startWith(controlInput.value))
           .subscribe(data => {
-            this.labelDataService.setLabel(data.toLocaleDateString('pt-BR'));
+            const locale = this.localeService.getLocale();
+            this.labelDataService.setLabel(data.toLocaleDateString(locale));
             console.log("evento! enviando...");
-            console.log(`${data.toLocaleDateString('pt-BR')}`);
+            console.log(`${data.toLocaleDateString(locale)}`);
           });
         this.subscription?.unsubscribe();
 
@@ -150,11 +153,11 @@ export class CalendarFormService {
         const dataFimValor = this.formularioService.intervaloForm.get(inputFim)?.value;
 
         if (dataFim instanceof Date && dataInicio instanceof Date && dataFim > dataInicio) {
-
+          const locale = this.localeService.getLocale();
           this.labelDataService.setInterval(true);
           this.labelDataService.setTipoData("Dia");
           this.labelDataService.setCalendarMode('day');
-          const label = `${dataInicioValor.toLocaleDateString('pt-BR')} - ${dataFimValor.toLocaleDateString('pt-BR')}`;
+          const label = `${dataInicioValor.toLocaleDateString(locale)} - ${dataFimValor.toLocaleDateString(locale)}`;
           this.labelDataService.setLabel(label);
 
           console.log("evento! enviando...");
@@ -197,9 +200,7 @@ export class CalendarFormService {
           this.labelDataService.setInterval(true);
           this.labelDataService.setTipoData("Ano");
           this.labelDataService.setCalendarMode('year');
-          // this.labelDataService.setTipoData("Ano fiscal");
-          // this.labelDataService.setCalendarMode('fiscalYear');
-
+          
           this.labelDataService
             .setLabel(`${this.formularioService.intervaloForm.get(inputInicio)?.value} - ${dataFim}`);
           console.log("evento! enviando...");

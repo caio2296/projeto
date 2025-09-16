@@ -5,6 +5,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { LabelDataService } from '../Services/label-data-service';
 import { CalendarBarModelService } from '../Services/calendarBarModel';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-label-data',
@@ -17,10 +18,11 @@ export class LabelData implements OnInit, OnDestroy {
   tipo = '';
   label = '';
   //  dados!: CalendarModel;
+  currentTipoLabel = ''; 
 
   private subscriptions = new Subscription();
 
-  constructor(public labelDataService: LabelDataService, protected calendarBarModelService: CalendarBarModelService) { }
+  constructor(public labelDataService: LabelDataService, protected calendarBarModelService: CalendarBarModelService,private translocoService: TranslocoService) { }
 
   ngOnInit(): void {
     this.calendarBarModelService.carregarDados().subscribe(data => {
@@ -39,19 +41,24 @@ export class LabelData implements OnInit, OnDestroy {
       this.labelDataService.tipoData$.subscribe(tipo => {
         switch (tipo) {
           case 'day': {
-            this.tipo = 'Dia';
+             const mensagem = this.translocoService.translate('Dashboard.Label.day');
+
+            this.tipo = mensagem;
             break;
           }
           case 'month': {
-            this.tipo = 'Mes';
+              const mensagem = this.translocoService.translate('Dashboard.Label.month');
+            this.tipo = mensagem;
             break;
           }
           case 'year': {
-            this.tipo = 'Ano';
+              const mensagem = this.translocoService.translate('Dashboard.Label.year');
+            this.tipo = mensagem;
             break;
           }
           case 'fiscalYear': {
-            this.tipo = 'Ano fiscal';
+              const mensagem = this.translocoService.translate('Dashboard.Label.fiscalYear');
+            this.tipo = mensagem;
             break;
           }
           default: {

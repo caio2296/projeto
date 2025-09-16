@@ -1,6 +1,6 @@
- <h2 mat-dialog-title>Confirmação</h2>
+ <h2 mat-dialog-title>{{'Dashboard.TabelaDialog.Deletar.Header' | transloco}}</h2>
     <mat-dialog-content>{{ data.mensagem }}</mat-dialog-content>
     <mat-dialog-actions align="end">
-      <button mat-button (click)="fechar(false)">Cancelar</button>
-      <button mat-button color="warn" (click)="fechar(true)">Confirmar</button>
+      <button mat-button (click)="fechar(false)">{{'Dashboard.TabelaDialog.Deletar.ButtonCancelar' | transloco}}</button>
+      <button mat-button color="warn" (click)="fechar(true)">{{'Dashboard.TabelaDialog.Deletar.ButtonConfirmar' | transloco}}</button>
     </mat-dialog-actions>

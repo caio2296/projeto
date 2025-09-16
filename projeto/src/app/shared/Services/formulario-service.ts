@@ -10,6 +10,7 @@ import { dataFimMinValidator } from "./Validators/dataFimMinValidator";
 import { CalendarBarModelService } from "./calendarBarModel";
 import { DateHelperService } from './dateHelperService';
 import { LabelDataService } from './label-data-service';
+import { LocaleService } from './LocaleService';
 
 @Injectable({
   providedIn: 'root'
@@ -20,9 +21,10 @@ export class FormularioService {
   public intervaloForm!: FormGroup;
 
   constructor(private fb: FormBuilder,
-              protected calendarBarModelService: CalendarBarModelService,
-              protected dateHelperServices: DateHelperService,
-              public labelDataService: LabelDataService) { }
+    protected calendarBarModelService: CalendarBarModelService,
+    protected dateHelperServices: DateHelperService,
+    public labelDataService: LabelDataService,
+    private localeService: LocaleService,) { }
 
   public inicializarFormulario(calendarMode: any): FormGroup {
 
@@ -34,7 +36,14 @@ export class FormularioService {
 
     switch (calendarMode) {
       case 'day':
-        console.log(partes);
+        console.log(this.form = this.fb.group({
+          data: [this.calendarBarModelService.dados.calendarBar.defaultSelection.dateStart],
+          day: [dataJs],
+          month: [dataM],
+          year: [parseInt(partesPadrao[2])],
+          fiscalYear: [parseInt(partesPadrao[2])]
+        }));
+
         return this.form = this.fb.group({
           data: [this.calendarBarModelService.dados.calendarBar.defaultSelection.dateStart],
           day: [dataJs],
@@ -63,6 +72,7 @@ export class FormularioService {
           fiscalYear: [parseInt(String(ano))]
         });
     }
+
   }
 
   public InicialiarFormularioIntervalor(): FormGroup {
@@ -144,7 +154,7 @@ export class FormularioService {
         break;
       case 'fiscalYear':
         dataJs = new Date(+partesPadrao[2], +partesPadrao[1] - 1, +partesPadrao[0]);
-        if (this.labelDataService.getLabel().toString().includes('-') || this.labelDataService.getLabel().toString().includes('/') ) {
+        if (this.labelDataService.getLabel().toString().includes('-') || this.labelDataService.getLabel().toString().includes('/')) {
           partesAno = this.labelDataService.getLabel().split(/[/\-]/);
           Ano = partesAno[0];
         } else {
@@ -201,19 +211,39 @@ export class FormularioService {
     let ano;
     const partesPadrao = this.calendarBarModelService.dados.calendarBar.defaultSelection.dateStart.split('/');
 
-    if (this.labelDataService.getLabel().toString().includes('/')) {
-      partes = this.labelDataService.getLabel().split(/[/\\-]/);
-      dataJs = new Date(+partes[2], +partes[1] - 1, +partes[0]);
-      dataM = new Date(+partes[2], +partes[1] - 1);
-      ano = this.labelDataService.getLabel().split('/')[2];
-      if (this.labelDataService.getLabel().split('/')[2] == undefined || this.labelDataService.getLabel().split('/')[2] == null) {
-        ano = this.labelDataService.getLabel().split('/')[1];
+    if (this.localeService.getLocale() != "en-US") {
+      if (this.labelDataService.getLabel().toString().includes('/')) {
+        partes = this.labelDataService.getLabel().split(/[/\\-]/);
+
+        dataJs = new Date(+partes[2], +partes[1] - 1, +partes[0]);
+        dataM = new Date(+partes[2], +partes[1] - 1);
+        ano = this.labelDataService.getLabel().split('/')[2];
+        if (this.labelDataService.getLabel().split('/')[2] == undefined || this.labelDataService.getLabel().split('/')[2] == null) {
+          ano = this.labelDataService.getLabel().split('/')[1];
+        }
+      } else if (this.labelDataService.getLabel().toString().includes('-')) {
+        ano = this.labelDataService.getLabel().split('-')[0];
+      } else {
+        ano = this.labelDataService.getLabel();
       }
-    } else if (this.labelDataService.getLabel().toString().includes('-')) {
-      ano = this.labelDataService.getLabel().split('-')[0];
     } else {
-      ano = this.labelDataService.getLabel();
+      //fazer a versão americana da data
+      if (this.labelDataService.getLabel().toString().includes('/')) {
+        partes = this.labelDataService.getLabel().split(/[/\\-]/);
+        console.log("partes:", partes);
+        dataJs = new Date(+partes[2], +partes[0] - 1, +partes[1]);
+        dataM = new Date(+partes[2], +partes[0] - 1);
+        ano = this.labelDataService.getLabel().split('/')[2];
+        if (this.labelDataService.getLabel().split('/')[2] == undefined || this.labelDataService.getLabel().split('/')[2] == null) {
+          ano = this.labelDataService.getLabel().split('/')[1];
+        }
+      } else if (this.labelDataService.getLabel().toString().includes('-')) {
+        ano = this.labelDataService.getLabel().split('-')[0];
+      } else {
+        ano = this.labelDataService.getLabel();
+      }
     }
+
     return { partes, dataJs, dataM, partesPadrao, ano };
   }
 
@@ -224,27 +254,48 @@ export class FormularioService {
     let partesAno;
     let dataJs!: Date;
     let Ano;
+    let unidade;
 
     let dataFim: Date;
 
     const label = String(this.labelDataService.getLabel());
+    if (this.localeService.getLocale() != "en-US") {
+      if (label.includes('-')) {
+        const partes = this.labelDataService.getLabel().split('-');
+        const dataStr = partes[1].trim(); // remove espaços
 
-    if (label.includes('-')) {
-      const partes = this.labelDataService.getLabel().split('-');
-      const dataStr = partes[1].trim(); // remove espaços
+        const [dia, mes, ano] = dataStr.split('/');
+        dataFim = new Date(+ano, +mes - 1, +dia);
+      } else {
+        const [dia, mes, ano] = label.split('/');
+        dataFim = new Date(+ano, +mes - 1, +dia);
+      }
 
-      const [dia, mes, ano] = dataStr.split('/');
-      dataFim = new Date(+ano, +mes - 1, +dia);
+      unidade = this.labelDataService.getCalendarMode();
+
+      if (this.labelDataService.getLabel().toString().includes('/')) {
+        partes = this.labelDataService.getLabel().split(/\/|-/);
+        dataJs = new Date(+partes[2], +partes[1] - 1, +partes[0]);
+      }
     } else {
-      const [dia, mes, ano] = label.split('/');
-      dataFim = new Date(+ano, +mes - 1, +dia);
-    }
+      //versão americana
 
-    const unidade = this.labelDataService.getCalendarMode();
+      if (label.includes('-')) {
+        const partes = this.labelDataService.getLabel().split('-');
+        const dataStr = partes[1].trim();
+        const [mes, dia, ano] = dataStr.split('/');
+        dataFim = new Date(+ano, +mes - 1, +dia);
+      } else {
+        const [mes, dia, ano] = label.split('/');
+        dataFim = new Date(+ano, +mes - 1, +dia);
+      }
 
-    if (this.labelDataService.getLabel().toString().includes('/')) {
-      partes = this.labelDataService.getLabel().split(/\/|-/);
-      dataJs = new Date(+partes[2], +partes[1] - 1, +partes[0]);
+      unidade = this.labelDataService.getCalendarMode();
+
+      if (this.labelDataService.getLabel().toString().includes('/')) {
+        partes = this.labelDataService.getLabel().split(/\/|-/);
+        dataJs = new Date(+partes[2], +partes[0] - 1, +partes[1]); // <-- aqui invertido para MM/DD/YYYY
+      }
     }
     return { unidade, dataJs, dataFim, partesPadrao, partesMeses, partesAno, Ano };
   }

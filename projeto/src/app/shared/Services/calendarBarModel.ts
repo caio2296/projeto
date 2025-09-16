@@ -16,10 +16,8 @@ export class CalendarBarModelService {
   dados!: CalendarModel;
 
   constructor(private http: HttpClient, private router: Router) {
-
   }
   get isLoginPage(): boolean {
-
     return this.router.url === '/login';
   }
 

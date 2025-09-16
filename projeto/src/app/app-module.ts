@@ -21,6 +21,7 @@ import { ErrosInterceptor } from './core/erro/erros-interceptor';
 import { autenticacaoInterceptor } from './autenticacao/autenticacao-interceptor';
 import { AutenticacaoModule } from './autenticacao/autenticacao-module';
 import { MensagemInterceptor } from './core/services/mensagemInterceptor';
+import { TranslocoRootModule } from './transloco-root.module';
 
 const moment = _rollupMoment || _moment;
 
@@ -39,7 +40,8 @@ const moment = _rollupMoment || _moment;
     SharedModule,
     DashboardModule,
     ErroModule,
-    AutenticacaoModule
+    AutenticacaoModule,
+    TranslocoRootModule
   ],
   providers: [
   {
