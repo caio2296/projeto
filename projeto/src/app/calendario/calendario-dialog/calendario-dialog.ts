@@ -5,12 +5,13 @@ import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { CalendarBarModelService } from '../../Services/calendarBarModel';
-import { DateHelperService } from '../../Services/dateHelperService';
-import { CalendarFormService } from '../../Services/calendarFormService';
-import { InputConfig } from '../../Services/InputConfig';
-import { LabelDataService } from '../../Services/label-data-service';
-import { FormularioService } from '../../Services/formulario-service';
+
+import { DateHelperService } from '../ServicosCalendario/dateHelperService';
+import { CalendarFormService } from '../ServicosCalendario/calendarFormService';
+import { InputConfig } from '../ServicosCalendario/InputConfig';
+import { LabelDataService } from '../ServicosCalendario/label-data-service';
+import { FormularioService } from '../ServicosCalendario/FormularioService/formulario-service';
+import { CalendarBarModelService } from '../ServicosCalendario/calendarBarModel';
 
 type Modo = 'day' | 'month' | 'year' | 'fiscalYear' | 'week' | 'datetime';
 

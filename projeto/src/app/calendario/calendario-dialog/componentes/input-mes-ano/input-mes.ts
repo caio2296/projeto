@@ -8,11 +8,11 @@ import moment from 'moment';
 import { Moment } from 'moment';
 
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
-import { MY_FORMATS } from '../../../../Models/Formats';
-import { LabelDataService } from '../../../../Services/label-data-service';
-import { CalendarFormService } from '../../../../Services/calendarFormService';
-import { DateHelperService } from '../../../../Services/dateHelperService';
-import { InputConfig } from '../../../../Services/InputConfig';
+import { MY_FORMATS } from '../../../../shared/Models/Formats';
+import { LabelDataService } from '../../../ServicosCalendario/label-data-service';
+import { CalendarFormService } from '../../../ServicosCalendario/calendarFormService';
+import { DateHelperService } from '../../../ServicosCalendario/dateHelperService';
+import { InputConfig } from '../../../ServicosCalendario/InputConfig';
 
 @Component({
   selector: 'app-input-mes',

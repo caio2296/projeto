@@ -3,10 +3,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { CalendarFormService } from '../../../../Services/calendarFormService';
-import { DateHelperService } from '../../../../Services/dateHelperService';
-import { InputConfig } from '../../../../Services/InputConfig';
-import { LabelDataService } from '../../../../Services/label-data-service';
+import { CalendarFormService } from '../../../ServicosCalendario/calendarFormService';
+import { DateHelperService } from '../../../ServicosCalendario/dateHelperService';
+import { InputConfig } from '../../../ServicosCalendario/InputConfig';
+import { LabelDataService } from '../../../ServicosCalendario/label-data-service';
 
 @Component({
   selector: 'app-input-data',

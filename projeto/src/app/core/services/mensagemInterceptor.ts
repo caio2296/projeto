@@ -8,50 +8,82 @@ import {
     HttpInterceptor,
     HttpResponse
 } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, take, tap } from 'rxjs';
 import { MensagemService } from '../services/mensagemService';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Injectable()
 export class MensagemInterceptor implements HttpInterceptor {
 
-    constructor(private mensagemService: MensagemService) { }
+    constructor(private mensagemService: MensagemService,   private translocoService: TranslocoService) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // Mensagens fixas por rota
         const mensagensPorRota: Record<string, string> = {
-            '/api/AtualizarFruta': 'Fruta atualizada com sucesso!',
-            '/api/CriarToken': 'Logado com sucesso!',
-            '/api/AdicionarFrutas': 'Nova Fruta foi adicionada!'
+            '/api/AtualizarFruta': 'Mensagens.FrutaAtualizada',
+            '/api/CriarToken': 'Mensagens.LogadoComSucesso',
+            '/api/AdicionarFrutas': 'Mensagens.NovaFrutaAdicionada'
         };
 
         // Mensagens padrão por status
         const mensagensPorStatus: Record<number, string> = {
-            201: 'Recurso criado com sucesso!'
+            201: 'Mensagens.RecursoCriado'
         };
 
         return next.handle(req).pipe(
             tap((event: HttpEvent<any>) => {
                 if (event instanceof HttpResponse) {
                     const status = event.status;   // exemplo: 200, 201
-                    const body = event.body;       // pode ser string, objeto, array etc.
+                    // const body = event.body;       // pode ser string, objeto, array etc.
 
-                    // Checa se a rota tem mensagem definida
+                    //     // Checa se a rota tem mensagem definida
+                    //     for (const rota in mensagensPorRota) {
+                    //         if (req.url.includes(rota)) {
+                    //             this.mensagemService.openSnackBar(mensagensPorRota[rota], 'sucesso');
+                    //             return;
+                    //         }
+                    //     }
+
+                    //     // Se o body é string e sucesso (exceto rotas especiais)
+                    //     if (typeof body === 'string' && status >= 200 && status < 300) {
+                    //         this.mensagemService.openSnackBar(body, 'sucesso');
+                    //         return;
+                    //     }
+
+                    //     // Mensagem padrão por status
+                    //     if (mensagensPorStatus[status]) {
+                    //         this.mensagemService.openSnackBar(mensagensPorStatus[status], 'sucesso');
+                    //     }
+                    // }
+
                     for (const rota in mensagensPorRota) {
                         if (req.url.includes(rota)) {
-                            this.mensagemService.openSnackBar(mensagensPorRota[rota], 'sucesso');
+                            this.translocoService.selectTranslate(mensagensPorRota[rota])
+                                .pipe(take(1))
+                                .subscribe(msgTraduzida => {
+                                    this.mensagemService.openSnackBar(msgTraduzida, 'sucesso');
+                                });
                             return;
                         }
                     }
 
-                    // Se o body é string e sucesso (exceto rotas especiais)
-                    if (typeof body === 'string' && status >= 200 && status < 300) {
-                        this.mensagemService.openSnackBar(body, 'sucesso');
+                    // Prioridade 2: body string
+                    if (typeof event.body === 'string' && status >= 200 && status < 300) {
+                        this.translocoService.selectTranslate(event.body)
+                            .pipe(take(1))
+                            .subscribe(msgTraduzida => {
+                                this.mensagemService.openSnackBar(msgTraduzida, 'sucesso');
+                            });
                         return;
                     }
 
-                    // Mensagem padrão por status
+                    // Prioridade 3: mensagem por status
                     if (mensagensPorStatus[status]) {
-                        this.mensagemService.openSnackBar(mensagensPorStatus[status], 'sucesso');
+                        this.translocoService.selectTranslate(mensagensPorStatus[status])
+                            .pipe(take(1))
+                            .subscribe(msgTraduzida => {
+                                this.mensagemService.openSnackBar(msgTraduzida, 'sucesso');
+                            });
                     }
                 }
             })

@@ -3,19 +3,19 @@
 import { ChangeDetectorRef, Component, computed, signal } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { CalendarioDialog } from './calendario-dialog/calendario-dialog';
-import { CalendarBarModelService } from '../Services/calendarBarModel';
-import { CalendarFormService } from '../Services/calendarFormService';
-import { DateHelperService } from '../Services/dateHelperService';
-import { InputConfig } from '../Services/InputConfig';
+import { CalendarioDialog } from '../../calendario/calendario-dialog/calendario-dialog';
+import { CalendarFormService } from '../../calendario/ServicosCalendario/calendarFormService';
+import { DateHelperService } from '../../calendario/ServicosCalendario/dateHelperService';
+import { InputConfig } from '../../calendario/ServicosCalendario/InputConfig';
 import { TemaService } from './Services/tema-service';
 import { Router } from '@angular/router';
 import { TokenService } from '../../autenticacao/Services/token-service';
 import { TranslocoService } from '@jsverse/transloco';
-import { LabelDataService } from '../Services/label-data-service';
+import { LabelDataService } from '../../calendario/ServicosCalendario/label-data-service';
 import { take } from 'rxjs';
-import { LocaleService } from '../Services/LocaleService';
+import { LocaleService } from '../../calendario/ServicosCalendario/LocaleService';
 import { DateAdapter } from '@angular/material/core';
+import { CalendarBarModelService } from '../../calendario/ServicosCalendario/calendarBarModel';
 
 @Component({
   selector: 'app-nav-bar',
@@ -74,7 +74,6 @@ export class NavBar {
         this.currentTipoLabel = translated;
       });
     });
-
   }
 
   AlterarIdioma(lang: string) {
@@ -89,7 +88,6 @@ export class NavBar {
       this.currentTipoLabel = translated;
       this.labelDataService.setTipoData(this.currentTipoLabel);
     });
-
   }
 
   toggleTheme(): void {

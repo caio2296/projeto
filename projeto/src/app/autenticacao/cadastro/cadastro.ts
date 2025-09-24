@@ -24,7 +24,7 @@ export class Cadastro implements OnInit {
   displayedColumns: string[] = [];
   dataSource: Usuarios[] = [];
 
-   columnLabels: Record<string, string> = {
+  columnLabels: Record<string, string> = {
     id: 'Autenticacao.Cadastro.TabelaHeader.Id',
     email: 'Autenticacao.Cadastro.TabelaHeader.Email',
     usuarioTipo: 'Autenticacao.Cadastro.TabelaHeader.UsuarioTipo',
@@ -36,7 +36,7 @@ export class Cadastro implements OnInit {
     private cadastroService: CadastroService,
     private router: Router,
     private dialog: MatDialog,
-    private translocoService:TranslocoService
+    private translocoService: TranslocoService
   ) { }
   ngOnInit(): void {
     this.cadastroFrom = this.formBuilder.group({
@@ -55,11 +55,11 @@ export class Cadastro implements OnInit {
           console.log('Status:', res.status); // 200, 409, etc
           console.log('Mensagem:', res.body); // string retornada
 
-           // reseta o formulário
-        this.cadastroFrom.reset();
+          // reseta o formulário
+          this.cadastroFrom.reset();
 
-        // recarrega do back
-         this.ListarUsuarios();
+          // recarrega do back
+          this.ListarUsuarios();
         },
         error: (err) => {
           console.error('Erro:', err);
@@ -71,45 +71,35 @@ export class Cadastro implements OnInit {
   }
 
   deletarItem(element: any): void {
-//       const mensagem = this.translocoService.translate('Autenticacao.Cadastro.MensagemDelete', { email: element.email });
+    this.translocoService.selectTranslate('Autenticacao.Cadastro.MensagemDelete', { email: element.email })
+      .pipe(take(1))
+      .subscribe(mensagemTraduzida => {
 
-//       console.log('ActiveLang:', this.translocoService.getActiveLang());
-// console.log('Available langs:', this.translocoService.getAvailableLangs());
-// console.log('Translate test key:', this.translocoService.translate('Autenticacao.Cadastro.MensagemDelete', { email: 'x' }));
-
-//     const dialogRef = this.dialog.open(DialogConfirmeDelete, {
-//         data: { mensagem: mensagem }
-//       });
-
-this.translocoService.selectTranslate('Autenticacao.Cadastro.MensagemDelete', { email: element.email })
-  .pipe(take(1))
-  .subscribe(mensagemTraduzida => {
-
-    const dialogRef = this.dialog.open(DialogConfirmeDelete, {
-      data: { mensagem: mensagemTraduzida }
-    });
-    dialogRef.afterClosed().subscribe(confirmado => {
-    if (confirmado) {
-      this.dataSource = this.dataSource.filter(item => item.id !== element.id);
-      this.cadastroService.DeletarUsuario(element.id).subscribe({
-        next: () => console.log("Usuario deletado com sucesso"),
-        error: err => console.error("Erro ao deletar Usuario:", err)
+        const dialogRef = this.dialog.open(DialogConfirmeDelete, {
+          data: { mensagem: mensagemTraduzida }
+        });
+        dialogRef.afterClosed().subscribe(confirmado => {
+          if (confirmado) {
+            this.dataSource = this.dataSource.filter(item => item.id !== element.id);
+            this.cadastroService.DeletarUsuario(element.id).subscribe({
+              next: () => console.log("Usuario deletado com sucesso"),
+              error: err => console.error("Erro ao deletar Usuario:", err)
+            });
+          }
+        });
       });
-    }
-  });
-  });
 
-  
+
   }
 
-    private ListarUsuarios() {
+  private ListarUsuarios() {
     this.cadastroService.ListarUsuario().subscribe({
       next: (res) => {
         this.dataSource = res;
         if (res.length > 0) {
           this.displayedColumns = Object.keys(res[0]);
           this.displayedColumns.push('acao');
-        }else{
+        } else {
           this.dataSource = [];
         }
       },
