@@ -35,27 +35,6 @@ export class MensagemInterceptor implements HttpInterceptor {
                 if (event instanceof HttpResponse) {
                     const status = event.status;   // exemplo: 200, 201
                     // const body = event.body;       // pode ser string, objeto, array etc.
-
-                    //     // Checa se a rota tem mensagem definida
-                    //     for (const rota in mensagensPorRota) {
-                    //         if (req.url.includes(rota)) {
-                    //             this.mensagemService.openSnackBar(mensagensPorRota[rota], 'sucesso');
-                    //             return;
-                    //         }
-                    //     }
-
-                    //     // Se o body é string e sucesso (exceto rotas especiais)
-                    //     if (typeof body === 'string' && status >= 200 && status < 300) {
-                    //         this.mensagemService.openSnackBar(body, 'sucesso');
-                    //         return;
-                    //     }
-
-                    //     // Mensagem padrão por status
-                    //     if (mensagensPorStatus[status]) {
-                    //         this.mensagemService.openSnackBar(mensagensPorStatus[status], 'sucesso');
-                    //     }
-                    // }
-
                     for (const rota in mensagensPorRota) {
                         if (req.url.includes(rota)) {
                             this.translocoService.selectTranslate(mensagensPorRota[rota])
@@ -66,7 +45,6 @@ export class MensagemInterceptor implements HttpInterceptor {
                             return;
                         }
                     }
-
                     // Prioridade 2: body string
                     if (typeof event.body === 'string' && status >= 200 && status < 300) {
                         this.translocoService.selectTranslate(event.body)

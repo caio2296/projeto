@@ -92,8 +92,8 @@
         "RecursoNaoEncontrado": "Resource not found.",
         "ErroServidor": "Internal server error.",
         "ConflitoRequisicao": "Conflict occurred while processing the request!",
-        "Cliente": "Client error: "
+        "Cliente": "Client error: ",
+        "UsuarioRegistrado": "User already registered!"
     }
 }
-
 }
