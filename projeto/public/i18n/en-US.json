@@ -63,7 +63,7 @@
                 "Titulo": "Add Item",
                 "Header": "Description",
                 "Selecionar": "Select size",
-                "Cor":"Color",
+                "Cor": "Color",
                 "Tamanho": {
                     "Pequeno": "Small",
                     "Medio": "Medium",
@@ -81,19 +81,22 @@
         }
     },
     "Mensagens": {
-    "FrutaAtualizada": "Fruit updated successfully!",
-    "LogadoComSucesso": "Logged in successfully!",
-    "NovaFrutaAdicionada": "A new fruit has been added!",
-    "RecursoCriado": "Resource created successfully!",
-    "Erros": {
-        "Desconhecido": "An unknown error occurred!",
-        "EmailIncorreto": "The provided email is incorrect or not registered.",
-        "NaoAutorizado": "You are not authorized to access this resource.",
-        "RecursoNaoEncontrado": "Resource not found.",
-        "ErroServidor": "Internal server error.",
-        "ConflitoRequisicao": "Conflict occurred while processing the request!",
-        "Cliente": "Client error: ",
-        "UsuarioRegistrado": "User already registered!"
+        "FrutaDeletada": "The selected fruit has been successfully deleted!",
+        "FrutaAtualizada": "Fruit updated successfully!",
+        "LogadoComSucesso": "Logged in successfully!",
+        "NovaFrutaAdicionada": "A new fruit has been added!",
+        "RecursoCriado": "Resource created successfully!",
+        "UsuarioDeletado": "User deleted successfully!",
+        "UsuarioCriado": "User added successfully!",
+        "Erros": {
+            "Desconhecido": "An unknown error occurred!",
+            "EmailIncorreto": "The provided email is incorrect or not registered.",
+            "NaoAutorizado": "You are not authorized to access this resource.",
+            "RecursoNaoEncontrado": "Resource not found.",
+            "ErroServidor": "Internal server error.",
+            "ConflitoRequisicao": "Conflict occurred while processing the request!",
+            "Cliente": "Client error: ",
+            "UsuarioRegistrado": "User already registered!"
+        }
     }
-}
 }

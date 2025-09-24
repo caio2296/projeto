@@ -6,7 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { registerLocaleData } from '@angular/common';
 import localeBr from '@angular/common/locales/pt';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 registerLocaleData(localeBr, 'pt');
 
 import { AppRoutingModule } from './app-routing-module';
@@ -35,7 +35,6 @@ const moment = _rollupMoment || _moment;
     ReactiveFormsModule,
     CommonModule,  
     FormsModule,
-    HttpClientModule,
     MaterialModule,
     SharedModule,
     DashboardModule,
@@ -44,6 +43,8 @@ const moment = _rollupMoment || _moment;
     TranslocoRootModule
   ],
   providers: [
+      // ✅ novo jeito recomendado
+    provideHttpClient(withInterceptorsFromDi()),
   {
     provide: HTTP_INTERCEPTORS,
     useClass: autenticacaoInterceptor,

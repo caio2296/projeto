@@ -82,10 +82,13 @@
         }
     },
     "Mensagens":{
+        "FrutaDeletada":"A Fruta selecionada foi deletada com sucesso!",
         "FrutaAtualizada":"Fruta atualizada com sucesso!",
         "LogadoComSucesso":"Logado com sucesso!",
         "NovaFrutaAdicionada":"Nova Fruta foi adicionada!",
         "RecursoCriado":"Recurso criado com sucesso!",
+        "UsuarioDeletado":"Usuário deletado com sucesso!",
+        "UsuarioCriado":"Usuário Adicionado com Sucesso!",
         "Erros":{
             "Desconhecido":"Ocorreu um erro desconhecido!",
             "EmailIncorreto":"O e-mail informado está incorreto ou não cadastrado.",

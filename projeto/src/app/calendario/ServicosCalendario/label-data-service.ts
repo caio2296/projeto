@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
- 
+
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { LocaleService } from './LocaleService';
@@ -41,17 +41,17 @@ export class LabelDataService {
 
   public setLabel(labelData: string, locale?: string) {
     //  console.log("setLabel chamado com:", labelData);
-    console.trace(); // mostra a pilha de chamadas
-    console.log("testando", labelData);
+    // console.trace(); // mostra a pilha de chamadas
+    // console.log("testando", labelData);
 
-      // se não passar locale, usa pt-BR como padrão
-  const effectiveLocale = locale ?? 'pt-BR';
-   this._DateLocale = effectiveLocale;
+    // se não passar locale, usa pt-BR como padrão
+    const effectiveLocale = locale ?? 'pt-BR';
+    this._DateLocale = effectiveLocale;
     this.labelSubject.next(labelData);
 
   }
 
-  public getDateLocale():string{
+  public getDateLocale(): string {
     return this._DateLocale;
   }
 
@@ -96,7 +96,7 @@ export class LabelDataService {
     }
   }
 
-      public TrocaFormatoDataLabelPadrao(lang: string, dateAdapter: DateAdapter<Date, any>, localeService: LocaleService) {
+  public TrocaFormatoDataLabelPadrao(lang: string, dateAdapter: DateAdapter<Date, any>, localeService: LocaleService) {
     if (this.getLabel().toString().includes("-")) {
       // se o label possui o "-" logo e um intervalo
       const partes = this.getLabel().split(/[-/]/);
@@ -150,7 +150,7 @@ export class LabelDataService {
   }
 
 
-    public TrocaFormatadoDataLabelEnUs(lang: string, dateAdapter: DateAdapter<Date, any>, localeService: LocaleService) {
+  public TrocaFormatadoDataLabelEnUs(lang: string, dateAdapter: DateAdapter<Date, any>, localeService: LocaleService) {
     if (this.getCalendarMode() == "day" && !this.dateReordered) {
 
       console.log(this.getLabel().split("-"));

@@ -37,8 +37,8 @@ export class LabelData implements OnInit, OnDestroy {
 
   // Setter
   set label(value: string) {
-    console.log('label alterado para:', value);
-    console.trace(); // mostra a pilha de chamadas
+    // console.log('label alterado para:', value);
+    // console.trace(); // mostra a pilha de chamadas
     this._label = value;
   }
   ngOnInit(): void {

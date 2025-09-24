@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { MaterialModule } from '../../core/material/material.module';
 
+import { MaterialModule } from '../../core/material/material.module';
 import { CalendarioDialog } from '../calendario-dialog/calendario-dialog';
 import { DataIntervalo } from '../calendario-dialog/componentes/data-intervalo/data-intervalo';
 import { InputData } from '../calendario-dialog/componentes/input-data/input-data';
