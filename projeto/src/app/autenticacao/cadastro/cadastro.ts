@@ -5,11 +5,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CadastroService } from '../Services/cadastro-service';
-import { Usuarios } from '../../shared/Models/type';
+import { Usuarios } from '../Models/type';
 import { DialogConfirmeDelete } from '../../shared/tabela/dialog-confirme-delete/dialog-confirme-delete';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslocoService } from '@jsverse/transloco';
 import { take } from 'rxjs';
+
 
 @Component({
   selector: 'app-cadastro',

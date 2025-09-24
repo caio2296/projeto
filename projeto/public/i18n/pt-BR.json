@@ -93,7 +93,8 @@
             "RecursoNaoEncontrado":"Recurso não encontrado.",
             "ErroServidor":"Erro interno do servidor",
             "ConflitoRequisicao":"Conflito ao processar a requisição!",
-            "Cliente":"Erro do cliente: "
+            "Cliente":"Erro do cliente: ",
+            "UsuarioRegistrado": "Usuário já cadastrado!"
         }
     }
 }

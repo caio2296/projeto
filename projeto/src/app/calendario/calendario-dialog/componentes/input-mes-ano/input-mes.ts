@@ -8,7 +8,7 @@ import moment from 'moment';
 import { Moment } from 'moment';
 
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
-import { MY_FORMATS } from '../../../../shared/Models/Formats';
+import { MY_FORMATS } from '../../../Models/Formats';
 import { LabelDataService } from '../../../ServicosCalendario/label-data-service';
 import { CalendarFormService } from '../../../ServicosCalendario/calendarFormService';
 import { DateHelperService } from '../../../ServicosCalendario/dateHelperService';

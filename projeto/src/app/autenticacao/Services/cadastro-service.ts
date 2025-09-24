@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/prefer-inject */
 import { Injectable } from '@angular/core';
-
 import { HttpClient, HttpResponse } from '@angular/common/http';
+
 import { environment } from '../../../environments/environment.development';
 import { Observable, tap } from 'rxjs';
-import { Usuarios } from '../../shared/Models/type';
+import { Usuarios } from '../Models/type';
+
 
 @Injectable({
   providedIn: 'root'
