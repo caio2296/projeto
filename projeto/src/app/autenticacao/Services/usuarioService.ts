@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { TokenService } from './token-service';
 import { jwtDecode } from 'jwt-decode';
 import { BehaviorSubject } from 'rxjs';
-import { Usuarios } from '../../shared/Models/type';
+import { Usuarios } from '../Models/type';
+
 
 
 @Injectable({

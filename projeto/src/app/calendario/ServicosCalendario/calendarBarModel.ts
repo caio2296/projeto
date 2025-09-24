@@ -3,9 +3,10 @@ import { Injectable } from '@angular/core';
 
 import { environment } from '../../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
-import { CalendarModel } from '../../shared/Models/type';
+
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { CalendarModel } from '../Models/type';
 
 @Injectable({
   providedIn: 'root' // Faz com que esse service seja um singleton global
