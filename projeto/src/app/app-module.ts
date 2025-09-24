@@ -48,8 +48,7 @@ const moment = _rollupMoment || _moment;
     provide: HTTP_INTERCEPTORS,
     useClass: autenticacaoInterceptor,
     multi: true
-  }
-    ,
+  },
     // DatePipe, { provide: LOCALE_ID, useValue: 'pt' },
     provideBrowserGlobalErrorListeners(),
     {

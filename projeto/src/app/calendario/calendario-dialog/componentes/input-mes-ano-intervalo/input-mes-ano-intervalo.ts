@@ -8,12 +8,12 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Moment } from 'moment';
 import { MatDatepicker } from '@angular/material/datepicker';
 import moment from 'moment';
-import { MY_FORMATS } from '../../../../Models/Formats';
+import { MY_FORMATS } from '../../../../shared/Models/Formats';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
-import { CalendarFormService } from '../../../../Services/calendarFormService';
-import { DateHelperService } from '../../../../Services/dateHelperService';
-import { InputConfig } from '../../../../Services/InputConfig';
-import { FormularioService } from '../../../../Services/formulario-service';
+import { CalendarFormService } from '../../../ServicosCalendario/calendarFormService';
+import { DateHelperService } from '../../../ServicosCalendario/dateHelperService';
+import { InputConfig } from '../../../ServicosCalendario/InputConfig';
+import { FormularioService } from '../../../ServicosCalendario/FormularioService/formulario-service';
 
 @Component({
   selector: 'app-input-mes-ano-intervalo',

@@ -2,10 +2,10 @@
 /* eslint-disable @angular-eslint/prefer-standalone */
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { InputConfig } from '../../../../Services/InputConfig';
-import { FormularioService } from '../../../../Services/formulario-service';
-import { DateHelperService } from '../../../../Services/dateHelperService';
-import { CalendarFormService } from '../../../../Services/calendarFormService';
+import { InputConfig } from '../../../ServicosCalendario/InputConfig';
+import { FormularioService } from '../../../ServicosCalendario/FormularioService/formulario-service';
+import { DateHelperService } from '../../../ServicosCalendario/dateHelperService';
+import { CalendarFormService } from '../../../ServicosCalendario/calendarFormService';
 
 @Component({
   selector: 'app-seletor-ano-fiscal-intervalo',

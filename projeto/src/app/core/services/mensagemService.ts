@@ -10,18 +10,18 @@ export class MensagemService {
   horizontalPosition: MatSnackBarHorizontalPosition = 'start';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
-  constructor(private _snackBar: MatSnackBar) {}
+  constructor(private _snackBar: MatSnackBar) { }
 
   openSnackBar(message: string, tipo: 'sucesso' | 'erro' | 'aviso' = 'aviso') {
-     let cssClass = 'snackbar-aviso';
+    let cssClass = 'snackbar-aviso';
 
-  if (tipo === 'sucesso') cssClass = 'snackbar-sucesso';
-  if (tipo === 'erro') cssClass = 'snackbar-erro';
+    if (tipo === 'sucesso') cssClass = 'snackbar-sucesso';
+    if (tipo === 'erro') cssClass = 'snackbar-erro';
     this._snackBar.open(message, undefined, {
-        duration: 3000,
-        horizontalPosition: this.horizontalPosition,
-        verticalPosition: this.verticalPosition,
-        panelClass: [cssClass]
+      duration: 3000,
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+      panelClass: [cssClass]
     });
-}
+  }
 }

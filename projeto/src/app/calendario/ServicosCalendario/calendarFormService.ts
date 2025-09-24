@@ -7,7 +7,7 @@ import { Subscription } from "rxjs";
 
 import { LabelDataService } from "./label-data-service";
 import { ApiService } from "C:/Users/user/Desktop/Caio/projeto/projeto/src/app/Services/api-service";
-import { FormularioService } from "./formulario-service";
+import { FormularioService } from "./FormularioService/formulario-service";
 import { LocaleService } from "./LocaleService";
 
 @Injectable({ providedIn: 'root' })
@@ -65,7 +65,9 @@ export class CalendarFormService {
           .pipe(startWith(controlInput.value))
           .subscribe(data => {
             const locale = this.localeService.getLocale();
+            // this.labelDataService.setLabel(data.toLocaleDateString(locale));
             this.labelDataService.setLabel(data.toLocaleDateString(locale));
+
             console.log("evento! enviando...");
             console.log(`${data.toLocaleDateString(locale)}`);
           });
@@ -129,7 +131,7 @@ export class CalendarFormService {
 
           const dataFormatadaFim = `${mesFim}/${anoFim}`;
           this.labelDataService.setInterval(true);
-          this.labelDataService.setTipoData("Mes");
+          this.labelDataService.setTipoData("month");
           this.labelDataService.setCalendarMode('month');
           this.labelDataService.setLabel(`${dataFormatadaInicio}-${dataFormatadaFim}`);
 
@@ -155,10 +157,11 @@ export class CalendarFormService {
         if (dataFim instanceof Date && dataInicio instanceof Date && dataFim > dataInicio) {
           const locale = this.localeService.getLocale();
           this.labelDataService.setInterval(true);
-          this.labelDataService.setTipoData("Dia");
+          this.labelDataService.setTipoData("day");
           this.labelDataService.setCalendarMode('day');
           const label = `${dataInicioValor.toLocaleDateString(locale)} - ${dataFimValor.toLocaleDateString(locale)}`;
-          this.labelDataService.setLabel(label);
+          this.labelDataService.setLabel(label,locale);
+          
 
           console.log("evento! enviando...");
           console.log(label);
@@ -177,7 +180,7 @@ export class CalendarFormService {
 
         if (dataFim && dataFim > dataInicio) {
           this.labelDataService.setInterval(true);
-          this.labelDataService.setTipoData("Ano fiscal");
+          this.labelDataService.setTipoData("fiscalYear");
           this.labelDataService.setCalendarMode('fiscalYear');
 
           this.labelDataService
@@ -198,7 +201,7 @@ export class CalendarFormService {
 
         if (dataFim && dataFim > dataInicio) {
           this.labelDataService.setInterval(true);
-          this.labelDataService.setTipoData("Ano");
+          this.labelDataService.setTipoData("year");
           this.labelDataService.setCalendarMode('year');
           
           this.labelDataService

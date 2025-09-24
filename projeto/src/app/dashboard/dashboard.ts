@@ -6,10 +6,11 @@ import { Router } from '@angular/router';
 import { TokenService } from '../autenticacao/Services/token-service';
 import { UsuarioService } from '../autenticacao/Services/usuarioService';
 import { TemaService } from '../shared/nav-bar/Services/tema-service';
-import { CalendarBarModelService } from '../shared/Services/calendarBarModel';
-import { CalendarFormService } from '../shared/Services/calendarFormService';
-import { DateHelperService } from '../shared/Services/dateHelperService';
-import { InputConfig } from '../shared/Services/InputConfig';
+
+import { CalendarFormService } from '../calendario/ServicosCalendario/calendarFormService';
+import { DateHelperService } from '../calendario/ServicosCalendario/dateHelperService';
+import { InputConfig } from '../calendario/ServicosCalendario/InputConfig';
+import { CalendarBarModelService } from '../calendario/ServicosCalendario/calendarBarModel';
 
 @Component({
   selector: 'app-dashboard',

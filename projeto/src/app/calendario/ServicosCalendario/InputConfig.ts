@@ -1,8 +1,9 @@
 /* eslint-disable @angular-eslint/prefer-inject */
 
+import { CalendarBarModelService } from "./calendarBarModel";
 import { DateHelperService } from "./dateHelperService";
 import { Injectable } from "@angular/core";
-import { CalendarBarModelService } from "./calendarBarModel";
+
 
 @Injectable({
   providedIn: 'root' // Isso já registra automaticamente como provider global

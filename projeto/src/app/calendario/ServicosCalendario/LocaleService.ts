@@ -7,6 +7,8 @@ export class LocaleService {
   locale$ = this.localeSubject.asObservable();
 
   setLocale(locale: string) {
+             console.log("muda");
+
     this.localeSubject.next(locale);
   }
 

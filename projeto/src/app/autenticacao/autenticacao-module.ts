@@ -22,12 +22,11 @@ import { TranslocoModule } from '@jsverse/transloco';
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
-        RouterModule,
-            SharedModule,
-            TranslocoModule
-        
+    RouterModule,
+    SharedModule,
+    TranslocoModule
   ],
-  exports:[
+  exports: [
     Login
   ]
 })
