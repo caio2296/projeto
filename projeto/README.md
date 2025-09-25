@@ -57,3 +57,43 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+# Projeto Angular
+
+## Requisitos
+- Node.js (versão recomendada: 20+)
+- NPM (vem junto com o Node)
+
+## Passo a passo para rodar o projeto
+
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/seu-usuario/projeto.git
+   cd projeto
+Instale as dependências:
+
+bash
+Copiar código:
+
+npm install
+Rode a aplicação em ambiente de desenvolvimento:
+
+bash
+Copiar código:
+
+npm start
+
+ou
+
+bash
+Copiar código:
+
+ng serve
+
+Acesse no navegador:
+
+arduino
+
+Copiar código:
+
+http://localhost:4200
