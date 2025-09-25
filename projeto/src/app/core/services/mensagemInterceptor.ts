@@ -22,7 +22,10 @@ export class MensagemInterceptor implements HttpInterceptor {
         const mensagensPorRota: Record<string, string> = {
             '/api/AtualizarFruta': 'Mensagens.FrutaAtualizada',
             '/api/CriarToken': 'Mensagens.LogadoComSucesso',
-            '/api/AdicionarFrutas': 'Mensagens.NovaFrutaAdicionada'
+            '/api/AdicionarFrutas': 'Mensagens.NovaFrutaAdicionada',
+            '/api/ExcluirFruta':'Mensagens.FrutaDeletada',
+            '/api/DeleteUsuario':'Mensagens.UsuarioDeletado',
+            '/api/RegistrarUsuario':'Mensagens.UsuarioCriado'
         };
 
         // Mensagens padrão por status

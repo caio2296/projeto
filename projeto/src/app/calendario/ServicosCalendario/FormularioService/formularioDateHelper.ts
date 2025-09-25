@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/prefer-inject */
 import { Injectable } from '@angular/core';
-import { LabelDataService } from '../label-data-service';
+import { LabelDataService } from '../../../calendario/ServicosCalendario/label-data-service';
 import { LocaleService } from '../LocaleService';
 
 @Injectable({

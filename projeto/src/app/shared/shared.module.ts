@@ -9,11 +9,10 @@ import { Tabela } from './tabela/tabela';
 import { Dialog } from './tabela/dialog/dialog';
 import { DialogAdicionarItem } from './tabela/dialog-adicionar-item/dialog-adicionar-item';
 import { NavBar } from './nav-bar/nav-bar';
-import { SideBar } from './side-bar/side-bar';
+import { SideBar } from './nav-bar/side-bar/side-bar';
 import { DialogConfirmeDelete } from './tabela/dialog-confirme-delete/dialog-confirme-delete';
 import { Footer } from './footer/footer';
 import { TranslocoModule } from "@jsverse/transloco";
-import { CalendarioModule } from "../calendario/modulo/calendario-module";
 
 
 @NgModule({
@@ -34,7 +33,6 @@ import { CalendarioModule } from "../calendario/modulo/calendario-module";
         FormsModule,
         RouterModule,
         TranslocoModule,
-        CalendarioModule
     ],
     exports: [
         Grafico,

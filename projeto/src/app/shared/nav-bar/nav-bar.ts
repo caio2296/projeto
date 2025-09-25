@@ -1,7 +1,7 @@
 /* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @angular-eslint/prefer-inject */
-import { ChangeDetectorRef, Component, computed, signal } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import {  Component, computed, signal } from '@angular/core';
+import {  FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { CalendarioDialog } from '../../calendario/calendario-dialog/calendario-dialog';
 import { CalendarFormService } from '../../calendario/ServicosCalendario/calendarFormService';
@@ -50,7 +50,7 @@ export class NavBar {
   };
 
 
-  constructor(private fb: FormBuilder, private cdRef: ChangeDetectorRef,
+  constructor(
     protected calendarBarModelService: CalendarBarModelService,
     protected dateHelperServices: DateHelperService,
     protected calendarFormService: CalendarFormService,

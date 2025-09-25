@@ -1,5 +1,5 @@
 /* eslint-disable @angular-eslint/prefer-inject */
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
@@ -20,7 +20,6 @@ export class ErrosInterceptor implements HttpInterceptor {
   constructor(private mensagemService: MensagemService,
     private tokenService: TokenService,
     private router: Router,
-    private injector: Injector,
     private translocoService: TranslocoService) {
   }
 
@@ -75,8 +74,6 @@ export class ErrosInterceptor implements HttpInterceptor {
             console.error("Erro HTTP:", error);
             console.error("Mensagem exibida:", msgTraduzida);
           });
-
-
         return throwError(() => new Error(errorMessage));
       })
     );
