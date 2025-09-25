@@ -3,7 +3,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import {MediaMatcher} from '@angular/cdk/layout';
 import { OnDestroy, inject, signal} from '@angular/core';
-import { UsuarioService } from '../../autenticacao/Services/usuarioService';
+import { UsuarioService } from '../../../autenticacao/Services/usuarioService';
 import { Router } from '@angular/router';
 
 @Component({

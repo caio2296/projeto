@@ -16,8 +16,6 @@ import { LabelData } from '../label-data/label-data';
 import { TranslocoModule } from '@jsverse/transloco';
 
 
-
-
 @NgModule({
   declarations: [
     InputData,

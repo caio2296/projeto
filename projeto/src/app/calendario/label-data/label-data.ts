@@ -9,6 +9,7 @@ import { TranslocoService } from '@jsverse/transloco';
 import { LocaleService } from '../ServicosCalendario/LocaleService';
 import { CalendarBarModelService } from '../ServicosCalendario/calendarBarModel';
 import { FormatadorLabelData } from '../ServicosCalendario/formatador-label-data';
+import { CalendarModel } from '../Models/type';
 
 @Component({
   selector: 'app-label-data',
@@ -26,8 +27,12 @@ export class LabelData implements OnInit, OnDestroy {
 
   private subscriptions = new Subscription();
 
-  constructor(public labelDataService: LabelDataService, protected calendarBarModelService: CalendarBarModelService, private translocoService: TranslocoService,
-    private localeService: LocaleService, private formatadorLabeData: FormatadorLabelData
+  constructor(
+    public labelDataService: LabelDataService,
+     protected calendarBarModelService: CalendarBarModelService,
+     private translocoService: TranslocoService,
+     private localeService: LocaleService,
+     private formatadorLabeData: FormatadorLabelData
   ) { }
 
   // Getter
@@ -53,31 +58,13 @@ export class LabelData implements OnInit, OnDestroy {
 
       if (this.localeService.getLocale() === "en-US") {
 
-        const partesPadrao = data.calendarBar.defaultSelection.dateStart.split('/');
-
-        this.labelDataService.setLabel(`${partesPadrao[1]}/${partesPadrao[0]}/${partesPadrao[2]}`);
-        this.IniciouEn = true;
-        this.labelDataService.TipoInicioLabel(this.IniciouEn);
-        // 🔹 já normaliza o label inicial aqui
-        const partes = this.labelDataService.getLabel().split('/');
-        this.label = `${partes[0]}/${partes[1]}/${partes[2]}`; // mm/dd/yyyy
-        // this.labelDataService.setLabel(this.label);
-
-        console.log("inicio com ingles", this.localeService.getLocale(), data.calendarBar.defaultSelection.dateStart, `${partesPadrao[1]}/${partesPadrao[0]}/${partesPadrao[2]}`);
+        this.InicilizacaoEnUs(data);
 
       } else {
 
-        this.IniciouEn = false;
-        this.labelDataService.TipoInicioLabel(this.IniciouEn);
-        const partes = data.calendarBar.defaultSelection.dateStart.split('/');
-        this.label = `${partes[0]}/${partes[1]}/${partes[2]}`; // dd/mm/yyyy
-        this.labelDataService.setLabel(this.label);
-        console.log("inicio bom portugues");
+        this.InicializacaoPadrao(data);
 
       }
-
-
-      // this.labelDataService.AlterarLocalizacao(this.localeService.getLocale());
 
     });
 
@@ -124,13 +111,38 @@ export class LabelData implements OnInit, OnDestroy {
         if (!label) return;
 
         if (label.toString().includes("/") && !label.toString().includes("-") || (!label.toString().includes("/") && !label.toString().includes("-"))) {
+
           this.label = this.formatadorLabeData.atualizarDataLabel(label);
+
         } else if (label.toString().includes("/") && label.toString().includes("-") || (!this.label.toString().includes("-") || (this.label.toString().includes("/")))) {
+
           this.label = this.formatadorLabeData.atualizarDataLabelIntervalo(label, locale);
+
         }
         this.labelDataService.TipoInicioLabel(this.IniciouEn);
       })
     );
+  }
+
+  private InicializacaoPadrao(data: CalendarModel) {
+    this.IniciouEn = false;
+    this.labelDataService.TipoInicioLabel(this.IniciouEn);
+    const partes = data.calendarBar.defaultSelection.dateStart.split('/');
+    this.label = `${partes[0]}/${partes[1]}/${partes[2]}`; // dd/mm/yyyy
+    this.labelDataService.setLabel(this.label);
+  
+  }
+
+  private InicilizacaoEnUs(data: CalendarModel) {
+    const partesPadrao = data.calendarBar.defaultSelection.dateStart.split('/');
+
+    this.labelDataService.setLabel(`${partesPadrao[1]}/${partesPadrao[0]}/${partesPadrao[2]}`);
+    this.IniciouEn = true;
+    this.labelDataService.TipoInicioLabel(this.IniciouEn);
+    // 🔹 já normaliza o label inicial aqui
+    const partes = this.labelDataService.getLabel().split('/');
+    this.label = `${partes[0]}/${partes[1]}/${partes[2]}`; // mm/dd/yyyy
+
   }
 
   ngOnDestroy(): void {

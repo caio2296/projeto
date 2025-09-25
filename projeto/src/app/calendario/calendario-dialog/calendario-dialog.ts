@@ -3,8 +3,7 @@
 /* eslint-disable @angular-eslint/prefer-inject */
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormBuilder, FormGroup } from '@angular/forms';
-
+import { FormGroup } from '@angular/forms';
 
 import { DateHelperService } from '../ServicosCalendario/dateHelperService';
 import { CalendarFormService } from '../ServicosCalendario/calendarFormService';
@@ -29,7 +28,6 @@ export class CalendarioDialog implements OnInit, OnDestroy {
   calendarMode!: 'day' | 'month' | 'year' | 'fiscalYear' | 'week' | 'datetime';
 
   constructor(
-    private fb: FormBuilder,
     public dialogRef: MatDialogRef<CalendarioDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public calendarBarModelService: CalendarBarModelService,
