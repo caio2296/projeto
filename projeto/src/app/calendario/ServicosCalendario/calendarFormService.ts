@@ -66,10 +66,10 @@ export class CalendarFormService {
           .subscribe(data => {
             const locale = this.localeService.getLocale();
             // this.labelDataService.setLabel(data.toLocaleDateString(locale));
-            this.labelDataService.setLabel(data.toLocaleDateString(locale));
+            this.labelDataService.setLabel(data.toLocaleDateString(locale),locale);
 
             console.log("evento! enviando...");
-            console.log(`${data.toLocaleDateString(locale)}`);
+            console.log(`${data.toLocaleDateString('pt-BR')}`);
           });
         this.subscription?.unsubscribe();
 
@@ -93,7 +93,7 @@ export class CalendarFormService {
             const dataFormatada = `${mes}/${ano}`;
             this.labelDataService.setLabel(dataFormatada);
             console.log("evento! enviando...");
-            console.log(dataFormatada);
+            console.log(date.toLocaleDateString('pt-BR'));
           });
         this.subscription?.unsubscribe();
         break;
@@ -137,7 +137,7 @@ export class CalendarFormService {
 
 
           console.log("evento! enviando...");
-          console.log(`${dataFormatadaInicio} - ${dataFormatadaFim}`);
+          console.log(`${dataInicio.toLocaleDateString('pt-BR')} - ${dataFim.toLocaleDateString('pt-BR')}`);
         }
       });
   }
@@ -164,7 +164,7 @@ export class CalendarFormService {
           
 
           console.log("evento! enviando...");
-          console.log(label);
+          console.log(`${dataInicioValor.toLocaleDateString('pt-BR')} - ${dataFimValor.toLocaleDateString('pt-BR')}`);
 
         }
       });
@@ -187,7 +187,7 @@ export class CalendarFormService {
             .setLabel(`${this.formularioService.intervaloForm.get(inputInicio)?.value}/${parseInt(this.formularioService.intervaloForm.get(inputInicio)?.value) + 1}
              - ${dataFim}/${dataFim + 1}`);
           console.log("evento! enviando...");
-          console.log(`${this.formularioService.intervaloForm.get(inputInicio)?.value}/${parseInt(this.formularioService.intervaloForm.get(inputInicio)?.value) + 1} - ${dataFim}/${dataFim + 1}`);
+          console.log(`${controlInicio?.value.toLocaleDateString('pt-BR')}/${parseInt(controlInicio?.value.toLocaleDateString('pt-BR')) + 1} - ${dataFim.toLocaleDateString('pt-BR')}/${dataFim.toLocaleDateString('pt-BR') + 1}`);
         }
       });
   }
@@ -207,7 +207,7 @@ export class CalendarFormService {
           this.labelDataService
             .setLabel(`${this.formularioService.intervaloForm.get(inputInicio)?.value} - ${dataFim}`);
           console.log("evento! enviando...");
-          console.log(`${this.formularioService.intervaloForm.get(inputInicio)?.value} - ${dataFim}`);
+          console.log(`${dataInicio.toLocaleDateString('pt-BR')} - ${dataFim.toLocaleDateString('pt-BR')}`);
         }
       });
   }

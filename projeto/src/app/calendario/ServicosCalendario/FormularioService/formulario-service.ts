@@ -31,7 +31,7 @@ export class FormularioService {
 
     console.log(this.calendarBarModelService.dados.calendarBar.defaultSelection.dateStart.split('/'));
 
-    var {  dataJs, dataM, partesPadrao, ano }: { partes: any; dataJs: any; dataM: any; partesPadrao: any; ano: any; } = 
+    var { partes, dataJs, dataM, partesPadrao, ano }: { partes: any; dataJs: any; dataM: any; partesPadrao: any; ano: any; } = 
           this.formularioDateHelper.ObtarDataAnoLabel(this.calendarBarModelService);
 
     this.labelDataService.setTipoData(calendarMode);
@@ -58,7 +58,7 @@ export class FormularioService {
         return this.form = this.fb.group({
           data: [this.calendarBarModelService.dados.calendarBar.defaultSelection.dateStart],
           day: [dataJs],
-          month: [dataM],
+          month: [new Date(+partes[1], +partes[0] - 1)],
           year: [parseInt(partesPadrao[2])],
           fiscalYear: [parseInt(partesPadrao[2])]
         });

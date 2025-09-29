@@ -11,7 +11,6 @@ import { Router } from '@angular/router';
 })
 export class PaginaNaoEncontrada implements OnInit {
 
-
   contador = 5;
 
    constructor(private router: Router) {}
