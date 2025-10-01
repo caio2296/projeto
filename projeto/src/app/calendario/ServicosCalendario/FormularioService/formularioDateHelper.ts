@@ -108,6 +108,11 @@ export class FormularioDateHelper {
     const label = String(calendarBarModelService.dados.calendarBar.defaultSelection.dateStart);
     if (this.localeService.getLocale() != "en-US" || this.labelDataService.getTipoInicioLabel()) {
 
+       if (label.includes('/')) {
+       
+          partes = this.labelDataService.getLabel().toString().split(/[/\\-]/);
+          dataJs = new Date(+partes[2], +partes[1] - 1, +partes[0]);
+        }
       if (this.localeService.getLocale() == "en-US" || !this.labelDataService.getTipoInicioLabel()) {
         if (label.includes('-')) {
           const partes = this.labelDataService.getLabel().split('-');
@@ -122,28 +127,24 @@ export class FormularioDateHelper {
 
         unidade = this.labelDataService.getCalendarMode();
 
-        if (label.includes('/')) {
-          partes = this.labelDataService.getLabel().toString().split(/[/\\-]/);
-          dataJs = new Date(+partes[2], +partes[1] - 1, +partes[0]);
-        }
       } else {
-        ({ dataFim, unidade, partes, dataJs } = this.TrocarOrdemDiaMesIntervalo(label, dataFim, unidade, partes, dataJs, calendarBarModelService));
+        ({ dataFim, unidade, partes, dataJs } = this.TrocarOrdemDiaMesIntervalo(label, dataFim, unidade, partes, dataJs));
       }
     } else {
       //versão americana
-      ({ dataFim, unidade, partes, dataJs } = this.TrocarOrdemDiaMesIntervalo(label, dataFim, unidade, partes, dataJs, calendarBarModelService));
+      ({ dataFim, unidade, partes, dataJs } = this.TrocarOrdemDiaMesIntervalo(label, dataFim, unidade, partes, dataJs));
     }
     return { unidade, dataJs, dataFim, partesPadrao, partesMeses, partesAno, Ano };
   }
 
-  private TrocarOrdemDiaMesIntervalo(label: string, dataFim: Date, unidade: any, partes: any, dataJs: Date, calendarBarModelService: any) {
+  private TrocarOrdemDiaMesIntervalo(label: string, dataFim: Date, unidade: any, partes: any, dataJs: Date) {
     if (label.includes('-')) {
-      const partes = calendarBarModelService.dados.calendarBar.defaultSelection.dateStart.split('-');
+      const partes = this.labelDataService.getLabel().toString().split(/[/\\-]/);
 
       dataFim = new Date(+partes[2], +partes[0] - 1, +partes[1]);
     } else {
-      const [dia, mes, ano] = calendarBarModelService.dados.calendarBar.defaultSelection.dateStart.split('/');
-      dataFim = new Date(+ano, +mes - 1, +dia);
+      const [dia, mes, ano] = this.labelDataService.getLabel().toString().split(/[/\\-]/);
+      dataFim = new Date(+ano, +dia - 1, +mes);
     }
 
     unidade = this.labelDataService.getCalendarMode();
