@@ -4,6 +4,7 @@ import { DashboardRoutingModule } from "./dashboard-routing-module";
 import { SharedModule } from "../shared/shared.module";
 import { MaterialModule } from "../core/material/material.module";
 import { CalendarioModule } from "../calendario/modulo/calendario-module";
+import { FiltroModule } from "../filtros/filtro/filtro-module";
 
 @NgModule({
     declarations:[
@@ -13,7 +14,8 @@ import { CalendarioModule } from "../calendario/modulo/calendario-module";
         DashboardRoutingModule,
         SharedModule,
         MaterialModule,
-        CalendarioModule
+        CalendarioModule,
+        FiltroModule
     ],
     exports:[
         Dashboard

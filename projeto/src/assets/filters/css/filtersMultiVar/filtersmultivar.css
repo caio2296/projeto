@@ -1,0 +1,26 @@
+﻿.botonShow
+    {
+        height:28px;
+        border-radius:5px; 
+        -webkit-border-radius:5px;
+        -moz-border-radius:5px;
+        border:1px solid rgba(0,0,0, 0.2);
+        color:gray;
+        background-color: rgba(224, 224, 224, 224);
+        padding: 2px;
+        }
+    .botonHide
+    {
+        height:28px;
+        border-radius:5px; 
+        -webkit-border-radius:5px;
+        -moz-border-radius:5px;
+        border:1px solid rgba(0,0,0, 0.2);
+        color:gray;
+        background-color: #fff;
+        padding: 2px;
+        }
+    ui-multiselect-header { /*The CheckAll/ UncheckAll line)*/
+    background: lightgray !important;
+    text-align: right !important;
+}
