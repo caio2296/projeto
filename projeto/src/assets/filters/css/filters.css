@@ -1,0 +1,96 @@
+﻿/*Estilos para el control Image*/
+.tblImg
+{
+    padding-top:2px;
+}
+.trImg{}
+.tdImg{}
+.imgCss{}
+
+/*Estilos para el control Separador*/
+.tblSep{}
+.trSep{}
+.tdSep {}
+.imgSep
+{
+    background-image: url('../images/tool_start.gif');
+}
+
+/*Estilos para el control Button*/
+.tblBtn{}
+.trBtn{}
+.tdBtn{}
+
+/*Estilos para el control Check*/
+.tblChk{}
+.trChk{}
+.tdChk{}
+
+/*Estilos para el control Multiselect*/
+.tblMSelect{}
+.trMSelect{}
+.tdMSelectLabelCell{}
+.tdMSelectDropDownCell{}
+
+/*Estilos para el control msDropDownList */
+.tblMsDropD
+{
+    background-color:rgb(224, 224, 224);	    
+    border:solid 1px #C4C4C4;
+    border-color:rgb(196, 196, 196);   
+}
+.trMsDropD{}
+.tdMsDropDLabelCell 
+{
+    font-family:Verdana, Sans-Serif; 
+    font-size:11px;
+    /*font-weight:bold;*/
+    text-align:left;
+	vertical-align:middle;
+	/*padding-top:3px !important;
+	padding-left:5px !important;    */
+}
+.tdMsDropDCtrlCell
+{
+    text-align:left;	
+    /*padding-top:5px !important;
+    padding-bottom:5px !important;	    
+    padding-right:0px !important;*/
+}
+.selectCss
+{
+    font-family:Verdana, Arial, Helvetica; 
+    font-size:11px;
+    width: 100px;
+}
+
+/*
+.tdMsDropDCtrlCell button 
+{
+    width: 120px !important;/
+    border: solid 1px #7A7A7A;
+    background: white;
+}
+*/
+
+.btnFilter button
+{
+    width: 120px !important;
+    border: solid 1px #7A7A7A;
+    background: white;
+}
+
+/*Estilos para la tabla del control msDropDownList */
+.tblFiltersContainer td
+{
+    /*padding-right:3px !important;*/
+    /*padding-bottom:3px !important;*/
+}
+
+.disabledMultiselect{
+    opacity: .35;
+    filter: Alpha(Opacity=60);
+    background-image: none;
+}
+
+.ui-multiselect-menu{width:250px !important;}

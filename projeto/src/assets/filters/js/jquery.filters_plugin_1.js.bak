@@ -1,0 +1,762 @@
+﻿(function ($) {
+    var methods = {
+        //Dibuja Todos los controle definidos en el JSON.
+        _renderfilters: function (ctrls, divfilters, data) {
+            divContainer = $('<table class="tblFiltersContainer"></table>');
+            var indAux = 0;
+
+            if (ctrls.controlsbyrow == true) {
+                var rowtmp = $('<tr id="' + ctrls.id + '_' + indAux + '" ></tr>');
+                for (var iPos = 0; iPos < ctrls.children.length; iPos++) {
+                    var celltmp = $('<td ></td>');
+
+                    methods._RenderControl(celltmp, ctrls.children[iPos], data);
+                    rowtmp.append(celltmp);
+
+                    var a = iPos + 1;
+                    if ((ctrls.maxctrlsbygroup != 0) && (a % ctrls.maxctrlsbygroup == 0)) {
+                        divContainer.append(rowtmp);
+                        indAux = indAux + 1;
+                        if (a < ctrls.children.length) {
+                            rowtmp = $('<tr id="' + ctrls.id + '_' + indAux + '" ></tr>');
+                        }
+                    }
+                }
+
+                if (divContainer.find('[id=' + rowtmp.attr('id') + ']').length == 0) {
+                    divContainer.append(rowtmp);
+                }
+            }
+            else {
+                if (ctrls.children != undefined && ctrls.children.length > 0) {
+                    for (var i = 0; i < ctrls.children.length; i++) {
+                        var rowtmp = $('<tr ></tr>');
+                        var celltmp = $('<td ></td>');
+
+                        methods._RenderControl(celltmp, ctrls.children[i], data);
+                        rowtmp.append(celltmp);
+                        divContainer.append(rowtmp);
+                    }
+                }
+            }
+
+            divfilters.empty();
+            divfilters.append(divContainer);
+            methods._SetStyles(divContainer);
+        },
+
+        //Dibuja los controles dentro del contenedor indicado.
+        _RenderControl: function (container, ctrls, data) {
+            switch (ctrls.typectrl) {
+                case "select":
+                    container.append(methods._RenderSelect(ctrls, data));
+                    break;
+                case "multiselect":
+                    container.append(methods._RenderMultiSelect(ctrls, data));
+                    break;
+                case "buttonset":
+                    container.append(methods._RenderButtonset(ctrls, data));
+                    break;
+                case "chk":
+                    container.append(methods._RenderCheck(ctrls, data));
+                    break;
+                case "btn":
+                    container.append(methods._RenderButton(ctrls, data));
+                    break;
+                case "separator":
+                    container.append(methods._RenderSeparator(ctrls, data));
+                    break;
+                case "img":
+                    container.append(methods._RenderImage(ctrls, data));
+                    break;
+                case "link":
+                    container.append(methods._RenderLink(ctrls, data));
+                    break;
+                case "inputtext":
+                    container.append(methods._RenderInputText(ctrls, data));
+                    break;
+                case "div":
+                    var containertmp = $('<div id="divfilters_' + ctrls.id + '" ></div>');
+                    for (var iPos = 0; iPos < ctrls.children.length; iPos++) {
+                        methods._RenderControl(containertmp, ctrls.children[iPos], data);
+                    }
+                    container.append(containertmp);
+                    break;
+                default: break;
+            }
+        },
+
+        //Dibuja un control dropdownlist estandar con sus opciones.
+        _RenderSelect: function (ctrl, data) {
+            
+            var tblfilter = $('<table class="tblMsDropD" ></table>');
+            var strdisabled = ""
+            //if (ctrl.disabled || ctrl.selectitems.length == 1) { strdisabled = "disabled"; }
+            if (ctrl.disabled) { strdisabled = "disabled"; }
+            var ddtmp = $('<select id=\"select_' + ctrl.id + '\" name=\"' + ctrl.name + '\" ' + strdisabled + ' class=\"selectCss\"></select>');
+            ddtmp.attr("disabledctrls", ctrl.disabledctrls);
+            ddtmp.attr("checkstatus", ctrl.checkstatus);
+
+            if (ctrl.filloptions != null) {
+                ctrl.filloptions.aux = data.IdLine;
+                ddtmp.data("fillopts", ctrl.filloptions);
+            }
+            //Genera los items del combo
+            /// <summary>
+            /// Translate
+            /// Se realiza modificacion para funcionalidad de translate
+            /// </summary>
+            for (var iPos = 0; iPos < ctrl.selectitems.length; iPos++) {
+                var strselected = "";
+                if (ctrl.selectitems[iPos].selected) { strselected = "selected"; }
+                opt = $("<option translate='" + ctrl.selectitems[iPos].displaytext + "' value='" + ctrl.selectitems[iPos].value + "' " + strselected + ">" + ctrl.selectitems[iPos].displaytext + "</option>");
+                ddtmp.append(opt);
+            }
+
+            if (ctrl.id == 818) {
+                ddtmp.change(function () { ActualizarVistaFueraGrilla(); methods._change(data.target.id, this.getAttribute("name")); });
+            } else {
+                ddtmp.change(function () { methods._change(data.target.id, this.getAttribute("name")); });
+            }
+
+
+            /// <summary>
+            /// Translate
+            /// Se realiza modificacion para funcionalidad de translate
+            /// </summary>
+            //En una sola fila?
+            if ((ctrl.labelbyrow != undefined) && (ctrl.labelbyrow != true)) {
+                var rowtmp = $('<tr class="trMsDropD" ></tr>');
+                var celltmp = $('<td class="tdMsDropDLabelCell" translate="' + ctrl.caption + '">' + ctrl.caption + '</td>');
+                celltmp.css("text-align", "left");
+                rowtmp.append(celltmp);
+                var celltmp2 = $('<td class="tdMsDropDCtrlCell"></td>');
+                celltmp2.css("text-align", "left");
+                celltmp2.append(ddtmp);
+                rowtmp.append(celltmp2);
+                tblfilter.append(rowtmp);
+            }
+            else {
+                //Fila para el label la primer fila
+                var rowtmp = $('<tr class="trMsDropD" ></tr>');
+                var celltmp = $('<td class="tdMsDropDLabelCell" translate="' + ctrl.caption + '">' + ctrl.caption + '</td>');
+                rowtmp.append(celltmp);
+                tblfilter.append(rowtmp);
+
+                //Fila para el select
+                rowtmp = $('<tr class="trMsDropD" ></tr>');
+                celltmp = $('<td class="tdMsDropDCtrlCell" ></td>');
+                celltmp.append(ddtmp);
+                rowtmp.append(celltmp);
+                tblfilter.append(rowtmp);
+            }
+            return tblfilter;
+        },
+
+        //Dibuja un control dropdownlist multiselect con sus opciones
+        _RenderMultiSelect: function (ctrl, data) {
+            var tblfilter = $('<table class="tblMsDropD" ></table>');
+            var strdisabled = ""
+            //if (ctrl.disabled || ctrl.selectitems.length == 1) { strdisabled = "disabled"; }
+            if (ctrl.disabled) { strdisabled = "disabled"; }
+            //Construye el select con sus opciones
+            var ddtmp = $('<select id=\"multiselect_' + ctrl.id + '\" multiple=\"multiple\" size=\"5\" name=\"' + ctrl.name + '\" ' + strdisabled + ' class=\"selectCss\"></select>');
+            var optG = $('<optgroup label="Marcar Todos" class="optG_' + ctrl.name + '\"></optgroup>');
+
+            ddtmp.attr("checkstatus", ctrl.checkstatus);
+<<<<<<< .mine
+			if (ctrl.filloptions != null) {
+                ctrl.filloptions.aux = data.IdLine;
+                ddtmp.data("fillopts", ctrl.filloptions);
+            }
+			
+||||||| .r9047
+=======
+            if (ctrl.filloptions != null) {
+                ctrl.filloptions.aux = data.IdLine;
+                ddtmp.data("fillopts", ctrl.filloptions);
+            }
+            
+>>>>>>> .r9296
+            //Genera los items del combo
+            for (var iPos = 0; iPos < ctrl.selectitems.length; iPos++) {
+                var strselected = "";
+                if (ctrl.selectitems[iPos].selected) {
+                    strselected = "selected";
+                }
+                /// <summary>
+                /// Translate
+                /// Se realiza modificacion para funcionalidad de translate
+                /// </summary>
+                if (ctrl.selectitems[iPos].value != '-') { //Se elimina la opción "Todos" de la lista
+                    opt = $('<option translate="' + ctrl.selectitems[iPos].displaytext + '" value="' + ctrl.selectitems[iPos].value + '" ' + strselected + '>' + ctrl.selectitems[iPos].displaytext + '</option>');
+                    //ddtmp.append(opt);
+                    optG.append(opt);
+                }
+            }
+
+            ddtmp.append(optG);
+            ddtmp.change(function () { methods._change(data.target.id, this.getAttribute("name")); });
+
+            //En una sola fila?
+            if ((ctrl.labelbyrow != undefined) && (ctrl.labelbyrow != true)) {
+                var rowtmp = $('<tr class="trMsDropD" ></tr>');
+                /// <summary>
+                /// Translate
+                /// Se realiza modificacion para funcionalidad de translate
+                /// </summary>
+                var celltmp = $('<td class="tdMSelectLabelCell" translate="' + ctrl.caption + '">' + ctrl.caption + '</td>');
+                rowtmp.append(celltmp);
+                var celltmp2 = $('<td class="btnFilter" ></td>');
+
+                celltmp2.append(ddtmp);
+                rowtmp.append(celltmp2);
+                tblfilter.append(rowtmp);
+            }
+            else {
+                //Genera la primer fila
+                var rowtmp = $('<tr class="trMsDropD" ></tr>');
+                var celltmp = $('<td class="tdMsDropDLabelCell" >' + ctrl.caption + '</td>');
+                rowtmp.append(celltmp);
+                tblfilter.append(rowtmp);
+
+                //Fila para el select
+                rowtmp = $('<tr class="trMsDropD" ></tr>');
+                celltmp = $('<td class="btnFilter" ></td>');
+
+                celltmp.append(ddtmp);
+                rowtmp.append(celltmp);
+                tblfilter.append(rowtmp);
+            }
+            return tblfilter;
+        },
+
+        //Dibuja un set de botones (conjunto de radio buttons)
+        _RenderButtonset: function (ctrl, data) {
+            var container = $('<div id="btnset_' + ctrl.id + '" name="' + ctrl.name + '" ></div>');
+            //Genera los items del buttonset
+            for (var iPos = 0; iPos < ctrl.radioitems.length; iPos++) {
+                var rad = $('<input type="radio" id="radio_' + ctrl.radioitems[iPos].id + '" value="' + ctrl.radioitems[iPos].value + '" name="' + ctrl.caption + '" />');
+                if (ctrl.radioitems[iPos].Checked == true) {
+                    rad.attr("checked", "checked");
+                }
+                rad.click(function () { methods._change(data.target.id, this.getAttribute("name")); });
+                var lbl = $('<label for="radio_' + ctrl.radioitems[iPos].id + '">' + ctrl.radioitems[iPos].caption + '</label>');
+                container.append(rad);
+                container.append(lbl);
+            }
+            container.attr("checkstatus", ctrl.checkstatus);
+            return container;
+        },
+
+        //Dinuja un control check
+        _RenderCheck: function (ctrl, data) {
+            var tblfilter = $('<table class="tblChk" ></table>');
+            var rowtmp = $('<tr class="trChk" ></tr>');
+            var celltmp = $('<td class="tdChk" ></td>');
+            var chktmp = $('<input type=\"checkbox\" id=\"chk_' + ctrl.id + '\" class=\"chkCss\" name=\"' + ctrl.name + '\" value=\"' + ctrl.value + '\" >');
+            if (ctrl.Checked == true) {
+                chktmp.attr("checked", "checked");
+            }
+            chktmp.addClass(ctrl.css);
+            /// <summary>
+            /// Translate
+            /// Se realiza modificacion para funcionalidad de translate
+            /// </summary>
+            var lbltmp = $('<label translate-ui-button-text=\"' + ctrl.caption + '\" for=\"chk_' + ctrl.id + '\" >' + ctrl.caption + '</label>');
+
+            if (ctrl.checkstatus) {
+                chktmp.change(function () { methods._change(data.target.id, this.getAttribute("name")); });
+            }
+            else {
+                chktmp.attr("onclick", ctrl.action);
+            }
+            chktmp.attr("checkstatus", ctrl.checkstatus);
+
+            celltmp.append(chktmp);
+            celltmp.append(lbltmp);
+            rowtmp.append(celltmp);
+            tblfilter.append(rowtmp);
+            return tblfilter;
+        },
+
+        //Dibuja un control button
+        _RenderButton: function (ctrl, data) {
+            var tbl = $('<table class="tblBtn" ></table>');
+            var rowtmp = $('<tr class="trBtn" ></tr>');
+            var celltmp = $('<td class="tdBtn" ></td>');
+            var btntmp = $('<input type=\"button\" />');
+
+            if (ctrl.value == null || ctrl.value == '-') {
+                btntmp.attr("onclick", ctrl.action);
+            }
+            else if (ctrl.value != null && ctrl.value != '-') {
+                btntmp.click(function () {
+                    methods._changeStatusBtn(data.redirectTo, ctrl.action, data.aux);
+                });
+            }
+
+            btntmp.addClass(ctrl.css);
+            btntmp.attr("value", ctrl.caption);
+            btntmp.attr("id", "btn_" + ctrl.id);
+
+            celltmp.append(btntmp);
+            btntmp.button();
+            rowtmp.append(celltmp);
+            tbl.append(rowtmp);
+            return tbl;
+        },
+
+        //Dibuja un separador.
+        _RenderSeparator: function (ctrl, data) {
+            var tblfilter = $('<table class="tblSep" ></table>');
+            var rowtmp = $('<tr class="trSep" ></tr>');
+            var celltmp = $('<td class="tdSep" ></td>');
+            var imgtmp = $('<img class="imgSep" />');
+
+            celltmp.append(imgtmp);
+            rowtmp.append(celltmp);
+            tblfilter.append(rowtmp);
+            return tblfilter;
+        },
+
+        //Dibuja una imagen
+        _RenderImage: function (ctrl, data) {
+            var tblfilter = $('<table class="tblImg" ></table>');
+            var rowtmp = $('<tr class="trImg" ></tr>');
+            var celltmp = $('<td class="tdImg" ></td>');
+            var imgtmp = $('<img class="imgCss" />');
+
+            if (ctrl.value == null || ctrl.value == '-') {
+                imgtmp.attr("onclick", ctrl.action);
+            }
+            else if (ctrl.value != null && ctrl.value != '-') {
+                imgtmp.click(function () {
+                    methods._changeStatusBtn(data.redirectTo, ctrl.action, ctrl.value);
+                });
+            }
+
+            imgtmp.addClass(ctrl.css);
+            imgtmp.attr("src", ctrl.imageurl);
+            imgtmp.attr("alt", ctrl.caption);
+            imgtmp.attr("title", ctrl.caption);
+            /// <summary>
+            /// Translate
+            /// Se realiza modificacion para funcionalidad de translate
+            /// </summary>
+            imgtmp.attr("translate-img-title", ctrl.caption);
+            imgtmp.css("cursor", "pointer");
+            imgtmp.mouseover(function () {
+                $(this).attr("src", ctrl.imageoverurl);
+            })
+            .mouseout(function () {
+                $(this).attr("src", ctrl.imageurl);
+            });
+
+            celltmp.append(imgtmp);
+            rowtmp.append(celltmp);
+            tblfilter.append(rowtmp);
+            return tblfilter;
+        },
+
+        //Dibuja un link
+        _RenderLink: function (ctrl, data) {
+            var tblfilter = $('<table class="tbllink" ></table>');
+            var rowtmp = $('<tr class="trlink" ></tr>');
+            var celltmp = $('<td class="tdlink" ></td>');
+            var linktmp = $('<div class="linkCss" />');
+
+            if (ctrl.value == null || ctrl.value == '-') {
+                linktmp.attr("onclick", ctrl.action);
+            }
+            else if (ctrl.value != null && ctrl.value != '-') {
+                linktmp.click(function () {
+                    methods._changeStatusBtn(data.redirectTo, ctrl.action, ctrl.value);
+                });
+            }
+
+            linktmp.addClass(ctrl.imageurl);
+            linktmp.attr("title", ctrl.caption);
+            linktmp.text(ctrl.caption);
+            linktmp.css("cursor", "pointer");
+            linktmp.mouseover(function () {
+                $(this).removeClass("css", ctrl.imageurl);
+                $(this).addClass("css", ctrl.imageoverurl);
+            })
+            .mouseout(function () {
+                $(this).removeClass("css", ctrl.imageoverurl);
+                $(this).addClass("css", ctrl.imageurl);
+            });
+
+            celltmp.append(linktmp);
+            rowtmp.append(celltmp);
+            tblfilter.append(rowtmp);
+            return tblfilter;
+        },
+
+        _RenderInputText: function (ctrl, data) {
+            var tblfilter = $('<table class="tblInputText" ></table>');
+            var strdisabled = ""
+            if (ctrl.disabled) { strdisabled = "disabled"; }
+
+            var input_tmp = $('<input id=\"inputtext_' + ctrl.id + '\" name=\"' + ctrl.name + '\" ' + strdisabled + ' class=\"input_textCss\" />');
+
+            //En una sola fila?
+            if ((ctrl.labelbyrow != undefined) && (ctrl.labelbyrow != true)) {
+                var rowtmp = $('<tr class="trInputText" ></tr>');
+                var celltmp = $('<td class="tdInputTextLabelCell">' + ctrl.caption + '</td>');
+                celltmp.css("text-align", "left");
+                rowtmp.append(celltmp);
+                var celltmp2 = $('<td class="tdInputTextCtrlCell"></td>');
+                celltmp2.css("text-align", "left");
+                celltmp2.append(input_tmp);
+                rowtmp.append(celltmp2);
+                tblfilter.append(rowtmp);
+            }
+            else {
+                //Fila para el label la primer fila
+                var rowtmp = $('<tr class="trInputText" ></tr>');
+                var celltmp = $('<td class="tdInputTextLabelCell" >' + ctrl.caption + '</td>');
+                rowtmp.append(celltmp);
+                tblfilter.append(rowtmp);
+
+                //Fila para el input text
+                rowtmp = $('<tr class="trInputText" ></tr>');
+                celltmp = $('<td class="tdInputTextCtrlCell" ></td>');
+                celltmp.append(input_tmp);
+                rowtmp.append(celltmp);
+                tblfilter.append(rowtmp);
+            }
+            return tblfilter;
+        },
+
+        //Aplica los plugins estandar a los elementos que lo requieren.
+        _SetStyles: function (divContainer) {
+            //divContainer.find('[id^=select_]').msDropDown();
+            divContainer.find('[id^=multiselect]').multiselect({ header: false });
+            divContainer.find('[id^=chk_]').button();
+            divContainer.find('[id^=btnset_]').buttonset();
+        },
+
+        //Obtiene el estado de los controles cuyo flag checkstatus=true.
+        _GetStatusFilters: function (me, whoCompare) {
+            var filtersreturn = [];
+            me.find('[checkstatus=true]').each(function (i, l) {
+                if (l.type == "checkbox") {
+                    var chk = $('[name=' + l.name + ']');
+                    filtersreturn.push({ "key": chk.attr("name"), "value": chk.is(':checked').toString() });
+                }
+                else if (l.className == "ui-buttonset") {
+                    var divradio = $('#' + l.id).find(':checked');
+                    filtersreturn.push({ "key": divradio.attr('name'), "value": divradio.attr('value').toString() });
+                }
+                else if (l.type == "select-one" || l.type == "select-multiple") {
+                    var ddl = $('[name=' + l.name + ']');
+
+                    if ((!ddl.attr('disabled')) || (whoCompare != undefined)) {
+                        var opts = ddl.find("option:selected");
+                        var optAllElements = ddl.find("option");
+                        var optG = $('li.optG_' + l.name)[0];
+
+                        //Validar si es de opcion multiple el objeto por el que esta comparando
+                        ddl.removeAttr('disabled');
+                        ddl.parent().removeAttr('disabled');
+                        ddl.nextAll().removeAttr('disabled');
+                        ddl.nextAll().removeClass('ui-state-disabled');
+                        //Buscar todos los elementos de las listas para poder habilitarlos
+                        var lisElements = $("label.ui-state-disabled");
+                        lisElements.each(function () {
+                            $(this).removeClass('ui-state-disabled');
+                            $(this).children().removeAttr("disabled");
+                        });
+
+                        if (whoCompare == l.name) {
+                            ddl.parent().attr('disabled', 'disabled');
+                            ddl.nextAll().attr('disabled', 'disabled');
+                        } else {
+                            if (opts.length > 1) {
+                                var options = "";
+                                var texts = "";
+                                opts.each(function () {
+                                    var s = $(this).attr("value").toString();
+                                    if (s.length > 0 && s != '-') {
+                                        options += $(this).attr("value").toString() + ',';
+                                        texts += $(this).text() + ',';
+                                    }
+                                });
+                                if (options.length > 0) {
+                                    options = options.substring(0, options.length - 1);
+                                    texts = texts.substring(0, texts.length - 1);
+                                    filtersreturn.push({ "key": l.name, "value": options, "valuetext": texts });
+                                }
+                            }
+                            else {
+                                var s = opts.attr("value");
+                                if (s != undefined && s.length > 0 && s != '-') {
+                                    filtersreturn.push({ "key": l.name, "value": s, "valuetext": opts.text() });
+                                }
+                            }
+                        }
+
+                        MarcarDesmascar(optG, opts, optAllElements);
+
+                    }
+                }
+            });
+
+            return filtersreturn;
+        },
+
+        //Evento que se lanza cuando cambia la selección en controles dropdown
+        _change: function (me, who) {
+            //debugger;
+            var $this = $('#' + me);
+            var aux = $this.find('[name=' + who + ']');
+            var optSelected = aux.find("option:selected");
+            var optAllElements = aux.find("option");
+            var optG = $('li.optG_' + who)[0];
+
+            if (aux.attr('disabledctrls') == "true") {
+                var valname = optSelected.text().replace(/\s/g, "");
+                methods._disabledCtrl($this, valname, true);
+            };
+
+            MarcarDesmascar(optG, optSelected, optAllElements);
+
+            if (aux.data("fillopts") != undefined) {
+                //methods._GetItemsByAjax($this, aux, { key: who, value: optSelected.val(), valuetext: optSelected.text() });
+                methods._GetItemsByAjax($this, aux, { key: who, value: aux.val().toString(), valuetext: optSelected.text() });
+            }
+            else {
+                var comp = $this.find('[name=Comparacion]');
+                var compSelec = comp.find("option:selected");
+                $this.data('status', methods._GetStatusFilters($this, compSelec.text()));
+                methods._setViewStateInitialValues(me, $this.data('status'));
+                $this.data('filterstatus').onchangestatus($this.attr('id'));
+            }
+        },
+
+        //Ejecuta una llamado ajax para obtener los items del combo asociado.
+        _GetItemsByAjax: function (divFilters, from, params) {
+            var cmb = divFilters.find('[id^=select_][name="' + from.data("fillopts").name_filter_fill + '"]');
+            if (cmb.length == 0) { cmb = divFilters.find('[id^=multiselect_][name="' + from.data("fillopts").name_filter_fill + '"]'); }
+
+            var parameters = new Object();
+            parameters.query = from.data("fillopts").query;
+            parameters.type_query = from.data("fillopts").type_query;
+            parameters.typectrl = from.data("fillopts").typectrl;
+            parameters.filter = params;
+            parameters.aux = from.data("fillopts").aux;
+            $.ajax({
+                url: divFilters.data('filterstatus').settings.urlgetitems,
+                data: JSON.stringify(parameters),
+                dataType: 'json',
+                contentType: 'application/json',
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    methods._SetItems(cmb, data, divFilters);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    //alert(XMLHttpRequest.responseText); cmb.add({ value: '-', text: "Status: " + textStatus + ". Error: " + errorThrown });
+                }
+            });
+        },
+
+        //Agrga los items a un combo determinado y lanza el evento onchange
+        _SetItems: function (cmb, items, div) {
+            var data = div.data('filterstatus');
+
+            if (items != null) {
+                var snewitems = '';
+<<<<<<< .mine
+||||||| .r9047
+                for (i = 0; i < items.length; i++) {
+                    var saux = '';
+                    if (items[i].selected) { saux = 'selected'; }
+                    /// <summary>
+                    /// Translate
+                    /// Se realiza modificacion para funcionalidad de translate
+                    /// </summary>
+                    snewitems += '<option translate="' + items[i].displaytext + '" value="' + items[i].value + '" ' + saux + '>' + items[i].displaytext + '</option>';
+                }
+=======
+                var id = cmb[0].getAttribute('id');
+
+                for (i = 0; i < items.length; i++) {
+                    var saux = '';
+                    if (items[i].selected) { saux = 'selected'; }
+
+                    if (id.indexOf('multiselect') >= 0) {
+                        if (snewitems.length == 0)
+                            snewitems = '<optgroup label="Marcar Todos" class="optG_' + cmb[0].name + '\">'
+
+                        if (items[i].value != '-') {
+                            snewitems += '<option translate="' + items[i].displaytext + '" value="' + items[i].value + '" ' + saux + '>' + items[i].displaytext + '</option>';
+                        }
+                    }
+                    else {
+                        snewitems += '<option translate="' + items[i].displaytext + '" value="' + items[i].value + '" ' + saux + '>' + items[i].displaytext + '</option>';
+                    }
+                }
+>>>>>>> .r9296
+                cmb.empty();
+
+<<<<<<< .mine
+                cmb.empty();
+                if (id.indexOf('multiselect') >= 0) {
+                    for (i = 0; i < items.length; i++) {
+                        var saux = '';
+                        if (items[i].selected) { saux = 'selected'; }
+
+                        if (snewitems.length == 0)
+                            snewitems = '<optgroup label="Marcar Todos" class="optG_' + cmb[0].name + '\">'
+
+                        if (items[i].value != '-') {
+                            snewitems += '<option translate="' + items[i].displaytext + '" value="' + items[i].value + '" ' + saux + '>' + items[i].displaytext + '</option>';
+                        }
+                    }
+                    snewitems += '</optgroup >';
+                    cmb.html(snewitems);
+                    cmb.multiselect('refresh');
+                }
+                else {
+                    for (i = 0; i < items.length; i++) {
+                        var saux = '';
+                        if (items[i].selected) { saux = 'selected'; }
+                        snewitems += '<option translate="' + items[i].displaytext + '" value="' + items[i].value + '" ' + saux + '>' + items[i].displaytext + '</option>';
+                    }
+                    cmb.html(snewitems);
+                }
+||||||| .r9047
+                cmb.empty();
+                cmb.html(snewitems);
+                if (id.indexOf('multiselect') >= 0) { cmb.multiselect('refresh'); }
+=======
+                if (id.indexOf('multiselect') >= 0) {
+                    snewitems += '</optgroup >';
+                    cmb.html(snewitems);
+                    cmb.multiselect('refresh');
+                }
+                else {
+                    cmb.html(snewitems);
+                }
+>>>>>>> .r9296
+            }
+            if (cmb.data("fillopts")) {
+                cmb.trigger('change');
+            }
+            else {
+                div.data('status', methods._GetStatusFilters(div));
+                methods._setViewStateInitialValues(div.attr('id'), div.data('status'));
+                data.onchangestatus(div.attr('id'));
+            }
+            /// <summary>
+            /// Translate
+            /// Se realiza modificacion para funcionalidad de translate
+            /// </summary>
+            try {
+                translateElem($(document));
+            }
+            catch (err) {
+            }
+        },
+
+        _changeStatusBtn: function (fn, action, aux) {
+            fn(action, aux);
+        },
+
+        //Deshabilita el control select del plugin indicado en el parametro name.
+        _disabledCtrl: function (me, name, enabledothers) {
+            if (enabledothers) {
+                me.find('[id^=select_][name]').removeAttr('disabled');
+
+                var selects = me.find('[id^=select_]');
+                $.each(selects, function (i, v) {
+                    if (v.children.length == 1) {
+                        $('#' + v.id).attr('disabled', 'disabled');
+                    }
+                });
+
+                //me.find('[id^=select_][name]').msDropDown().data('dd').set('disabled', false);
+            };
+            //var cmbs = me.find('[id^=select_][name=' + name + ']').msDropDown();
+            //if (cmbs.length > 0) { cmbs.data('dd').set('disabled', true); }
+            //debugger;
+            $('[id^=select_][name=' + name + ']').val('-').attr("selected", "selected");
+            //$('[id^=select_][name=' + name + ']').attr('selectedIndex', 0);
+            $('[id^=select_][name=' + name + ']').attr('disabled', 'disabled');
+        },
+
+        _setViewStateInitialValues: function (id, obj) {
+            if (id == "divFiltros") {
+                ViewStateCollector.Set_statusfilters_bkp(obj);
+            } else if (id == "divSubFiltros") {
+                ViewStateCollector.Set_statusSubfilters_bkp(obj);
+            }
+        },
+
+        init: function (options, fn1) {
+            var settings = {};
+
+            return this.each(function () {
+                if (options) { settings = $.extend(settings, options); };
+                var $this = $(this);
+                var data = $this.data('filterstatus');
+
+                if (!data) {
+                    $(this).data('filterstatus', {
+                        target: $this[0],
+                        settings: settings,
+                        onchangestatus: fn1,
+                        aux: settings.aux,
+                        redirectTo: settings.redirectTo,
+                        IdLine: settings.IdLine
+                    });
+                    data = $this.data('filterstatus');
+                }
+                methods._renderfilters(settings, $this, data);
+                $this.data('status', methods._GetStatusFilters($this));
+                methods._setViewStateInitialValues($this[0].id, $this.data('status'));
+            });
+        },
+
+        refresh: function () {
+        },
+
+        destroy: function () {
+            return this.each(function () {
+                var $this = $(this);
+                var data = $this.data('filterstatus');
+
+                $(window).unbind('.filters');
+                data.filterstatus.remove();
+                this.removeData('filterstatus');
+            });
+        }
+
+    };
+
+    var properties = {};
+
+    $.fn.filters = function (method) {
+        if (methods[method]) {
+            return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+        }
+        else if (typeof method === 'object' || !method) {
+            return methods.init.apply(this, arguments);
+        } else {
+            $.error('The Method ' + method + ' does not exist on jQuery.filters');
+        }
+    };
+})(jQuery);
+
+function MarcarDesmascar(optG, optSelected, optAllElements) {
+    if (optG != undefined) {
+        if ((optSelected.length == 0) || (optSelected.length < optAllElements.length)) {
+            optG.innerHTML = '<a href="#">Marcar Todos</a>';
+        } else {
+            optG.innerHTML = '<a href="#">Desmarcar Todos</a>';
+        }
+    }
+}

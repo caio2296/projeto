@@ -1,3 +1,5 @@
+/* eslint-disable no-var */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/prefer-inject */
 /* eslint-disable @angular-eslint/prefer-standalone */
 import { ChangeDetectorRef, Component } from '@angular/core';
@@ -12,6 +14,8 @@ import { DateHelperService } from '../calendario/ServicosCalendario/dateHelperSe
 import { InputConfig } from '../calendario/ServicosCalendario/InputConfig';
 import { CalendarBarModelService } from '../calendario/ServicosCalendario/calendarBarModel';
 
+
+
 @Component({
   selector: 'app-dashboard',
   standalone: false,
@@ -19,6 +23,8 @@ import { CalendarBarModelService } from '../calendario/ServicosCalendario/calend
   styleUrl: './dashboard.scss'
 })
 export class Dashboard {
+  
+
   
 
     showFiller = false;
@@ -34,8 +40,18 @@ export class Dashboard {
     private tokenService: TokenService
     ) {  }
 
+  
+
+
+
+
+  
+
+
       toggleTheme(): void {
     this.temaService.toggleTheme();
   }
   
 }
+
+
