@@ -1,3 +1,78 @@
 <div id="meuFiltroContainer"></div>
 
 <!-- <img src="SharedComponents/exporterBar/Images/img_correo.png"> -->
+
+
+<table class="tblFiltersContainer">
+
+  <!-- Caso controlsbyrow = true -->
+  <ng-container *ngIf="ctrls?.controlsbyrow; else verticalMode">
+<!-- <tr id="' + ctrls.id + '_' + indAux + '" ></tr> -->
+    <tr [id]= "ctrls?.id + '_' + indAux">
+
+ 
+    <!-- <tr *ngFor="let row of ctrls.children | slice:0; let rowIndex = index"> -->
+      <td *ngFor="let ctrl of ctrls?.children; let i = index;">
+      <!-- <td *ngFor="let ctrl of ctrls.children | slice:(rowIndex * ctrls.maxctrlsbygroup):(rowIndex * ctrls.maxctrlsbygroup + ctrls.maxctrlsbygroup)"> -->
+        
+        <!-- Switch para o tipo -->
+        <ng-container [ngSwitch]="ctrl.typectrl">
+<!-- 
+          <filter-select      *ngSwitchCase="'select'"      [ctrl]="ctrl"></filter-select>
+          <filter-multiselect *ngSwitchCase="'multiselect'" [ctrl]="ctrl"></filter-multiselect>
+          <filter-buttonset   *ngSwitchCase="'buttonset'"   [ctrl]="ctrl"></filter-buttonset>
+          <filter-check       *ngSwitchCase="'chk'"         [ctrl]="ctrl"></filter-check>
+          <filter-button      *ngSwitchCase="'btn'"         [ctrl]="ctrl"></filter-button>
+          <filter-separator   *ngSwitchCase="'separator'"   [ctrl]="ctrl"></filter-separator> -->
+          <app-filter-image   *ngSwitchCase="'img'"       [ctrl]="ctrl" [data]="{ redirectTo: 'algumaCoisa' }"  (clickAction)="executarAcao(ctrl.action)"  ></app-filter-image>
+          <!-- <filter-link        *ngSwitchCase="'link'"        [ctrl]="ctrl"></filter-link>
+          <filter-inputtext   *ngSwitchCase="'inputtext'"   [ctrl]="ctrl"></filter-inputtext> -->
+
+
+    <tr [id]= "ctrls?.id + '_' + (i+1)"></tr>
+
+          <div *ngIf=" ((i+1) % 1 === 0) ">
+          <!-- <div *ngIf="ctrls.maxctrlsbygroup !== 0 && ((i+1) % ctrls.maxctrlsbygroup === 0) && ((i+1) < quatFilhos)"> -->
+                    <tr [id]= "ctrls?.id + '_' + (i+1)"></tr>
+          </div>
+          <!-- Recursivo: tipo div contém children -->
+          <!-- <div *ngIf="ctrl?.children?.length" id="divfilters_{{ ctrl.id }}"></div> -->
+          <div *ngIf="ctrl?.children?.length" id="divfilters_{{ ctrl.id }}">
+          <app-filtros [ctrls]="ctrl"></app-filtros>
+        </div>
+
+        </ng-container>
+
+      </td>
+   </tr>
+
+  </ng-container>
+
+  <!-- Caso controlsbyrow = false -->
+  <ng-template #verticalMode>
+    <tr *ngFor="let ctrl of ctrls?.children">
+      <td>
+
+        <ng-container [ngSwitch]="ctrl?.typectrl">
+
+          <!-- <filter-select      *ngSwitchCase="'select'"      [ctrl]="ctrl"></filter-select>
+          <filter-multiselect *ngSwitchCase="'multiselect'" [ctrl]="ctrl"></filter-multiselect>
+          <filter-buttonset   *ngSwitchCase="'buttonset'"   [ctrl]="ctrl"></filter-buttonset>
+          <filter-check       *ngSwitchCase="'chk'"         [ctrl]="ctrl"></filter-check>
+          <filter-button      *ngSwitchCase="'btn'"         [ctrl]="ctrl"></filter-button>
+          <filter-separator   *ngSwitchCase="'separator'"   [ctrl]="ctrl"></filter-separator> -->
+          <app-filter-image   *ngSwitchCase="'img'"         [ctrl]="ctrl" [data]="{ redirectTo: 'algumaCoisa' }"   (clickAction)="executarAcao(ctrl.action)" ></app-filter-image>
+          <!-- <filter-link        *ngSwitchCase="'link'"        [ctrl]="ctrl"></filter-link>
+          <filter-inputtext   *ngSwitchCase="'inputtext'"   [ctrl]="ctrl"></filter-inputtext> -->
+
+          <!-- <div *ngSwitchCase="'div'" id="divfilters_{{ ctrl.id }}">
+            <app-filtros [ctrls]="ctrl" [data]="data"></app-filtros>
+          </div> -->
+
+        </ng-container>
+
+      </td>
+    </tr>
+  </ng-template>
+
+</table>

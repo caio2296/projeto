@@ -1,5 +1,5 @@
-/* eslint-disable no-var */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
+ 
 /* eslint-disable @angular-eslint/prefer-inject */
 /* eslint-disable @angular-eslint/prefer-standalone */
 import { ChangeDetectorRef, Component } from '@angular/core';

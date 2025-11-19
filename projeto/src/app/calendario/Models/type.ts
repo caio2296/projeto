@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface CalendarModel {
   type: string;
   calendarBar: CalendarBar;
@@ -38,4 +39,32 @@ export interface ShiftBar {
   rangeStart: string | null;
   rangeEnd: string | null;
   typeCtrl: string;
+}
+
+export interface FilterCat {
+  typectrl: string;
+  id: number;
+  css: string;
+  caption: string;
+  name: string;
+  parentcontrolid: number | null;
+  selectitems: any[] | null;
+  radioitems: any[] | null;
+  value: string | null;
+  checkstatus: boolean;
+  action: string | null;
+  imageurl: string | null;
+  controlsbyrow: boolean;
+  children: FilterCat[] | null;
+  changeStatus: any | null;
+  labelbyrow: boolean;
+  tag: string | null;
+  Order: number;
+  id_ctrl_depend: number;
+  disabledctrls: boolean;
+  maxctrlsbygroup: number;
+  disabled: boolean;
+  filloptions: any[] | null;
+  Checked: boolean;
+  imageoverurl: string | null;
 }

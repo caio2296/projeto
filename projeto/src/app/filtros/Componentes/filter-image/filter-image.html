@@ -1,0 +1,38 @@
+<table class="tblImg">
+  <tr class="trImg">
+    <td class="tdImg">
+
+      <img
+        class="imgCss {{ ctrl.css }}"
+        [src]="currentImage"
+        [alt]="ctrl.caption"
+        [title]="ctrl.caption"
+        [attr.translate-img-title]="ctrl.caption"
+
+        style="cursor: pointer;"
+   
+        tabindex="0"  
+        
+        (click)="onClick()"
+        (keyup.enter)="onClick()"  
+
+        (mouseover)="onMouseOver()"
+        (focus)="onMouseOver()"     
+
+        (mouseout)="onMouseOut()"
+        (blur)="onMouseOut()"      
+      
+        />
+
+    </td>
+  </tr>
+</table>
+
+
+
+<!-- <app-filter-image
+    [ctrl]="item"
+    [data]="{ redirectTo: 'algumaCoisa' }"
+    (clickAction)="executarAcao(item.action)"
+></app-filter-image> -->
+
