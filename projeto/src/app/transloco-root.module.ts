@@ -5,6 +5,7 @@ import {
 import { NgModule } from '@angular/core';
 import { TranslocoHttpLoader } from './transloco-loader';
 import { environment } from '../environments/environment';
+// import { FilterImage } from './filtros/Componentes/filter-image/filter-image';
 
 
 @NgModule({
@@ -23,6 +24,8 @@ import { environment } from '../environments/environment';
       }),
   ],
   declarations: [
+  
+    // FilterImage
   ],
 })
 export class TranslocoRootModule {}

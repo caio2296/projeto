@@ -1,9 +1,11 @@
+/* eslint-disable @angular-eslint/prefer-inject */
 /* eslint-disable no-var */
 /* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { toolbar } from '../filters/filters_json_export'; // caminho relativo para o arquivo
-
+import { FiltroServiceApi } from './ServicesFiltro/filtro-service-api';
+import { FilterCat } from '../calendario/Models/type';
 
 declare var $: any;
 
@@ -13,8 +15,30 @@ declare var $: any;
   templateUrl: './filtros.html',
   styleUrl: './filtros.scss'
 })
-export class Filtros implements AfterViewInit {
+export class Filtros implements AfterViewInit, OnInit {
+ 
+  // vai virar input depois
+   @Input() ctrls: FilterCat | null = null;
 
+  quatFilhos= 0;
+
+   indAux= this.setIndAux()|0;
+
+
+  setIndAux():number{
+
+    if(this.indAux<10){
+      this.indAux=this.indAux+1;
+    }
+
+     return this.indAux;
+  }
+
+ 
+  constructor(protected filtroServiceApi:FiltroServiceApi) {
+
+
+  }
   private loadScript(src: string): Promise<void> {
     return new Promise((resolve, reject) => {
       const script = document.createElement('script');
@@ -24,6 +48,22 @@ export class Filtros implements AfterViewInit {
       document.body.appendChild(script);
     });
   }
+
+  
+   ngOnInit() {
+    // 1) Primeiro buscar os dados
+    this.filtroServiceApi.carregarDados().subscribe({
+      next: data => {
+        updateImageUrls(data);
+        this.ctrls = data;
+        console.log("Dados carregados:", data);
+      },
+      error: err => console.error(err),
+      complete: () => console.log("HTTP completo")
+    });
+  }
+
+
 
   ngAfterViewInit() {
 
@@ -35,26 +75,50 @@ export class Filtros implements AfterViewInit {
       .then(() => this.loadScript('/SharedComponents/filters/js/jquery.filters_plugin_1.js'))
       .then(() => {
 
+        this.filtroServiceApi.carregarDados().subscribe({
+
+          next:(data)=>{
+              updateImageUrls(data);
+              this.ctrls=data;
+              if(this.ctrls.children != null && this.ctrls.children.length >0){
+                this.quatFilhos=this.ctrls.children?.length;
+              }
+
+              console.log(data);
+
+                      console.log(toolbar);
+                      console.log(this.ctrls);
+              const globalMethods = (window as any).methods;
+
+              if (globalMethods && typeof globalMethods._renderfilters === 'function') {
+
+                globalMethods._renderfilters(data, ($('#meuFiltroContainer') as any), {});
+              } else {
+                console.warn('Plugin jQuery não encontrado!');
+              }
+          },
+          error:(ex)=>{
+               console.log(ex.message);
+          },
+          complete:()=>{
+            console.log("Requisição completa");
+          }
+
+        });
         // Atualiza todos os imageurl do toolbar
-        updateImageUrls(toolbar);
+        // updateImageUrls(toolbar);
 
-
-        console.log((window as any).exporterBarOptions);
-        console.log(toolbar);
-
-        const globalMethods = (window as any).methods;
-
-        if (globalMethods && typeof globalMethods._renderfilters === 'function') {
-
-          globalMethods._renderfilters(toolbar, ($('#meuFiltroContainer') as any), {});
-        } else {
-          console.warn('Plugin jQuery não encontrado!');
-        }
       })
       .catch(err => console.error('Erro ao carregar scripts', err));
 
-
   }
+
+   executarAcao(valor: any) {
+
+    console.log(valor);
+  throw new Error('Function not implemented.');
+
+}
 }
 
 function updateImageUrls(obj: any) {
@@ -76,3 +140,8 @@ function updateImageUrls(obj: any) {
     }
   }
 }
+
+
+
+
+
