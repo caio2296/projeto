@@ -1,6 +1,8 @@
+/* eslint-disable @angular-eslint/prefer-inject */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/prefer-standalone */
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-filter-image',
@@ -14,11 +16,33 @@ export class FilterImage implements OnInit {
   @Input() data: any;        // Para usar no redirect ou changeStatus
   @Output() clickAction = new EventEmitter<void>();
 
+  translatedCaption = '';
+
   currentImage!: string;
+
+  /**
+   *
+   */
+  constructor(private translocoService: TranslocoService) {
+    
+  }
+
+  private toTranslocoKey(caption: string): string {
+  return 'Filtro.img.Captions.' +
+    caption
+      .toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // remove acentos
+      .replace(/\s+/g, '_') // substitui espaços por _
+      .replace(/[^a-zA-Z0-9_]/g, ''); // remove caracteres especiais
+}
 
 
    ngOnInit() {
     this.currentImage = this.ctrl.imageurl;
+      const key = this.toTranslocoKey(this.ctrl.caption);
+      this.translocoService.selectTranslate(key).subscribe(value => {
+        this.translatedCaption = value;
+      });
   }
 
    onMouseOut(){

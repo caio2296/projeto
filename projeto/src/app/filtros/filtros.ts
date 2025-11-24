@@ -2,7 +2,7 @@
 /* eslint-disable no-var */
 /* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, input, Input, OnInit } from '@angular/core';
 import { toolbar } from '../filters/filters_json_export'; // caminho relativo para o arquivo
 import { FiltroServiceApi } from './ServicesFiltro/filtro-service-api';
 import { FilterCat } from '../calendario/Models/type';
@@ -19,7 +19,7 @@ export class Filtros implements AfterViewInit, OnInit {
  
   // vai virar input depois
    @Input() ctrls: FilterCat | null = null;
-
+   @Input() ctrlsId!:number;
   quatFilhos= 0;
 
    indAux= this.setIndAux()|0;
@@ -30,7 +30,6 @@ export class Filtros implements AfterViewInit, OnInit {
     if(this.indAux<10){
       this.indAux=this.indAux+1;
     }
-
      return this.indAux;
   }
 
@@ -52,7 +51,7 @@ export class Filtros implements AfterViewInit, OnInit {
   
    ngOnInit() {
     // 1) Primeiro buscar os dados
-    this.filtroServiceApi.carregarDados().subscribe({
+    this.filtroServiceApi.carregarDados(this.ctrlsId).subscribe({
       next: data => {
         updateImageUrls(data);
         this.ctrls = data;
@@ -75,7 +74,7 @@ export class Filtros implements AfterViewInit, OnInit {
       .then(() => this.loadScript('/SharedComponents/filters/js/jquery.filters_plugin_1.js'))
       .then(() => {
 
-        this.filtroServiceApi.carregarDados().subscribe({
+        this.filtroServiceApi.carregarDados(this.ctrlsId).subscribe({
 
           next:(data)=>{
               updateImageUrls(data);

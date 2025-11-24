@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Filtros } from '../filtros';
 import { FilterImage } from '../Componentes/filter-image/filter-image';
+import { TranslocoModule } from '@jsverse/transloco';
 
 
 
@@ -11,7 +12,8 @@ import { FilterImage } from '../Componentes/filter-image/filter-image';
     FilterImage
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    TranslocoModule
   ],
   exports:[
     Filtros,

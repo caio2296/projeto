@@ -28,9 +28,9 @@
           <!-- <filter-link        *ngSwitchCase="'link'"        [ctrl]="ctrl"></filter-link>
           <filter-inputtext   *ngSwitchCase="'inputtext'"   [ctrl]="ctrl"></filter-inputtext> -->
 
-
-    <tr [id]= "ctrls?.id + '_' + (i+1)"></tr>
-
+          <!-- depois apagar pq é um teste -->
+          <tr [id]= "ctrls?.id + '_' + (i+1)"></tr>
+           <!-- testando -->
           <div *ngIf=" ((i+1) % 1 === 0) ">
           <!-- <div *ngIf="ctrls.maxctrlsbygroup !== 0 && ((i+1) % ctrls.maxctrlsbygroup === 0) && ((i+1) < quatFilhos)"> -->
                     <tr [id]= "ctrls?.id + '_' + (i+1)"></tr>
@@ -38,7 +38,8 @@
           <!-- Recursivo: tipo div contém children -->
           <!-- <div *ngIf="ctrl?.children?.length" id="divfilters_{{ ctrl.id }}"></div> -->
           <div *ngIf="ctrl?.children?.length" id="divfilters_{{ ctrl.id }}">
-          <app-filtros [ctrls]="ctrl"></app-filtros>
+            <p>{{ctrl.id}}</p>
+          <app-filtros [ctrlsId]="ctrl.id"></app-filtros>
         </div>
 
         </ng-container>

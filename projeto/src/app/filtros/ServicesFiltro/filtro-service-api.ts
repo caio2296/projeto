@@ -20,8 +20,8 @@ export class FiltroServiceApi {
       return this.router.url === '/login';
     }
   
-    carregarDados(): Observable<FilterCat> {
-     console.log(`${this.apiBaseUrl}api/BuscarFiltro/${77}`);
-      return this.http.get<FilterCat>(`${this.apiBaseUrl}api/BuscarFiltro/${77}`); // ou 'api/calendarData' se for por backend;
+    carregarDados(id:number=0): Observable<FilterCat> {
+     console.log(`${this.apiBaseUrl}api/BuscarFiltro/${id}`);
+      return this.http.get<FilterCat>(`${this.apiBaseUrl}api/BuscarFiltro/${id}`); // ou 'api/calendarData' se for por backend;
     }
 }
