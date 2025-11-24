@@ -99,5 +99,15 @@
             "Cliente":"Erro do cliente: ",
             "UsuarioRegistrado": "Usuário já cadastrado!"
         }
-    }
+    },
+     "Filtro": {
+        "img":{
+            "Captions": {
+            "enviar_por_correo": "Enviar por e-mail",
+            "exportar_a_excel": "Exportar para Excel",
+            "imprimir": "Imprimir"
+            }
+        }
+
+  }
 }

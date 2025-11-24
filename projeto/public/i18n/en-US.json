@@ -98,5 +98,14 @@
             "Cliente": "Client error: ",
             "UsuarioRegistrado": "User already registered!"
         }
+    },
+    "Filtro": {
+        "img": {
+            "Captions": {
+            "enviar_por_correo": "Send by email",
+            "exportar_a_excel": "Export to Excel",
+            "imprimir": "Print"
+            }
+        }
     }
 }
