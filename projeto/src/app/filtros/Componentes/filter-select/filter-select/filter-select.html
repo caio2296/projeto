@@ -1,0 +1,65 @@
+<table class="tblMsDropD">
+
+  <!-- label e select na mesma linha -->
+  <tr class="trMsDropD" *ngIf="ctrl.labelbyrow === false">
+    <td class="tdMsDropDLabelCell" [attr.translate]="ctrl.caption">
+      {{ ctrl.caption }}
+    </td>
+
+    <td class="tdMsDropDCtrlCell">
+      <select 
+        class="selectCss"
+        [id]="'select_' + ctrl.id"
+        [name]="ctrl.name"
+        [disabled]="ctrl.disabled"
+        [attr.disabledctrls]="ctrl.disabledctrls"
+        [attr.checkstatus]="ctrl.checkstatus"
+        (change)="onChange($event)"
+      >
+        <option 
+          *ngFor="let item of ctrl.selectitems; trackBy: trackByIndex"
+          [value]="item.value"
+          [selected]="item.selected"
+          [attr.translate]="item.displaytext"
+        >
+          {{ item.displaytext }}
+        </option>
+      </select>
+    </td>
+  </tr>
+
+  <!-- label e select em linhas separadas -->
+  <ng-container *ngIf="ctrl.labelbyrow !== false">
+      
+    <tr class="trMsDropD">
+      <td class="tdMsDropDLabelCell" [attr.translate]="ctrl.caption">
+        {{ ctrl.caption }}
+      </td>
+    </tr>
+
+    <tr class="trMsDropD">
+      <td class="tdMsDropDCtrlCell">
+        <select 
+          class="selectCss"
+          [id]="'select_' + ctrl.id"
+          [name]="ctrl.name"
+          [disabled]="ctrl.disabled"
+          [attr.disabledctrls]="ctrl.disabledctrls"
+          [attr.checkstatus]="ctrl.checkstatus"
+          (change)="onChange($event)"
+        >
+          <option 
+            *ngFor="let item of ctrl.selectitems; trackBy: trackByIndex"
+            [value]="item.value"
+            [selected]="item.selected"
+            [attr.translate]="item.displaytext"
+          >
+            {{ item.displaytext }}
+          </option>
+        </select>
+      </td>
+    </tr>
+
+  </ng-container>
+
+</table>

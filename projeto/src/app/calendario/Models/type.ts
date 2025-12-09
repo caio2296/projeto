@@ -48,10 +48,9 @@ export interface FilterCat {
   caption: string;
   name: string;
   parentcontrolid: number | null;
-  selectitems: any[] | null;
-  radioitems: any[] | null;
+  radioitems: RadioItem[] | null;
   value: string | null;
-  checkstatus: boolean;
+  checkstatus: boolean | null;
   action: string | null;
   imageurl: string | null;
   controlsbyrow: boolean;
@@ -59,12 +58,35 @@ export interface FilterCat {
   changeStatus: any | null;
   labelbyrow: boolean;
   tag: string | null;
-  Order: number;
-  id_ctrl_depend: number;
+  order: number;          // <-- corrigido
+  id_ctrl_depend: number | null;
   disabledctrls: boolean;
-  maxctrlsbygroup: number;
+  maxctrlsbygroup: number | null;
   disabled: boolean;
   filloptions: any[] | null;
-  Checked: boolean;
+  checked: boolean;       // <-- corrigido
   imageoverurl: string | null;
+  selectitems: SelectItems[];
 }
+
+export interface SelectItems{
+  value: string;
+  displaytext: string;
+  selected?: boolean;
+}
+
+export interface RadioItem {
+  id_item: number;
+  value: string;
+  caption: string;
+  statuscheck: boolean;
+}
+
+export interface FilterData {
+    target: HTMLElement;            // ok no Angular
+    settings: FilterCat;            // usa sua interface
+    aux?: any;
+    redirectTo?: string;
+    IdLine?: number | string;
+}
+

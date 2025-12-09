@@ -1,0 +1,58 @@
+<table class="tblMsDropD">
+<ng-container *ngIf="ctrl.labelbyrow === false; else verticalMode">
+<tr class="trMsDropD">
+<td class="tdMSelectLabelCell">{{ ctrl.caption }}</td>
+<td class="btnFilter">
+<select
+[id]="'multiselect_' + ctrl.id"
+[name]="ctrl.name"
+multiple
+size="5"
+class="selectCss"
+[disabled]="ctrl.disabled"
+(change)="onChange()">
+
+
+<optgroup label="Marcar Todos" [attr.class]="'optG_' + ctrl.name">
+<option
+*ngFor="let item of filteredItems"
+[value]="item.value"
+[selected]="item.selected">
+{{ item.displaytext }}
+</option>
+</optgroup>
+</select>
+</td>
+</tr>
+</ng-container>
+
+
+<ng-template #verticalMode>
+<tr class="trMsDropD">
+<td class="tdMsDropDLabelCell">{{ ctrl.caption }}</td>
+</tr>
+<tr class="trMsDropD">
+<td class="btnFilter">
+<select
+[id]="'multiselect_' + ctrl.id"
+[name]="ctrl.name"
+multiple
+size="5"
+class="selectCss"
+[disabled]="ctrl.disabled"
+(change)="onChange()">
+
+
+<optgroup label="Marcar Todos" [attr.class]="'optG_' + ctrl.name">
+<option
+*ngFor="let item of filteredItems"
+[value]="item.value"
+[selected]="item.selected">
+{{ item.displaytext }}
+</option>
+</optgroup>
+</select>
+</td>
+</tr>
+</ng-template>
+</table>

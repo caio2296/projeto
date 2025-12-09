@@ -1,0 +1,13 @@
+<table class="tblBtn">
+  <tr class="trBtn">
+    <td class="tdBtn">
+      <input
+        type="button"
+        [id]="'btn_' + ctrl.id"
+        [value]="ctrl.caption"
+        [ngClass]="ctrl.css"
+        (click)="onClick()"
+      />
+    </td>
+  </tr>
+</table>

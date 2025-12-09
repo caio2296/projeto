@@ -1,0 +1,25 @@
+<table class="tblChk">
+<tr class="trChk">
+<td class="tdChk">
+<input
+type="checkbox"
+class="chkCss"
+[id]="'chk_' + ctrl.id"
+[name]="ctrl.name"
+[value]="ctrl.value"
+[checked]="ctrl.checked"
+[ngClass]="ctrl.css"
+[attr.checkstatus]="ctrl.checkstatus"
+(change)="handleChange()"
+(click)="handleClick($event)"
+/>
+
+
+<label
+[attr.translate-ui-button-text]="ctrl.caption"
+[for]="'chk_' + ctrl.id">
+{{ ctrl.caption }}
+</label>
+</td>
+</tr>
+</table>

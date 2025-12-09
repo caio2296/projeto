@@ -1,0 +1,22 @@
+<div
+  class="buttonset"
+  [attr.id]="'btnset_' + ctrl.id"
+  [attr.name]="ctrl.name"
+  [attr.checkstatus]="ctrl.checkstatus"
+>
+  <ng-container *ngFor="let item of ctrl.radioitems; let i = index">
+    <input
+      type="radio"
+      [id]="'radio_' + item.id"
+      [value]="item.value"
+      [name]="ctrl.caption"
+      [checked]="item.Checked"
+      (change)="onChange(ctrl.id, ctrl.caption)"
+    />
+
+    <label [for]="'radio_' + item.id">
+      {{ item.caption }}
+    </label>
+  </ng-container>
+</div>
+
