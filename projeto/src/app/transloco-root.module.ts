@@ -26,6 +26,9 @@ import { environment } from '../environments/environment';
   declarations: [
   
     // FilterImage
+
+  
+    
   ],
 })
 export class TranslocoRootModule {}

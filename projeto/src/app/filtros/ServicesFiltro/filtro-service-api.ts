@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @angular-eslint/prefer-inject */
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';

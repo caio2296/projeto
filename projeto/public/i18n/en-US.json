@@ -102,9 +102,9 @@
     "Filtro": {
         "img": {
             "Captions": {
-            "enviar_por_correo": "Send by email",
-            "exportar_a_excel": "Export to Excel",
-            "imprimir": "Print"
+                "enviar_por_correo": "Send by email",
+                "exportar_a_excel": "Export to Excel",
+                "imprimir": "Print"
             }
         }
     }
