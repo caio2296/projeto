@@ -125,10 +125,6 @@ export class Filtros implements  OnInit {
 
   // }
 
-  executarAcao(valor: any) {
-    console.log(valor);
-    throw new Error(`Function ${valor} not implemented.`);
-  }
 }
 
 function updateImageUrls(obj: any) {

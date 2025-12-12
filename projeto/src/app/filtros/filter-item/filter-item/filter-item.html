@@ -1,0 +1,61 @@
+<ng-container [ngSwitch]="ctrl?.typectrl">
+
+    <p>{{ctrl?.id}}</p>
+    <p> {{ctrl?.typectrl}}</p>
+  <app-filter-select 
+        *ngSwitchCase="'select'"
+        [ctrl]="ctrl!"
+        (changed)="executarAcao($event)">
+  </app-filter-select>
+
+  <app-filter-multi-select 
+        *ngSwitchCase="'multiselect'"
+        [ctrl]="ctrl!"
+        (changeSelection)="executarAcao($event)">
+  </app-filter-multi-select>
+
+  <app-filter-check
+        *ngSwitchCase="'chk'"
+        [ctrl]="ctrl!"
+        (changeSelection)="executarAcao($event)">
+  </app-filter-check>
+
+  <app-filter-button
+        *ngSwitchCase="'btn'"
+        [ctrl]="ctrl!"
+        (buttonAction)="executarAcao($event)">
+  </app-filter-button>
+
+  <app-filter-separator
+        *ngSwitchCase="'separator'"
+        [ctrl]="ctrl">
+  </app-filter-separator>
+
+  <app-filter-buttonset
+        *ngSwitchCase="'buttonset'"
+        [ctrl]="ctrl"
+        (changeSelection)="executarAcao($event)">
+  </app-filter-buttonset>
+
+  <app-filter-image
+        *ngSwitchCase="'img'"
+        [ctrl]="ctrl"
+        [data]="{ redirectTo: 'algumaCoisa' }"
+        (clickAction)="executarAcao(ctrl!.action)">
+  </app-filter-image>
+
+   <div *ngIf=" controlsbyrow &&(
+                  (ctrls?.maxctrlsbygroup ?? 0) !== 0 &&
+                  ((i+1) % (ctrls?.maxctrlsbygroup ?? 1) === 0) &&
+                  ((i+1) < quatFilhos)
+                )
+                ">
+      <tr [id]="ctrls?.id + '_' + (i+1)"></tr>
+    </div>
+
+  <!-- Renderiza children -->
+  <div *ngSwitchCase="'Filters'" id="divfilters_{{ ctrl!.id }}">
+      <app-filtros [ctrlsId]="ctrl!.id"></app-filtros>
+  </div>
+
+</ng-container>

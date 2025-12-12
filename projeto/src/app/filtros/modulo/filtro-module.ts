@@ -9,6 +9,10 @@ import { FilterMultiSelect } from '../Componentes/filter-multiSelect/filter-mult
 import { FilterCheck } from '../Componentes/filter-check/filter-check/filter-check';
 import { FilterButton } from '../Componentes/filter-button/filter-button/filter-button';
 import { FilterSeparator } from '../Componentes/filter-separator/filter-separator/filter-separator';
+import { FilterItem } from '../filter-item/filter-item/filter-item';
+
+
+
 
 
 
@@ -21,7 +25,8 @@ import { FilterSeparator } from '../Componentes/filter-separator/filter-separato
     FilterMultiSelect,
     FilterCheck,
     FilterButton,
-    FilterSeparator
+    FilterSeparator,
+    FilterItem
   ],
   imports: [
     CommonModule,
@@ -35,7 +40,8 @@ import { FilterSeparator } from '../Componentes/filter-separator/filter-separato
     FilterMultiSelect,
     FilterCheck,
     FilterButton,
-    FilterSeparator
+    FilterSeparator,
+    FilterItem
   ]
 })
 export class FiltroModule { }
