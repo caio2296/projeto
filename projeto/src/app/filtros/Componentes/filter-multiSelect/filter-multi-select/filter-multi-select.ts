@@ -1,6 +1,6 @@
 /* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { FilterCat } from '../../../../calendario/Models/type';
 
 @Component({
@@ -9,13 +9,27 @@ import { FilterCat } from '../../../../calendario/Models/type';
   templateUrl: './filter-multi-select.html',
   styleUrl: './filter-multi-select.scss'
 })
-export class FilterMultiSelect {
+export class FilterMultiSelect implements OnChanges {
 @Input() ctrl!: FilterCat;
 @Output() changeStatus = new EventEmitter<void>();
 
 
+     // 🔥 array, não string
+  valorPadrao: string[] = [];
+
+
+  ngOnChanges(): void {
+    if (this.ctrl?.selectItems?.length) {
+       // 🔥 pega TODOS os defaultselected
+      this.valorPadrao = this.ctrl.selectItems
+        .filter(i => i.defaultselected)
+        .map(i => i.value);
+      console.log('Selecionados:', this.valorPadrao);
+    }
+  }
+
 get filteredItems(): any[] {
- return this.ctrl.selectitems.filter(i => i.value !== '-');
+ return this.ctrl.selectItems.filter(i => i.value !== '-');
 }
 
 

@@ -10,7 +10,9 @@ multiple
 size="5"
 class="selectCss"
 [disabled]="ctrl.disabled"
-(change)="onChange()">
+(change)="onChange()"
+[(ngModel)]="valorPadrao"
+>
 
 
 <optgroup label="Marcar Todos" [attr.class]="'optG_' + ctrl.name">

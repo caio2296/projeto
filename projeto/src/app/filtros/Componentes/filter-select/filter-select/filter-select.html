@@ -15,12 +15,15 @@
         [attr.disabledctrls]="ctrl.disabledctrls"
         [attr.checkstatus]="ctrl.checkstatus"
         (change)="onChange($event)"
+          [(ngModel)]="valorPadrao"
+
+   
       >
         <option 
-          *ngFor="let item of ctrl.selectitems; trackBy: trackByIndex"
-          [value]="item.value"
-          [selected]="item.selected"
+          *ngFor="let item of ctrl.selectItems; trackBy: trackByIndex"
+           [ngValue]="item.value"
           [attr.translate]="item.displaytext"
+
         >
           {{ item.displaytext }}
         </option>
@@ -28,6 +31,7 @@
     </td>
   </tr>
 
+  <!-- [selected]="item.selected" -->
   <!-- label e select em linhas separadas -->
   <ng-container *ngIf="ctrl.labelbyrow !== false">
       
@@ -47,12 +51,13 @@
           [attr.disabledctrls]="ctrl.disabledctrls"
           [attr.checkstatus]="ctrl.checkstatus"
           (change)="onChange($event)"
+          [(ngModel)]="valorPadrao"
         >
           <option 
-            *ngFor="let item of ctrl.selectitems; trackBy: trackByIndex"
+            *ngFor="let item of ctrl.selectItems; trackBy: trackByIndex"
             [value]="item.value"
-            [selected]="item.selected"
             [attr.translate]="item.displaytext"
+       
           >
             {{ item.displaytext }}
           </option>

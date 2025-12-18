@@ -10,6 +10,7 @@ import { FilterCheck } from '../Componentes/filter-check/filter-check/filter-che
 import { FilterButton } from '../Componentes/filter-button/filter-button/filter-button';
 import { FilterSeparator } from '../Componentes/filter-separator/filter-separator/filter-separator';
 import { FilterItem } from '../filter-item/filter-item/filter-item';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -30,7 +31,8 @@ import { FilterItem } from '../filter-item/filter-item/filter-item';
   ],
   imports: [
     CommonModule,
-    TranslocoModule
+    TranslocoModule,
+     FormsModule // 🔥 obrigatório
   ],
   exports:[
     Filtros,

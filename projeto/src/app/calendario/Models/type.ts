@@ -66,13 +66,17 @@ export interface FilterCat {
   filloptions: any[] | null;
   checked: boolean;       // <-- corrigido
   imageoverurl: string | null;
-  selectitems: SelectItems[];
+  selectItems: SelectItems[];
 }
 
 export interface SelectItems{
-  value: string;
-  displaytext: string;
-  selected?: boolean;
+   id_item: number;
+   id_filter: number;
+   order: number;
+   defaultselected: boolean;
+   withfilters: boolean;
+   value: string;
+   displaytext: string;
 }
 
 export interface RadioItem {
