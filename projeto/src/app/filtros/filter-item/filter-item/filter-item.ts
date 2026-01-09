@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/prefer-standalone */
-import { Component, input, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FilterCat, FilterData } from '../../../calendario/Models/type';
 
 @Component({

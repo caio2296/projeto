@@ -1,4 +1,4 @@
-<table class="tblMsDropD">
+<!-- <table class="tblMsDropD">
 <ng-container *ngIf="ctrl.labelbyrow === false; else verticalMode">
 <tr class="trMsDropD">
 <td class="tdMSelectLabelCell">{{ ctrl.caption }}</td>
@@ -57,4 +57,71 @@ class="selectCss"
 </td>
 </tr>
 </ng-template>
-</table>
+</table> -->
+
+
+<div appCombobox #cb="appCombobox"   
+  tabindex="0"
+  role="aria-combobox"
+  aria-haspopup="listbox"
+  class="material-select"
+  >
+
+  <!-- TRIGGER / INPUT -->
+  <div #origin class="select">
+
+    <span class="selected-label-text">
+      {{ displayValue() }}
+    </span>
+
+    <!-- 🔥 INPUT OBRIGATÓRIO -->
+    <input
+      appComboboxInput
+      type="text"
+      class="combobox-input"
+      aria-label="Select labels"
+      [attr.aria-expanded]="cb.expanded()"
+      readonly />
+
+    <span class="example-arrow">▼</span>
+  </div>
+
+  <!-- OVERLAY -->
+  <ng-template
+    cdkConnectedOverlay
+    [cdkConnectedOverlayOrigin]="origin"
+    [cdkConnectedOverlayOpen]="cb.expanded()"
+    [cdkConnectedOverlayHasBackdrop]="false"
+    [cdkConnectedOverlayWidth]="origin.offsetWidth">
+
+    <div class="example-popup-container">
+      <div appListbox [multi]="true"
+       [values]="selectedValues()"
+       (valuesChange)="selectedValues.set($event)"
+       (valuesChange)="onValuesChange($event)"
+       role="listbox"
+       >
+
+        @for (item of filteredItems; track item.displaytext) {
+          <div appOption [optionValue]="item" [optionLabel]="item.displaytext">
+              <!-- <span
+                class="example-option-icon material-symbols-outlined"
+                translate="no"
+                aria-hidden="true"
+                >{{ label.icon }}</span
+              > -->
+              <span class="example-option-text">{{ item.displaytext }}</span>
+              <span
+                class="example-option-check material-symbols-outlined"
+                translate="no"
+                aria-hidden="true"
+                >check</span>
+          
+      </div>
+    }
+    </div>
+    </div>
+  </ng-template>
+
+</div>
+

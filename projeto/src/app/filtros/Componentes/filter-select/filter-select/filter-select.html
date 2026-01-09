@@ -1,7 +1,7 @@
-<table class="tblMsDropD">
+<!-- <table class="tblMsDropD"> -->
 
   <!-- label e select na mesma linha -->
-  <tr class="trMsDropD" *ngIf="ctrl.labelbyrow === false">
+  <!-- <tr class="trMsDropD" *ngIf="ctrl.labelbyrow === false">
     <td class="tdMsDropDLabelCell" [attr.translate]="ctrl.caption">
       {{ ctrl.caption }}
     </td>
@@ -29,11 +29,11 @@
         </option>
       </select>
     </td>
-  </tr>
+  </tr> -->
 
   <!-- [selected]="item.selected" -->
   <!-- label e select em linhas separadas -->
-  <ng-container *ngIf="ctrl.labelbyrow !== false">
+  <!-- <ng-container *ngIf="ctrl.labelbyrow !== false">
       
     <tr class="trMsDropD">
       <td class="tdMsDropDLabelCell" [attr.translate]="ctrl.caption">
@@ -67,4 +67,72 @@
 
   </ng-container>
 
-</table>
+</table> -->
+
+<div appCombobox #cb="appCombobox"   
+  tabindex="0"
+  role="aria-combobox"
+  aria-haspopup="listbox"
+  class="material-select"
+  >
+
+  <!-- TRIGGER / INPUT -->
+  <div #origin class="select">
+
+    <span class="selected-label-text">
+      {{ displayValue() }}
+    </span>
+
+    <!-- 🔥 INPUT OBRIGATÓRIO -->
+    <input
+      appComboboxInput
+      type="text"
+      class="combobox-input"
+      aria-label="Select labels"
+      [attr.aria-expanded]="cb.expanded()"
+      readonly />
+
+    <span class="example-arrow">▼</span>
+  </div>
+
+  <!-- OVERLAY -->
+  <ng-template
+    cdkConnectedOverlay
+    [cdkConnectedOverlayOrigin]="origin"
+    [cdkConnectedOverlayOpen]="cb.expanded()"
+    [cdkConnectedOverlayHasBackdrop]="false"
+    [cdkConnectedOverlayWidth]="origin.offsetWidth">
+
+    <div class="example-popup-container">
+      <div appListbox [multi]="false"
+       [values]="selectedValues()"
+       (valuesChange)="selectedValues.set($event)"
+       (valuesChange)="onValuesChange($event)"
+       role="listbox"
+       >
+
+        @for (item of filteredItems; track item.displaytext) {
+          <div appOption [optionValue]="item" [optionLabel]="item.displaytext">
+              <!-- <span
+                class="example-option-icon material-symbols-outlined"
+                translate="no"
+                aria-hidden="true"
+                >{{ label.icon }}</span
+              > -->
+              <span class="example-option-text">{{ item.displaytext }}</span>
+              <span
+                class="example-option-check material-symbols-outlined"
+                translate="no"
+                aria-hidden="true"
+                >check</span>
+          
+      </div>
+    }
+    </div>
+    </div>
+  </ng-template>
+
+</div>
+
+
+
