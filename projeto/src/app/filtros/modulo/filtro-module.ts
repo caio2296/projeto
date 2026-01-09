@@ -11,6 +11,10 @@ import { FilterButton } from '../Componentes/filter-button/filter-button/filter-
 import { FilterSeparator } from '../Componentes/filter-separator/filter-separator/filter-separator';
 import { FilterItem } from '../filter-item/filter-item/filter-item';
 import { FormsModule } from '@angular/forms';
+import { Options } from '../Componentes/TypeMultiSelect/option.directive';
+import { Combobox } from '../Componentes/TypeMultiSelect/combobox.directive';
+import { Listbox } from '../Componentes/TypeMultiSelect/listbox.directive';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 
 
@@ -27,13 +31,18 @@ import { FormsModule } from '@angular/forms';
     FilterCheck,
     FilterButton,
     FilterSeparator,
-    FilterItem
+    FilterItem,
+    Options,
+    Combobox,
+    Listbox,
+    
   ],
   imports: [
     CommonModule,
     TranslocoModule,
-     FormsModule // 🔥 obrigatório
-  ],
+    FormsModule, // 🔥 obrigatório
+    OverlayModule
+    ],
   exports:[
     Filtros,
     FilterImage,
@@ -43,7 +52,11 @@ import { FormsModule } from '@angular/forms';
     FilterCheck,
     FilterButton,
     FilterSeparator,
-    FilterItem
+    FilterItem,
+    Options,
+    Combobox,
+    Listbox,
+    
   ]
 })
 export class FiltroModule { }
