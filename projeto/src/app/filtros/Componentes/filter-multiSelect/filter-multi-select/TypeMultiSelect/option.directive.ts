@@ -11,7 +11,7 @@ import {
   input,
 } from '@angular/core';
 import { Listbox } from './listbox.directive';
-import { FilterCat } from '../../../calendario/Models/type';
+import { FilterCat } from '../../../../../calendario/Models/type';
 
 @Directive({
   selector: '[appOption]',

@@ -1,7 +1,7 @@
 <table class="tblChk">
 <tr class="trChk">
 <td class="tdChk">
-<input
+<!-- <input
 type="checkbox"
 class="chkCss"
 [id]="'chk_' + ctrl.id"
@@ -12,7 +12,19 @@ class="chkCss"
 [attr.checkstatus]="ctrl.checkstatus"
 (change)="handleChange()"
 (click)="handleClick($event)"
-/>
+/> -->
+<section class="example-section">
+  <mat-checkbox class="example-margin chkCss" type="checkbox"
+            [id]="'chk_' + ctrl.id"
+            [name]="ctrl.name"
+            [value]="ctrl.value ?? ''"
+            [checked]="ctrl.checked"
+            [ngClass]="ctrl.css"
+            [attr.checkstatus]="ctrl.checkstatus"
+            (change)="handleChange()"
+            (click)="handleClick($event)">
+        </mat-checkbox>
+
 
 
 <label
@@ -20,6 +32,10 @@ class="chkCss"
 [for]="'chk_' + ctrl.id">
 {{ ctrl.caption }}
 </label>
+
+</section>
 </td>
 </tr>
 </table>
+
+

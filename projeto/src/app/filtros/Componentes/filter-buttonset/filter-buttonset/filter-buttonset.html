@@ -1,22 +1,50 @@
-<div
-  class="buttonset"
-  [attr.id]="'btnset_' + ctrl.id"
-  [attr.name]="ctrl.name"
-  [attr.checkstatus]="ctrl.checkstatus"
->
-  <ng-container *ngFor="let item of ctrl.radioitems; let i = index">
-    <input
+<!-- <div class="buttonset" [attr.id]="'btnset_' + ctrl.id" [attr.name]="ctrl.name" [attr.checkstatus]="ctrl.checkstatus">
+  <ng-container *ngFor="let item of ctrl.radioitems; let i = index"> -->
+    <!-- <input
       type="radio"
       [id]="'radio_' + item.id"
       [value]="item.value"
       [name]="ctrl.caption"
       [checked]="item.Checked"
       (change)="onChange(ctrl.id, ctrl.caption)"
-    />
+    /> -->
 
-    <label [for]="'radio_' + item.id">
+    <!-- <mat-radio-group aria-label="Select an option">
+      <mat-radio-button
+       [id]="'radio_' + item.id"
+       [value]="item.value"
+       [name]="ctrl.caption"
+       [checked]="item.Checked"
+       (change)="onChange(ctrl.id, ctrl.caption)">{{ item.caption }}</mat-radio-button>
+    </mat-radio-group> -->
+
+    <!-- <label [for]="'radio_' + item.id">
       {{ item.caption }}
-    </label>
-  </ng-container>
+    </label> -->
+  <!-- </ng-container>
+</div> -->
+
+
+<div class="buttonset"
+     [attr.id]="'btnset_' + ctrl.id"
+     [attr.name]="ctrl.name"
+     [attr.checkstatus]="ctrl.checkstatus">
+
+  <mat-radio-group
+    [(ngModel)]="selectedValue"
+    (change)="onChange(ctrl.id, ctrl.caption)"
+    aria-label="Select an option">
+
+    <mat-radio-button
+      *ngFor="let item of ctrl.radioitems"
+      [id]="'radio_' + item.id_item"
+      [value]="item.value">
+
+      {{ item.caption }}
+
+    </mat-radio-button>
+
+  </mat-radio-group>
+
 </div>
 
