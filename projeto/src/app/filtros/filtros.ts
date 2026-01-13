@@ -2,7 +2,7 @@
 /* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, Input, OnInit } from '@angular/core';
-import { toolbar } from '../filters/filters_json_export'; // caminho relativo para o arquivo
+// import { toolbar } from '../filters/filters_json_export'; // caminho relativo para o arquivo
 import { FiltroServiceApi } from './ServicesFiltro/filtro-service-api';
 import { FilterCat, FilterData } from '../calendario/Models/type';
 

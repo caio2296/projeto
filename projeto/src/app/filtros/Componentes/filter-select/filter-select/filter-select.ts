@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/prefer-standalone */
-import { afterRenderEffect, Component, computed, EventEmitter, Input, OnChanges, OnInit, Output, signal, viewChild, viewChildren } from '@angular/core';
+import { afterRenderEffect, Component, computed, EventEmitter, Input, OnChanges, Output, signal, viewChild, viewChildren } from '@angular/core';
 import { FilterCat, SelectItems } from '../../../../calendario/Models/type';
-import { Combobox } from '../../TypeMultiSelect/combobox.directive';
-import { Listbox } from '../../TypeMultiSelect/listbox.directive';
-import { Options } from '../../TypeMultiSelect/option.directive';
+import { Combobox } from '../../filter-multiSelect/filter-multi-select/TypeMultiSelect/combobox.directive';
+import { Listbox } from '../../filter-multiSelect/filter-multi-select/TypeMultiSelect/listbox.directive';
+import { Options } from '../../filter-multiSelect/filter-multi-select/TypeMultiSelect/option.directive';
 
 @Component({
   selector: 'app-filter-select',
