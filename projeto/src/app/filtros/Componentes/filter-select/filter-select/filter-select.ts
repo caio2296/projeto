@@ -2,9 +2,9 @@
 /* eslint-disable @angular-eslint/prefer-standalone */
 import { afterRenderEffect, Component, computed, EventEmitter, Input, OnChanges, Output, signal, viewChild, viewChildren } from '@angular/core';
 import { FilterCat, SelectItems } from '../../../../calendario/Models/type';
-import { Combobox } from '../../filter-multiSelect/filter-multi-select/TypeMultiSelect/combobox.directive';
-import { Listbox } from '../../filter-multiSelect/filter-multi-select/TypeMultiSelect/listbox.directive';
-import { Options } from '../../filter-multiSelect/filter-multi-select/TypeMultiSelect/option.directive';
+import { Combobox } from '../../TypeMultiSelect/combobox.directive';
+import { Listbox } from '../../TypeMultiSelect/listbox.directive';
+import { Options } from '../../TypeMultiSelect/option.directive';
 
 @Component({
   selector: 'app-filter-select',
@@ -105,10 +105,10 @@ export class FilterSelect implements  OnChanges {
    return this.ctrl.selectItems.filter(i => i.value !== '-');
   }
   
-    displayIcon = computed(() => {
-      const values = this.listbox()?.values() || [];
-      return this.labels.find(l => l.value === values[0])?.icon ?? '';
-    });
+    // displayIcon = computed(() => {
+    //   const values = this.listbox()?.values() || [];
+    //   return this.labels.find(l => l.value === values[0])?.icon ?? '';
+    // });
   
     displayValue = computed(() => {
       console.log( this.listbox()?.values());
@@ -118,16 +118,16 @@ export class FilterSelect implements  OnChanges {
       return `${values[0].displaytext} + ${values.length - 1} more`;
     });
   
-    labels = [
-      {value: 'Important', icon: 'label'},
-      {value: 'Starred', icon: 'star'},
-      {value: 'Work', icon: 'work'},
-      {value: 'Personal', icon: 'person'},
-      {value: 'To Do', icon: 'checklist'},
-      {value: 'Later', icon: 'schedule'},
-      {value: 'Read', icon: 'menu_book'},
-      {value: 'Travel', icon: 'flight'},
-    ];
+    // labels = [
+    //   {value: 'Important', icon: 'label'},
+    //   {value: 'Starred', icon: 'star'},
+    //   {value: 'Work', icon: 'work'},
+    //   {value: 'Personal', icon: 'person'},
+    //   {value: 'To Do', icon: 'checklist'},
+    //   {value: 'Later', icon: 'schedule'},
+    //   {value: 'Read', icon: 'menu_book'},
+    //   {value: 'Travel', icon: 'flight'},
+    // ];
   
     constructor() {
       afterRenderEffect(() => {
