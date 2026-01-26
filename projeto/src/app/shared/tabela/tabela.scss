@@ -21,3 +21,14 @@
   overflow-x: auto;       /* Adiciona rolagem horizontal se necessário */
 }
 }
+
+/* Make the container scrollable */
+.example-container {
+  height: 316px;
+  overflow: auto;
+  width: 624px;
+}
+
+.example-container table {
+  width: 100%;
+}

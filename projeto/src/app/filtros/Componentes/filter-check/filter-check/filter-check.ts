@@ -23,6 +23,7 @@ export class FilterCheck {
       this.changeSelection.emit({
         type: this.ctrl.typectrl,
         action: this.ctrl.action,
+        caption: this.ctrl.caption
         // redirectTo: this.data.redirectTo,
         // aux: this.data.aux
       });

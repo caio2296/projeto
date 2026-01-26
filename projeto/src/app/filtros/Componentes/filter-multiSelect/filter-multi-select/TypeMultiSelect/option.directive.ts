@@ -11,7 +11,7 @@ import {
   input,
 } from '@angular/core';
 import { Listbox } from './listbox.directive';
-import { FilterCat } from '../../../calendario/Models/type';
+import { FilterCat } from '../../../../../calendario/Models/type';
 
 @Directive({
   selector: '[appOption]',
@@ -31,7 +31,7 @@ export class Options<V> {
     const value = this.optionValue();
     const isSelected = this.listbox.isSelected(value);
 
-    console.log('[Option]', value, 'selected:', isSelected);
+    // console.log('[Option]', value, 'selected:', isSelected);
 
     return isSelected;
   });

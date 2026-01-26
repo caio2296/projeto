@@ -1,6 +1,5 @@
 /* eslint-disable @angular-eslint/prefer-inject */
 /* eslint-disable @angular-eslint/prefer-standalone */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, Input, OnInit } from '@angular/core';
 // import { toolbar } from '../filters/filters_json_export'; // caminho relativo para o arquivo
 import { FiltroServiceApi } from './ServicesFiltro/filtro-service-api';
@@ -50,11 +49,10 @@ export class Filtros implements  OnInit {
 
   ngOnInit() {
 
-    console.log("fui chamado");
     // 1) Primeiro buscar os dados
     this.filtroServiceApi.carregarDados(this.ctrlsId).subscribe({
       next: data => {
-        updateImageUrls(data);
+        // updateImageUrls(data);
         this.ctrls = data;
         console.log("Dados carregados:", data);
       },
@@ -127,25 +125,25 @@ export class Filtros implements  OnInit {
 
 }
 
-function updateImageUrls(obj: any) {
-  if (Array.isArray(obj)) {
-    obj.forEach(updateImageUrls);
-  } else if (typeof obj === 'object' && obj !== null) {
-    for (const key in obj) {
-      if ((key === 'imageurl' || key === 'imageoverurl') && typeof obj[key] === 'string') {
-        let filename = obj[key];
+// function updateImageUrls(obj: any) {
+//   if (Array.isArray(obj)) {
+//     obj.forEach(updateImageUrls);
+//   } else if (typeof obj === 'object' && obj !== null) {
+//     for (const key in obj) {
+//       if ((key === 'imageurl' || key === 'imageoverurl') && typeof obj[key] === 'string') {
+//         let filename = obj[key];
 
-        // Pega só o nome do arquivo (último pedaço do caminho)
-        filename = filename.split('/').pop() || filename;
+//         // Pega só o nome do arquivo (último pedaço do caminho)
+//         filename = filename.split('/').pop() || filename;
 
-        // Gera caminho final correto
-        obj[key] = '/SharedComponents/exporterBar/Images/' + filename;
-      } else {
-        updateImageUrls(obj[key]);
-      }
-    }
-  }
-}
+//         // Gera caminho final correto
+//         obj[key] = '/SharedComponents/exporterBar/Images/' + filename;
+//       } else {
+//         updateImageUrls(obj[key]);
+//       }
+//     }
+//   }
+// }
 
 
 
