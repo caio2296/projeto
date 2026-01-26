@@ -101,3 +101,14 @@
   max-width: 30%;
  }
 }
+
+/* Make the container scrollable */
+.example-container {
+  height: 316px;
+  overflow: auto;
+  width: 624px;
+}
+
+.example-container table {
+  width: 100%;
+}

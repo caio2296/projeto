@@ -2,9 +2,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { afterRenderEffect, Component, computed, EventEmitter, Input, OnChanges, Output, signal, viewChild, viewChildren } from '@angular/core';
 import { FilterCat, SelectItems } from '../../../../calendario/Models/type';
-import { Combobox } from '../../TypeMultiSelect/combobox.directive';
-import { Listbox } from '../../TypeMultiSelect/listbox.directive';
-import { Options } from '../../TypeMultiSelect/option.directive';
+import { Combobox } from './TypeMultiSelect/combobox.directive';
+import { Listbox } from './TypeMultiSelect/listbox.directive';
+import { Options } from './TypeMultiSelect/option.directive';
 
 
 
@@ -48,6 +48,7 @@ export class FilterMultiSelect implements OnChanges {
 onValuesChange(values: SelectItems[]) {
   this.selectedValues.set(values);
 
+  console.log("chamando o pai");
   // 🔥 notifica o pai
   this.changeSelection.emit(values);
 }

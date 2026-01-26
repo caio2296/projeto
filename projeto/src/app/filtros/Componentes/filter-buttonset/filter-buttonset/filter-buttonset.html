@@ -32,7 +32,8 @@
 
   <mat-radio-group
     [(ngModel)]="selectedValue"
-    (change)="onChange(ctrl.id, ctrl.caption)"
+    (change)="onChange()"
+
     aria-label="Select an option">
 
     <mat-radio-button
@@ -48,3 +49,4 @@
 
 </div>
 
+    <!-- (change)="onChange(ctrl.id, ctrl.caption)" -->

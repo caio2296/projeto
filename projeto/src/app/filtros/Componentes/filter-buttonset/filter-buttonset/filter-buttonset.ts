@@ -1,4 +1,5 @@
- /* eslint-disable @angular-eslint/prefer-standalone */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @angular-eslint/prefer-standalone */
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { FilterCat } from '../../../../calendario/Models/type';
 
@@ -12,7 +13,7 @@ export class FilterButtonset implements OnInit {
 
   @Input() ctrl!: FilterCat;
 
-  @Output() changeSelection = new EventEmitter<{ id: number, caption: string }>();
+  @Output() changeSelection = new EventEmitter<any>();
 
 
   selectedValue: string | null = null;
@@ -29,10 +30,24 @@ export class FilterButtonset implements OnInit {
   //   // comportamento idêntico ao radio HTML padrão
   // }
 
-  onChange(id: number, caption: string) {
-    this.changeSelection.emit({
-      id: id,
-      caption: caption
-    });
+  onChange() {
+    // this.changeSelection.emit({
+    //   id: id,
+    //   caption: caption
+    // });
+
+    // sincroniza o array com o valor selecionado
+  this.ctrl.radioitems?.forEach(item => {
+    item.statuscheck = item.value === this.selectedValue;
+  });
+
+  const selected = this.ctrl.radioitems?.find(i => i.statuscheck);
+
+  this.changeSelection.emit({
+    typectrl: this.ctrl.typectrl,
+    action: this.ctrl.action,
+    value: this.selectedValue,
+    caption: selected?.caption ?? null
+  });
   }
 }
