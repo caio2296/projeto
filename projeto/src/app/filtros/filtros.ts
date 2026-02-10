@@ -15,7 +15,20 @@ import { FilterCat, FilterData } from '../calendario/Models/type';
 export class Filtros implements  OnInit {
 
   // vai virar input depois
-  @Input() ctrls: FilterCat | null = null;
+ private _ctrls: FilterCat | null = null;
+
+@Input()
+set ctrls(value: FilterCat | null) {
+  this._ctrls = value;
+
+  if (value) {
+    console.log('Dados recebidos:', value);
+  }
+}
+
+get ctrls(): FilterCat | null {
+  return this._ctrls;
+}
   @Input() ctrlsId!: number;
   @Input() data!: FilterData;
   quatFilhos = 0;
@@ -48,17 +61,8 @@ export class Filtros implements  OnInit {
 
 
   ngOnInit() {
-
-    // 1) Primeiro buscar os dados
-    this.filtroServiceApi.carregarDados(this.ctrlsId).subscribe({
-      next: data => {
-        // updateImageUrls(data);
-        this.ctrls = data;
-        console.log("Dados carregados:", data);
-      },
-      error: err => console.error(err),
-      complete: () => console.log("HTTP completo")
-    });
+      console.log(this._ctrls);
+   
   }
 //  ngAfterViewInit()  {
 //     // 1) Primeiro buscar os dados

@@ -18,10 +18,6 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { MaterialModule } from '../../core/material/material.module';
 
 
-
-
-
-
 @NgModule({
   declarations: [
     Filtros,
