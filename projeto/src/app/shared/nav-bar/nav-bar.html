@@ -1,10 +1,10 @@
 <mat-toolbar class="navbar">
-  <button matIconButton class="mat-elevation-z3"  type="button" 
-    aria-label=""  *ngIf="logado" (click)="collapsed.set(!collapsed())">
+  <button matIconButton class="mat-elevation-z3" type="button" aria-label="" *ngIf="logado"
+    (click)="collapsed.set(!collapsed())">
     <mat-icon>menu</mat-icon>
   </button>
-  <button matIconButton *ngIf="isDashboardPage" class="sandwich-menu" type="button" (click)="collapsed.set(false); abrirDialogCalendario()"
-    aria-label="Abrir calendário">
+  <button matIconButton *ngIf="isDashboardPage" class="sandwich-menu" type="button"
+    (click)="collapsed.set(false); abrirDialogCalendario()" aria-label="Abrir calendário">
     <mat-icon>calendar_today</mat-icon>
   </button>
   <span><a href="/auth/dashboard">My App</a></span>
@@ -12,26 +12,26 @@
     <!-- <mat-icon class="spin-animation">settings</mat-icon>  -->
     <mat-icon class="spin-animation">wb_sunny</mat-icon>
     {{ this.temaService.isDarkMode ? 'Light Mode' : 'Dark Mode' }}
-  </button> 
+  </button>
 
   <button mat-raised-button *ngIf=" !isCadastroPage && isAdmin" routerLink="/cadastro" class="btn btn-primary">
     {{'NavBar.RegistroUsuario'| transloco}}
   </button>
-   <button mat-button [matMenuTriggerFor]="langMenu">
-  <mat-icon>language</mat-icon>
-  {{ activeLang === 'pt-BR' ? 'Português' : 'Inglês' }}
-</button>
+  <button mat-button [matMenuTriggerFor]="langMenu">
+    <mat-icon>language</mat-icon>
+    {{ activeLang === 'pt-BR' ? 'Português' : 'Inglês' }}
+  </button>
 
 
-<!-- Menu dropdown -->
-<mat-menu #langMenu="matMenu">
-  <button mat-menu-item (click)="AlterarIdioma('pt-BR')">
-    🇧🇷 Português
-  </button>
-  <button mat-menu-item (click)="AlterarIdioma('en-US')">
-    🇺🇸 Inglês
-  </button>
-</mat-menu>
+  <!-- Menu dropdown -->
+  <mat-menu #langMenu="matMenu">
+    <button mat-menu-item (click)="AlterarIdioma('pt-BR')">
+      🇧🇷 Português
+    </button>
+    <button mat-menu-item (click)="AlterarIdioma('en-US')">
+      🇺🇸 Inglês
+    </button>
+  </mat-menu>
 </mat-toolbar>
 
 <mat-sidenav-container class="layout">
@@ -39,9 +39,14 @@
     <app-side-bar (deslogou)="collapsed.set(!collapsed())"></app-side-bar>
   </mat-sidenav>
   <mat-sidenav-content class="content" [style.margin-left]="sideNavWidth()">
-       <router-outlet></router-outlet>
+    <!-- <app-loading></app-loading>
+       <router-outlet></router-outlet> -->
+
+<router-outlet></router-outlet>
+
+<div class="global-loading" *ngIf="loading$ | async">
+  <app-loading></app-loading>
+</div>
 
   </mat-sidenav-content>
 </mat-sidenav-container>
-
-
