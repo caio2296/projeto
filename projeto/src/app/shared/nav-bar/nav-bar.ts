@@ -1,6 +1,6 @@
 /* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @angular-eslint/prefer-inject */
-import {  Component, computed, signal } from '@angular/core';
+import {  Component, computed, inject, signal } from '@angular/core';
 import {  FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { CalendarioDialog } from '../../calendario/calendario-dialog/calendario-dialog';
@@ -16,6 +16,7 @@ import { take } from 'rxjs';
 import { LocaleService } from '../../calendario/ServicosCalendario/LocaleService';
 import { DateAdapter } from '@angular/material/core';
 import { CalendarBarModelService } from '../../calendario/ServicosCalendario/calendarBarModel';
+import { LoadingService } from '../Loading/Service/loading-service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -49,6 +50,10 @@ export class NavBar {
     FiscalYear: 'Dashboard.Label.fiscalYear'
   };
 
+
+    private loadingService = inject(LoadingService);
+
+    loading$ = this.loadingService.loading$;
 
   constructor(
     protected calendarBarModelService: CalendarBarModelService,

@@ -21,6 +21,7 @@ import { autenticacaoInterceptor } from './autenticacao/autenticacao-interceptor
 import { AutenticacaoModule } from './autenticacao/autenticacao-module';
 import { MensagemInterceptor } from './core/services/mensagemInterceptor';
 import { TranslocoRootModule } from './transloco-root.module';
+import { LoadingInterceptor } from './shared/Loading/Interceptor/loading-interceptor-interceptor';
 
 registerLocaleData(localeBr, 'pt');
 
@@ -47,6 +48,12 @@ registerLocaleData(localeBr, 'pt');
   {
     provide: HTTP_INTERCEPTORS,
     useClass: autenticacaoInterceptor,
+    multi: true
+  },
+    // ⏳ Loading (ADICIONE AQUI)
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: LoadingInterceptor,
     multi: true
   },
     // DatePipe, { provide: LOCALE_ID, useValue: 'pt' },
