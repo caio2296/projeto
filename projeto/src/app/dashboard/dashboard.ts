@@ -1,10 +1,8 @@
- 
- 
 /* eslint-disable @angular-eslint/prefer-inject */
 /* eslint-disable @angular-eslint/prefer-standalone */
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TokenService } from '../autenticacao/Services/token-service';
 import { UsuarioService } from '../autenticacao/Services/usuarioService';
 import { TemaService } from '../shared/nav-bar/Services/tema-service';
@@ -25,15 +23,15 @@ import { FilterCat } from '../calendario/Models/type';
   styleUrl: './dashboard.scss'
 })
 export class Dashboard implements OnInit {
-  
-   ctrls: FilterCat[] | null = null;
-   ctrlsId!: number;
 
-  
+  ctrls: FilterCat[] | null = null;
+  ctrlsId!: number;
 
-    showFiller = false;
 
-    constructor(private fb: FormBuilder, private cdRef: ChangeDetectorRef,
+
+  showFiller = false;
+
+  constructor(private fb: FormBuilder, private cdRef: ChangeDetectorRef,
     protected calendarBarModelService: CalendarBarModelService,
     protected dateHelperServices: DateHelperService,
     protected calendarFormService: CalendarFormService,
@@ -42,41 +40,44 @@ export class Dashboard implements OnInit {
     protected router: Router,
     protected userService: UsuarioService,
     private tokenService: TokenService,
-    private filtroServiceApi: FiltroServiceApi
-    ) {  }
-
-  
-
+    private filtroServiceApi: FiltroServiceApi,
+    private route: ActivatedRoute,
+  ) { }
 
 
-    ngOnInit(){
-      this.ctrlsId = 1;
-      // 1) Primeiro buscar os dados
-          this.filtroServiceApi.carregarDados(this.ctrlsId).subscribe({
-            next: data => {
-              // updateImageUrls(data);
-              this.ctrls = data;
-              // console.log("Dados carregados:", data);
-            },
-            error: err => console.error(err),
-            complete: () => console.log("HTTP completo")
-          });
-
-    }
-
-    get filtros(): FilterCat[] {
-
-  return this.ctrls ?? [];
-}
 
 
-  
+
+  ngOnInit() {
+    // this.ctrlsId = 1;
+    // // 1) Primeiro buscar os dados
+    // this.filtroServiceApi.carregarDados(this.ctrlsId).subscribe({
+    //   next: data => {
+    //     // updateImageUrls(data);
+    //     this.ctrls = data;
+    //     // console.log("Dados carregados:", data);
+    //   },
+    //   error: err => console.error(err),
+    //   complete: () => console.log("HTTP completo")
+    // });
+
+     this.ctrls = this.route.snapshot.data['filtros'];
+
+  }
+
+  get filtros(): FilterCat[] {
+
+    return this.ctrls ?? [];
+  }
 
 
-      toggleTheme(): void {
+
+
+
+  toggleTheme(): void {
     this.temaService.toggleTheme();
   }
-  
+
 }
 
 

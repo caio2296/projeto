@@ -14,17 +14,70 @@
   z-index: 9999; /* acima de tudo */
 }
 
+// .spinner {
+//   width: 50px;
+//   height: 50px;
+//   border: 5px solid #ddd;
+//   border-top: 5px solid #1976d2;
+//   border-radius: 50%;
+//   animation: spin 1s linear infinite;
+// }
+
+// @keyframes spin {
+//   100% {
+//     transform: rotate(360deg);
+//   }
+// }
+
+
+// Licença
+// Todos os 12 ícones de carregamento CSS fornecidos nesta página estão sob a licença CC0 , então sinta-se à vontade para usá-los!
+//  Também oferecemos uma licença avançada e um editor para ícones de carregamento premium e animados . Não deixe de conferir! :)
+
+// link fonte do loading: https://loading.io/css/
+
 .spinner {
-  width: 50px;
-  height: 50px;
-  border: 5px solid #ddd;
-  border-top: 5px solid #1976d2;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
+  /* change color here */
+  color: #27687c
 }
 
-@keyframes spin {
+.spinner,
+.spinner div {
+  box-sizing: border-box;
+}
+.spinner {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.spinner div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid currentColor;
+  border-radius: 50%;
+  animation: spinner 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: currentColor transparent transparent transparent;
+}
+.spinner div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.spinner div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.spinner div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
   100% {
     transform: rotate(360deg);
   }
 }
+
