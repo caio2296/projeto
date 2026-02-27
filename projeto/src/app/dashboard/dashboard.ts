@@ -39,40 +39,9 @@ export class Dashboard implements OnInit {
     protected temaService: TemaService,
     protected router: Router,
     protected userService: UsuarioService,
-    private tokenService: TokenService,
-    private filtroServiceApi: FiltroServiceApi,
-    private route: ActivatedRoute,
-  ) { }
-
-
-
-
-
-  ngOnInit() {
-    // this.ctrlsId = 1;
-    // // 1) Primeiro buscar os dados
-    // this.filtroServiceApi.carregarDados(this.ctrlsId).subscribe({
-    //   next: data => {
-    //     // updateImageUrls(data);
-    //     this.ctrls = data;
-    //     // console.log("Dados carregados:", data);
-    //   },
-    //   error: err => console.error(err),
-    //   complete: () => console.log("HTTP completo")
-    // });
-
-     this.ctrls = this.route.snapshot.data['filtros'];
-
-  }
-
-  get filtros(): FilterCat[] {
-
-    return this.ctrls ?? [];
-  }
-
-
-
-
+    private tokenService: TokenService
+    ) {  }
+//test branch 
 
   toggleTheme(): void {
     this.temaService.toggleTheme();
