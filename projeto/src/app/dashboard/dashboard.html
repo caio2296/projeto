@@ -2,14 +2,15 @@
 <h1>DashBoard working!</h1>
  <!-- <router-outlet></router-outlet> -->
 <app-label-data></app-label-data>
-<app-filtros [ctrlsId]="77"></app-filtros>
-<app-filtros [ctrlsId]="83"></app-filtros>
-<app-filtros [ctrlsId]="33"></app-filtros>
-<app-filtros [ctrlsId]="61"></app-filtros>
-<app-filtros [ctrlsId]="36"></app-filtros>
-<app-filtros [ctrlsId]="47"></app-filtros>
-<app-filtros [ctrlsId]="87"></app-filtros>
+<app-filtros *ngIf="filtros.length > 1" [ctrls]="filtros[4]" ></app-filtros>
+<app-filtros *ngIf="filtros.length > 1" [ctrls]="filtros[5]"></app-filtros>
+<app-filtros *ngIf="filtros.length > 1" [ctrls]="filtros[0]"></app-filtros>
+<app-filtros *ngIf="filtros.length > 1" [ctrls]="filtros[3]"></app-filtros>
+<app-filtros *ngIf="filtros.length > 1" [ctrls]="filtros[1]"></app-filtros>
+<app-filtros *ngIf="filtros.length > 1" [ctrls]="filtros[2]"></app-filtros>
+
 <app-tabela></app-tabela>
+<app-filtros *ngIf="filtros.length > 1" [ctrls]="filtros[6]"></app-filtros>
 <app-grafico></app-grafico>
 
 

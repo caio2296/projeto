@@ -1,7 +1,7 @@
 /* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FilterCat, FilterData } from '../../../../calendario/Models/type';
+import { FilterCat } from '../../../../calendario/Models/type';
 
 @Component({
   selector: 'app-filter-button',

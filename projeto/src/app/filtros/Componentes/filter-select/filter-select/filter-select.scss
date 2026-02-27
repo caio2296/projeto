@@ -1,0 +1,165 @@
+@import url('https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined');
+
+:host {
+  display: block;
+  font-family: var(--inter-font, Arial, sans-serif);
+  --primary: var(--hot-pink, #e91e63);
+  --on-primary: #ffffff;
+}
+
+/* ===============================
+   SELECT (TRIGGER)
+================================ */
+
+.material-select {
+  width: 100%;
+  max-width: 320px;
+     --select-width: 155px;
+      width: var(--select-width);
+  margin: 0px 30px 0px 0px;    
+}
+
+.select {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 3rem;
+  padding: 0 1rem;
+  border-radius: 999px;
+  background-color: var(--primary);
+  color: var(--on-primary);
+  cursor: pointer;
+  user-select: none;
+   width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+}
+
+/* foco acessível */
+[appCombobox]:focus-within .select {
+  outline: 2px solid color-mix(in srgb, var(--primary) 60%, black);
+  outline-offset: 2px;
+}
+
+/* ===============================
+   TEXTO SELECIONADO
+================================ */
+
+.selected-label-text {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  pointer-events: none;
+   max-width: calc(100% - 2rem); /* espaço da seta */
+}
+
+/* ===============================
+   INPUT INVISÍVEL (A11Y)
+================================ */
+
+[appComboboxInput] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* ===============================
+   SETA
+================================ */
+
+.example-arrow {
+  margin-left: 0.5rem;
+  font-size: 1.25rem;
+  pointer-events: none;
+  transition: transform 150ms ease-in-out;
+}
+
+/* gira a seta */
+[appComboboxInput][aria-expanded='true'] ~ .example-arrow {
+  transform: rotate(180deg);
+}
+
+/* ===============================
+   OVERLAY / POPUP
+================================ */
+
+.example-popup-container {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  background-color: var(--septenary-contrast, #ffffff);
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.12),
+    0 2px 4px rgba(0, 0, 0, 0.08);
+  max-height: 14rem;
+  overflow: hidden;
+
+   width: 100%;
+  min-width: 100%;
+  box-sizing: border-box;
+}
+
+/* ===============================
+   LISTBOX
+================================ */
+
+[appListbox] {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 13rem;
+  overflow-y: auto;
+}
+
+/* ===============================
+   OPTION
+================================ */
+
+[appOption] {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 2.75rem;
+  padding: 0 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 120ms ease;
+}
+
+/* hover */
+[appOption]:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* ativo (teclado / foco lógico) */
+[appOption][data-active='true'] {
+  outline: 2px solid var(--hot-pink, #e91e63);
+  outline-offset: -2px;
+   background-color: color-mix(in srgb, var(--primary-contrast) 5%, transparent);
+}
+
+/* selecionado */
+[appOption][aria-selected='true'] {
+  color: var(--hot-pink, #e91e63);
+  background-color: color-mix(in srgb, var(--hot-pink, #e91e63) 10%, transparent);
+}
+
+/* ===============================
+   TEXTO / ÍCONES
+================================ */
+
+.example-option-text {
+  flex: 1;
+}
+
+.example-option-icon,
+.example-option-check {
+  font-size: 1rem;
+}
+
+/* check só aparece se selecionado */
+[appOption]:not([aria-selected='true']) .example-option-check {
+  display: none;
+}

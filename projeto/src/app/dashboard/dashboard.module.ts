@@ -5,6 +5,7 @@ import { SharedModule } from "../shared/shared.module";
 import { MaterialModule } from "../core/material/material.module";
 import { CalendarioModule } from "../calendario/modulo/calendario-module";
 import { FiltroModule } from "../filtros/modulo/filtro-module";
+import { CommonModule } from "@angular/common";
 
 @NgModule({
     declarations:[
@@ -15,7 +16,8 @@ import { FiltroModule } from "../filtros/modulo/filtro-module";
         SharedModule,
         MaterialModule,
         CalendarioModule,
-        FiltroModule
+        FiltroModule,
+        CommonModule
     ],
     exports:[
         Dashboard

@@ -1,11 +1,11 @@
 <ng-container [ngSwitch]="ctrl?.typectrl">
 
-    <p>{{ctrl?.id}}</p>
-    <p> {{ctrl?.typectrl}}</p>
+    <!-- <p>{{ctrl?.id}}</p>
+    <p> {{ctrl?.typectrl}}</p> -->
   <app-filter-select 
         *ngSwitchCase="'select'"
         [ctrl]="ctrl!"
-        (changed)="executarAcao($event)">
+        (changeSelection)="executarAcao($event)">
   </app-filter-select>
 
   <app-filter-multi-select 
@@ -33,7 +33,7 @@
 
   <app-filter-buttonset
         *ngSwitchCase="'buttonset'"
-        [ctrl]="ctrl"
+        [ctrl]="ctrl!"
         (changeSelection)="executarAcao($event)">
   </app-filter-buttonset>
 

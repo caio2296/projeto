@@ -1,10 +1,8 @@
- 
- 
 /* eslint-disable @angular-eslint/prefer-inject */
 /* eslint-disable @angular-eslint/prefer-standalone */
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TokenService } from '../autenticacao/Services/token-service';
 import { UsuarioService } from '../autenticacao/Services/usuarioService';
 import { TemaService } from '../shared/nav-bar/Services/tema-service';
@@ -13,6 +11,8 @@ import { CalendarFormService } from '../calendario/ServicosCalendario/calendarFo
 import { DateHelperService } from '../calendario/ServicosCalendario/dateHelperService';
 import { InputConfig } from '../calendario/ServicosCalendario/InputConfig';
 import { CalendarBarModelService } from '../calendario/ServicosCalendario/calendarBarModel';
+import { FiltroServiceApi } from '../filtros/ServicesFiltro/filtro-service-api';
+import { FilterCat } from '../calendario/Models/type';
 
 
 
@@ -22,14 +22,16 @@ import { CalendarBarModelService } from '../calendario/ServicosCalendario/calend
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss'
 })
-export class Dashboard {
-  
+export class Dashboard implements OnInit {
 
-  
+  ctrls: FilterCat[] | null = null;
+  ctrlsId!: number;
 
-    showFiller = false;
 
-    constructor(private fb: FormBuilder, private cdRef: ChangeDetectorRef,
+
+  showFiller = false;
+
+  constructor(private fb: FormBuilder, private cdRef: ChangeDetectorRef,
     protected calendarBarModelService: CalendarBarModelService,
     protected dateHelperServices: DateHelperService,
     protected calendarFormService: CalendarFormService,
@@ -41,10 +43,10 @@ export class Dashboard {
     ) {  }
 //test branch 
 
-      toggleTheme(): void {
+  toggleTheme(): void {
     this.temaService.toggleTheme();
   }
-  
+
 }
 
 

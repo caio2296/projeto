@@ -13,6 +13,7 @@ import { SideBar } from './nav-bar/side-bar/side-bar';
 import { DialogConfirmeDelete } from './tabela/dialog-confirme-delete/dialog-confirme-delete';
 import { Footer } from './footer/footer';
 import { TranslocoModule } from "@jsverse/transloco";
+import { Loading } from "./Loading/loading";
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { TranslocoModule } from "@jsverse/transloco";
         NavBar,
         SideBar,
         DialogConfirmeDelete,
-        Footer
+        Footer,
+        Loading
     ],
     imports: [
         CommonModule,
@@ -42,7 +44,8 @@ import { TranslocoModule } from "@jsverse/transloco";
         NavBar,
         SideBar,
         DialogConfirmeDelete,
-        Footer
+        Footer,
+        Loading
     ]
 })
 

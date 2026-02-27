@@ -1,13 +1,25 @@
 <table class="tblBtn">
   <tr class="trBtn">
     <td class="tdBtn">
-      <input
+      <!-- <input
         type="button"
         [id]="'btn_' + ctrl.id"
         [value]="ctrl.caption"
         [ngClass]="ctrl.css"
         (click)="onClick()"
-      />
+      /> -->
+    <section>
+      <div class="example-button-row">
+        <button matButton="tonal" 
+        [id]="'btn_' + ctrl.id"
+        [value]="ctrl.caption"
+        [ngClass]="ctrl.css"
+        (click)="onClick()">{{ctrl.action}}</button>
+      </div>
+    </section>
+
     </td>
   </tr>
 </table>
+
+

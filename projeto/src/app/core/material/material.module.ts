@@ -14,6 +14,9 @@ import { MatCardModule } from '@angular/material/card';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { MatListModule } from "@angular/material/list";
 import {MatMenuModule} from '@angular/material/menu';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatRadioModule} from '@angular/material/radio';
+import { ScrollingModule } from "@angular/cdk/scrolling";
 
 @NgModule({
     exports:[
@@ -31,7 +34,10 @@ import {MatMenuModule} from '@angular/material/menu';
     MatCardModule,
     MatSidenavModule,
     MatListModule,
-    MatMenuModule
+    MatMenuModule,
+    MatCheckboxModule,
+    MatRadioModule,
+    ScrollingModule
     ]
 })
 
