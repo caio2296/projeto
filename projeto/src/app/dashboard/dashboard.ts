@@ -39,14 +39,7 @@ export class Dashboard {
     protected userService: UsuarioService,
     private tokenService: TokenService
     ) {  }
-
-  
-
-
-
-
-  
-
+//test branch 
 
       toggleTheme(): void {
     this.temaService.toggleTheme();
