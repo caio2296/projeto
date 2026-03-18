@@ -27,7 +27,7 @@ export class LoadingService {
         this.showTimeout = setTimeout(() => {
           this.loadingSubject.next(true);
           document.body.style.overflow = 'hidden';
-        }, 150);
+        }, 200);
       }
     }
 
