@@ -1,7 +1,7 @@
-<!-- <app-nav-bar></app-nav-bar> -->
-<h1>DashBoard working!</h1>
+<!-- <app-nav-bar></app-nav-bar>
+<h1>DashBoard working!</h1> -->
  <!-- <router-outlet></router-outlet> -->
-<app-label-data></app-label-data>
+<!-- <app-label-data></app-label-data>
 <app-filtros *ngIf="filtros.length > 1" [ctrls]="filtros[4]" ></app-filtros>
 <app-filtros *ngIf="filtros.length > 1" [ctrls]="filtros[5]"></app-filtros>
 <app-filtros *ngIf="filtros.length > 1" [ctrls]="filtros[0]"></app-filtros>
@@ -11,8 +11,24 @@
 
 <app-tabela></app-tabela>
 <app-filtros *ngIf="filtros.length > 1" [ctrls]="filtros[6]"></app-filtros>
-<app-grafico></app-grafico>
+<app-grafico></app-grafico> -->
 
+<h1>Dashboard</h1>
+
+<app-label-data></app-label-data>
+
+<div class="filters-container" *ngIf="filtros?.length">
+
+  <app-filtros
+    *ngFor="let filtro of filtros; trackBy: trackFiltro"
+    [ctrls]="filtro">
+  </app-filtros>
+
+</div>
+
+<app-tabela></app-tabela>
+
+<app-grafico></app-grafico>
 
 
 

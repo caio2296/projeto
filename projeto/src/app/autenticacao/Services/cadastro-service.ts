@@ -13,7 +13,7 @@ import { Usuarios } from '../Models/type';
 })
 export class CadastroService {
 
-  private apiUrl: string = environment.apiUrl;
+  private apiUrl: string = environment.apiUrlUsuario;
 
   constructor(private http:HttpClient) { }
 

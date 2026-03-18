@@ -13,6 +13,7 @@ import { InputConfig } from '../calendario/ServicosCalendario/InputConfig';
 import { CalendarBarModelService } from '../calendario/ServicosCalendario/calendarBarModel';
 import { FiltroServiceApi } from '../filtros/ServicesFiltro/filtro-service-api';
 import { FilterCat } from '../calendario/Models/type';
+import { DashboardService } from './Service/DashboardService';
 
 
 
@@ -24,7 +25,7 @@ import { FilterCat } from '../calendario/Models/type';
 })
 export class Dashboard implements OnInit {
 
-  ctrls: FilterCat[] | null = null;
+  filtros: FilterCat[] | null = null;
   ctrlsId!: number;
 
 
@@ -42,6 +43,7 @@ export class Dashboard implements OnInit {
     private tokenService: TokenService,
     private filtroServiceApi: FiltroServiceApi,
     private route: ActivatedRoute,
+    private dashboardService: DashboardService,
   ) { }
 
 
@@ -61,18 +63,47 @@ export class Dashboard implements OnInit {
     //   complete: () => console.log("HTTP completo")
     // });
 
-     this.ctrls = this.route.snapshot.data['filtros'];
+    //  this.ctrls = this.route.snapshot.data['filtros'];
+
+      // 1️⃣ dados iniciais do resolver
+    this.route.data.subscribe(data => {
+      this.filtros = data['filtros'];
+    });
+
+    // 2️⃣ escuta mudança de dashboard
+    this.dashboardService.dashboardId$
+      .subscribe(id => {
+
+        if (!id) return;
+
+        this.carregarDashboard(id);
+
+      });
 
   }
 
-  get filtros(): FilterCat[] {
+    // 3️⃣ recarrega dados
+  carregarDashboard(id: number) {
 
-    return this.ctrls ?? [];
+    this.filtroServiceApi
+      .carregarDados(id)
+      .subscribe(filtros => {
+
+        this.filtros = filtros;
+
+      });
+
+  }
+
+   trackFiltro(index: number, item: FilterCat) {
+    return item.id;
   }
 
 
+  // get filtros(): FilterCat[] {
 
-
+  //   return this.ctrls ?? [];
+  // }
 
   toggleTheme(): void {
     this.temaService.toggleTheme();

@@ -15,7 +15,7 @@ interface AuthResponse {
 })
 export class AutenticacaoService {
 
-  private apiUrl: string = environment.apiUrl;
+  private apiUrl: string = environment.apiUrlUsuario;
 
   constructor(
     private http: HttpClient,
