@@ -5,14 +5,19 @@ import { Cadastro } from './cadastro/cadastro';
 import { AdminGuard } from './admin-guard';
 
 const routes: Routes = [
-   {
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
+  },
+  {
     path: 'login',
     component: Login
   },
   {
-    path:'cadastro',
-    component:Cadastro,
-    canActivate:[AdminGuard]
+    path: 'cadastro',
+    component: Cadastro,
+    canActivate: [AdminGuard]
   }
 ];
 

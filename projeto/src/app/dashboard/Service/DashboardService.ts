@@ -10,7 +10,8 @@ export class DashboardService {
 
   dashboardId$ = this.dashboardId.asObservable();
 
-  setDashboard(id: number) {
+   setDashboard(id: number) {
+    if (this.dashboardId.value === id) return; // 🔥 evita duplicado
     this.dashboardId.next(id);
   }
 

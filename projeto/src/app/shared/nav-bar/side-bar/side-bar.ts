@@ -35,12 +35,17 @@ export class SideBar implements OnDestroy {
     this._mobileQuery.removeEventListener('change', this._mobileQueryListener);
   }
 
-  abrirInicial(){
-    this.dashboardService.setDashboard(1);
-  }
-  abrirConsumo() {
-    this.dashboardService.setDashboard(2);
-  }
+abrirInicial(){
+  this.router.navigate(['auth/dashboard', 1]);
+      // emitir evento pro NavBar
+    this.deslogou.emit();
+}
+
+abrirConsumo() {
+  this.router.navigate(['auth/dashboard', 2]);
+      // emitir evento pro NavBar
+    this.deslogou.emit();
+}
 
   logout() {
     // remover token

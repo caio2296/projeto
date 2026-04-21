@@ -1,36 +1,24 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { authGuard } from './autenticacao/auth.guard';
-import { DashboardResolver } from './dashboard/Resolver/Dashboard.resolver';
+
 
 const routes: Routes = [
-   {
+  {
     path: 'auth',
     loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
-    canActivate: [authGuard],
-     resolve: {
-        filtros: DashboardResolver
-     }
+    canActivate: [authGuard]
   },
-    {
-    path: 'login',
-    redirectTo: 'login',
-    pathMatch: 'full'
-  },
+
+  // 👇 AQUI ESTÁ O AJUSTE
   {
     path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
+    loadChildren: () => import('../app/autenticacao/autenticacao-module').then(m => m.AutenticacaoModule)
   },
-  {
-    path:'cadastro',
-    redirectTo: 'cadastro',
-    pathMatch: 'full',
-  },
+
   {
     path: '**',
-    redirectTo: 'pagina-nao-encontrada',
-    pathMatch: 'full'
+     loadChildren:() => import('../app/core/erro/erro-module').then(m => m.ErroModule)
   }
 ];
 

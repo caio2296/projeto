@@ -1,12 +1,16 @@
 import { RouterModule, Routes } from "@angular/router";
 import { Dashboard } from "./dashboard";
 import { NgModule } from "@angular/core";
+import { DashboardResolver } from "./Resolver/Dashboard.resolver";
 
 
 const routes :Routes = [
     {
-    path:'dashboard',
-    component: Dashboard
+    path: 'dashboard/:id',
+    component: Dashboard,
+     resolve: {
+        dashboard: DashboardResolver
+     }
     }
 ];
 

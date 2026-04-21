@@ -1,34 +1,66 @@
-<!-- <app-nav-bar></app-nav-bar>
-<h1>DashBoard working!</h1> -->
- <!-- <router-outlet></router-outlet> -->
-<!-- <app-label-data></app-label-data>
-<app-filtros *ngIf="filtros.length > 1" [ctrls]="filtros[4]" ></app-filtros>
-<app-filtros *ngIf="filtros.length > 1" [ctrls]="filtros[5]"></app-filtros>
-<app-filtros *ngIf="filtros.length > 1" [ctrls]="filtros[0]"></app-filtros>
-<app-filtros *ngIf="filtros.length > 1" [ctrls]="filtros[3]"></app-filtros>
-<app-filtros *ngIf="filtros.length > 1" [ctrls]="filtros[1]"></app-filtros>
-<app-filtros *ngIf="filtros.length > 1" [ctrls]="filtros[2]"></app-filtros>
-
-<app-tabela></app-tabela>
-<app-filtros *ngIf="filtros.length > 1" [ctrls]="filtros[6]"></app-filtros>
-<app-grafico></app-grafico> -->
-
 <h1>Dashboard</h1>
 
 <app-label-data></app-label-data>
 
-<div class="filters-container" *ngIf="filtros?.length">
-
+<h2>Filtros Select</h2>
+<div class="filters-container">
   <app-filtros
-    *ngFor="let filtro of filtros; trackBy: trackFiltro"
+    *ngFor="let filtro of filtrosPorTipo['select']; trackBy: trackFiltro"
     [ctrls]="filtro">
   </app-filtros>
+</div>
+
+<h2>Filtros Imagens</h2>
+<div class="filters-container">
+  <app-filtros
+    *ngFor="let filtro of filtrosPorTipo['img']; trackBy: trackFiltro"
+    [ctrls]="filtro">
+  </app-filtros>
+</div>
+
+<h2>Filtros Multi Select</h2>
+<div class="filters-container">
+  <app-filtros
+    *ngFor="let filtro of filtrosPorTipo['multiselect']; trackBy: trackFiltro"
+    [ctrls]="filtro">
+  </app-filtros>
+</div>
+
+<h2>Filtros Checkout</h2>
+<div class="filters-container">
+  <app-filtros
+    *ngFor="let filtro of filtrosPorTipo['chk']; trackBy: trackFiltro"
+    [ctrls]="filtro">
+  </app-filtros>
+</div>
+
+<h2>Filtros Button set</h2>
+<div class="filters-container">
+  <app-filtros
+    *ngFor="let filtro of filtrosPorTipo['buttonset']; trackBy: trackFiltro"
+    [ctrls]="filtro">
+  </app-filtros>
+</div>
+
+<h2>Filtros Button</h2>
+<div class="filters-container">
+  <app-filtros
+    *ngFor="let filtro of filtrosPorTipo['btn']; trackBy: trackFiltro"
+    [ctrls]="filtro">
+  </app-filtros>
+</div>
+
+<div *ngFor="let tabela of tabelasProcessadas">
+
+  <h2>{{ tabela.titulo }}</h2>
+
+  <app-tabela 
+    [grid]="tabela.grid"
+    [displayedColumns]="tabela.displayedColumns">
+  </app-tabela>
 
 </div>
 
-<app-tabela></app-tabela>
-
+<!-- 🔥 Você pode colocar qualquer coisa aqui -->
 <app-grafico></app-grafico>
-
-
 

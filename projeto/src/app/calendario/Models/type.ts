@@ -94,3 +94,101 @@ export interface FilterData {
     IdLine?: number | string;
 }
 
+export interface Root {
+  tablabis: Tablabis[];
+}
+
+export interface Tablabis {
+  id_tablabis: number;
+  description: string;
+  enable: boolean;
+  templates: Template[];
+  semaphores: Semaphore[];
+}
+
+export interface Template {
+  id_template: number;
+  description?: string | null;
+  align?: string | null;
+  showindicators?: boolean | null;
+  showunits?: number | null;
+  showsemaphores?: boolean | null;
+  scrolling?: boolean | null;
+
+  rows?: Row[] | null;
+  cols?: Col[] | null;
+}
+
+export interface Row {
+  id_row_schema: number;
+  text?: string | null;
+  order?: number | null;
+  level?: number | null;
+  enabled?: boolean | null;
+  tooltip?: Tooltip[] | null;
+  linkbuttons?: LinkButton[] | null;
+  nodes: Node[];
+}
+
+export interface Tooltip {
+  tooltip: string;
+}
+
+export interface LinkButton {
+  url: string;
+  onclick: string;
+  order: number;
+}
+
+export interface Col {
+  id_col_schema: number;
+  text?: string | null;
+  order?: number | null;
+  level?: number | null;
+  collapsed?: boolean | null;
+}
+
+export interface Node {
+  id_node: number;
+  measure: string;
+  format_text: string;
+
+  id_rows_nodes_rel: number;
+  order?: number | null;
+  enable?: boolean;
+  rel_format_text?: string;
+
+  indicator: Indicator;
+  variation: Variation;
+  unit: Unit;
+}
+
+export interface Indicator {
+  id_indicator: number;
+  description: string;
+}
+
+export interface Variation {
+  id_variation?: number | null;
+  description?: string | null;
+  description_alt?: string | null;
+}
+
+export interface Unit {
+  id_unit: number;
+  description: string;
+}
+
+export interface Semaphore {
+  id_semaphore: number;
+  description: string;
+  references: SemaphoreReference[];
+}
+
+export interface SemaphoreReference {
+  min_val: number;
+  max_val: number;
+  reference: string;
+  image: string;
+}
+
