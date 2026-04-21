@@ -25,7 +25,7 @@ export class Login implements OnInit {
 
      const token = localStorage.getItem('token');
     if (token) {
-      this.router.navigate(['/auth/dashboard']);
+     this.router.navigate(['auth/dashboard', 1]);
     }
   }
 
@@ -35,7 +35,7 @@ export class Login implements OnInit {
       this.authService.autenticar(email).subscribe({
         next: (value) => {
           console.log('Autenticado com sucesso', value);
-          this.router.navigateByUrl('/auth/dashboard');
+          this.router.navigateByUrl('/auth/dashboard/1');
           this.loginForm.reset();
         },
         error: (err) => {

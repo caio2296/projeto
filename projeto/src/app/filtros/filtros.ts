@@ -20,10 +20,6 @@ export class Filtros implements  OnInit {
 @Input()
 set ctrls(value: FilterCat | null) {
   this._ctrls = value;
-
-  if (value) {
-    console.log('Dados recebidos:', value);
-  }
 }
 
 get ctrls(): FilterCat | null {
