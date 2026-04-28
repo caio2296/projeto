@@ -43,6 +43,49 @@ export class Tabela {
 
 
 
+    hasChildren(row: any, data: any[]): boolean {
+  return data.some(r => r.parent === row.id);
+}
+
+toggle(row: any) {
+  row.expanded = !row.expanded;
+
+  this.grid.forEach(r => {
+    if (r.parent === row.id) {
+      r.visible = row.expanded;
+
+      if (!row.expanded) {
+        this.hideChildren(r);
+      }
+    }
+  });
+}
+
+private hideChildren(row: any) {
+  this.grid.forEach(r => {
+    if (r.parent === row.id) {
+      r.visible = false;
+      this.hideChildren(r);
+    }
+  });
+}
+
+isVisible(row: any, data: any[]): boolean {
+
+  let current = row;
+
+  while (current.parent) {
+    const parent = data.find(r => r.id === current.parent);
+
+    if (!parent || !parent.expanded) return false;
+
+    current = parent;
+  }
+
+  return true;
+}
+
+
   // getIndexFromColumn(column: string): number {
   //   // Pula a coluna de ação
   //   return this.displayedColumns.indexOf(column);

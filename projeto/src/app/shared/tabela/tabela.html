@@ -32,7 +32,7 @@
 </div> -->
 
 
-<table mat-table [dataSource]="grid" class="mat-elevation-z8">
+<!-- <table mat-table [dataSource]="grid" class="mat-elevation-z8">
 
   <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
 
@@ -40,13 +40,84 @@
        {{ column === 'rowHeader' ? '' : column }}
     </th>
 
-    <td mat-cell *matCellDef="let element">
+     <td mat-cell *matCellDef="let element">
       {{ element[column] }}
-    </td>
+    </td> -->
+
+<!-- <td mat-cell *matCellDef="let element">
+
+  <span [style.padding-left.px]="(element.level || 0) * 20">
+
+    <button *ngIf="hasChildren(element, grid)"
+            (click)="toggle(element)">
+      {{ element.expanded ? '-' : '+' }}
+    </button>
+
+    {{ element.rowHeader }}
+
+  </span>
+
+</td>
 
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+</table> -->
+
+
+<table mat-table [dataSource]="grid" class="mat-elevation-z8">
+
+  <!-- 🔥 COLUNAS DINÂMICAS -->
+  <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+
+    <!-- HEADER -->
+    <th mat-header-cell *matHeaderCellDef>
+      {{ column === 'rowHeader' ? '' : column }}
+    </th>
+
+    <!-- CELL -->
+    <td mat-cell class="rowHeaderCell" *matCellDef="let element">
+
+      <!-- 🔥 PRIMEIRA COLUNA (HIERARQUIA) -->
+      <ng-container *ngIf="column === 'rowHeader'; else valorColuna">
+
+        <div class="cell-content">
+        <span [style.padding-left.px]="(element.level || 0) * 20">
+
+
+
+          {{ element.rowHeader }}
+
+        </span>
+
+                  <!-- 🔥 BOTÃO EXPAND -->
+
+          <button mat-icon-button  class="btn-expand" *ngIf="hasChildren(element, grid)" (click)="toggle(element)">
+
+            <mat-icon>
+              {{ element.expanded ? 'remove_circle' : 'add_circle' }}
+            </mat-icon>
+
+          </button>
+          </div>
+      </ng-container>
+
+      <!-- 🔥 OUTRAS COLUNAS -->
+      <ng-template #valorColuna>
+        {{ element[column] }}
+      </ng-template>
+
+    </td>
+
+  </ng-container>
+
+  <!-- HEADER ROW -->
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+  <!-- 🔥 DATA ROW (AQUI É O PONTO CRÍTICO) -->
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" [style.display]="row.visible ? '' : 'none'">
+  </tr>
 
 </table>

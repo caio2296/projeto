@@ -12,7 +12,7 @@ import { DateHelperService } from '../calendario/ServicosCalendario/dateHelperSe
 import { InputConfig } from '../calendario/ServicosCalendario/InputConfig';
 import { CalendarBarModelService } from '../calendario/ServicosCalendario/calendarBarModel';
 import { FiltroServiceApi } from '../filtros/ServicesFiltro/filtro-service-api';
-import { FilterCat } from '../calendario/Models/type';
+import { Col, FilterCat, Row } from '../calendario/Models/type';
 import { DashboardService } from './Service/DashboardService';
 import { Root } from '../calendario/Models/type';
 import { TabelasServiceApi } from '../shared/tabela/TabelasServices/TabelasServicesApi';
@@ -66,12 +66,6 @@ export class Dashboard implements OnInit {
   ngOnInit() {
 
     // 1️⃣ dados iniciais
-    // this.route.data.subscribe(data => {
-    //   if(data['filtros']){
-    // this.filtros = data['filtros'];
-    // this.montarFiltrosPorTipo();
-    //   }
-
     this.route.data.subscribe(data => {
       const dashboard = data['dashboard'];
       if (dashboard?.filtros) {
@@ -87,58 +81,110 @@ export class Dashboard implements OnInit {
     });
   }
 
-// 🔥 NOVA: monta tudo uma vez só
-private montarTabela() {
+  // 🔥 NOVA: monta tudo uma vez só
+  private montarTabela() {
 
-  if (!this.tabelas?.length) return;
+    if (!this.tabelas?.length) return;
 
-  this.tabelasProcessadas = [];
+    this.tabelasProcessadas = [];
 
-  this.tabelas.forEach(t => {
+    this.tabelas.forEach(t => {
 
-    const tablabis = t?.tablabis?.[0];
-    const template = tablabis?.templates?.[0];
+      const tablabis = t?.tablabis?.[0];
+      const template = tablabis?.templates?.[0];
 
-    const rows = template?.rows || [];
-    const cols = template?.cols || [];
+      const rows = template?.rows || [];
+      const cols = template?.cols || [];
 
-    const displayedColumns = [
-      'rowHeader',
-      ...cols.map(c => this.normalizarColuna(c))
-    ];
+      const displayedColumns = [
+        'rowHeader',
+        ...cols.map(c => this.normalizarColuna(c))
+      ];
 
-    const grid = rows.map(row => {
+      // const grid = rows.map(row => {
+
+      //   const linha: any = {
+      //     rowHeader: row.text ?? 'Sem nome'
+      //   };
+
+      //   cols.forEach(col => {
+      //     const colName = this.normalizarColuna(col);
+      //     linha[colName] = this.getValorDinamico(row, col);
+      //   });
+
+      //   return linha;
+      // });
+      
+     const grid = this.buildGrid(rows, cols);
+
+
+      this.tabelasProcessadas.push({
+        titulo: tablabis?.description,
+        grid,
+        displayedColumns
+      });
+
+    });
+
+    console.log("TABELAS PROCESSADAS:", this.tabelasProcessadas);
+  }
+
+// cria a gird que será utilizado na tabela
+  private buildGrid(rows: Row[], cols: Col[]): any[] {
+
+  const result: any[] = [];
+
+  const map = new Map<number, Row[]>();
+
+  // 🔥 agrupa filhos por parent
+  rows.forEach(r => {
+    if (!map.has(r.parent ?? 0)) {
+      map.set(r.parent ?? 0, []);
+    }
+    map.get(r.parent ?? 0)!.push(r);
+  });
+
+  const build = (parent: number | null, level = 0) => {
+
+    const children = map.get(parent ?? 0) || [];
+
+    children.forEach(row => {
 
       const linha: any = {
+        id: row.id_row_schema,
+        parent: row.parent,
+        level,
+        expanded: false,
+        visible: parent === null, // 🔥 só raiz visível
         rowHeader: row.text ?? 'Sem nome'
       };
 
+      // 🔥 colunas dinâmicas
       cols.forEach(col => {
         const colName = this.normalizarColuna(col);
         linha[colName] = this.getValorDinamico(row, col);
       });
 
-      return linha;
+      result.push(linha);
+
+      // 🔥 RECURSÃO (filhos logo abaixo do pai)
+      build(row.id_row_schema, level + 1);
     });
+  };
 
-    this.tabelasProcessadas.push({
-      titulo: tablabis?.description,
-      grid,
-      displayedColumns
-    });
+  build(null);
 
-  });
-
-  console.log("TABELAS PROCESSADAS:", this.tabelasProcessadas);
+  return result;
 }
- // normaliza o nome tas colunas
+
+  // normaliza o nome tas colunas
   normalizarColuna(col: any): string {
     return (col.text ?? 'col_' + col.id_col_schema)
       .replace(/\s+/g, '_')   // espaço → _
       .toLowerCase();
   }
 
-// torna os valores dos nós dinamicos
+  // torna os valores dos nós dinamicos
   getValorDinamico(row: any, col: any): any {
     // ⚠️ REGRA TEMPORÁRIA (você precisa alinhar com backend depois)
     //  const node = row.nodes?.[colIndex];
@@ -149,18 +195,6 @@ private montarTabela() {
 
     return node?.format_text || '-';
   }
-
-  // carregarDashboard(id: number) {
-  //   this.filtroServiceApi
-  //     .carregarDados(id)
-  //     .subscribe(filtros => {
-  //       this.filtros = filtros;
-  //       this.montarFiltrosPorTipo(); // 🔥 recalcula aqui
-  //     });
-  //     console.trace();
-
-
-  // }
 
   trackFiltro(index: number, item: FilterCat) {
     return item.id;

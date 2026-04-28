@@ -125,6 +125,7 @@ export interface Row {
   order?: number | null;
   level?: number | null;
   enabled?: boolean | null;
+  parent?: number | null;
   tooltip?: Tooltip[] | null;
   linkbuttons?: LinkButton[] | null;
   nodes: Node[];
