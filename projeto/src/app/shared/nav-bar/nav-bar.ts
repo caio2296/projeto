@@ -133,7 +133,12 @@ export class NavBar {
   }
 
   get isDashboardPage(): boolean {
-    return this.router.url === '/auth/dashboard';
+   return this.router.isActive('/auth/dashboard', {
+    paths: 'subset',
+    queryParams: 'ignored',
+    fragment: 'ignored',
+    matrixParams: 'ignored'
+  });
   }
 
 }

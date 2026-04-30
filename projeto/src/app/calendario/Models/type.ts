@@ -146,6 +146,7 @@ export interface Col {
   text?: string | null;
   order?: number | null;
   level?: number | null;
+  parent?: number | null;
   collapsed?: boolean | null;
 }
 

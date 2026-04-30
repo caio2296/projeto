@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/prefer-inject */
 /* eslint-disable @angular-eslint/prefer-standalone */
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Dialog } from './dialog/dialog';
 
@@ -17,12 +17,23 @@ import { TranslocoService } from '@jsverse/transloco';
   templateUrl: './tabela.html',
   styleUrl: './tabela.scss'
 })
-export class Tabela {
+export class Tabela implements OnInit{
 
 
   // dataSource: frutas[] = [];
   @Input() grid: any[] = [];
   @Input() displayedColumns: string[] = [];
+
+  @Input() childCols: any[] = [];
+
+
+childDisplayedColumns: string[] = [];
+
+subHeaderColumns: string[] = [];
+
+// 🔥 Recebe as colunas do Dashboard
+// @Input() colTree: any[] = [];
+
 
   // columnLabels: Record<string, string> = {
   //   id: 'Dashboard.TabelaHeader.Id',
@@ -35,13 +46,31 @@ export class Tabela {
   constructor(private dialog: MatDialog, private apiService: ApiService, private translocoService:TranslocoService) {
   }
 
-  //   ngOnInit(): void {
-  //   // this.BuscarListaFrutas();
+   ngOnInit(): void {
 
+  // 🔥 pega só colunas filhas (level > 0 ou parent != null)
+  // this.childCols = this.colTree.filter(c => c.parent);
 
-  // }
+  // 🔥 transforma em nome de coluna (string)
+  this.childDisplayedColumns = this.childCols.map(c =>
+    this.normalizarColuna(c)
+  );
 
+    // 🔥 AQUI ESTÁ A SOLUÇÃO
+  this.subHeaderColumns = ['rowHeader', ...this.childDisplayedColumns];
 
+  console.log('subHeaderColumns:', this.subHeaderColumns);
+
+  console.log('childCols:', this.childCols);
+  console.log('childDisplayedColumns:', this.childDisplayedColumns);
+}
+
+// 🔥 você já tem isso, mas garantindo aqui
+normalizarColuna(col: any): string {
+  return (col.text ?? 'col_' + col.id_col_schema)
+    .replace(/\s+/g, '_')
+    .toLowerCase();
+}
 
     hasChildren(row: any, data: any[]): boolean {
   return data.some(r => r.parent === row.id);
@@ -60,6 +89,8 @@ toggle(row: any) {
     }
   });
 }
+
+
 
 private hideChildren(row: any) {
   this.grid.forEach(r => {

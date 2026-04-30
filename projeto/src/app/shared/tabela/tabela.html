@@ -69,42 +69,40 @@
 
 <table mat-table [dataSource]="grid" class="mat-elevation-z8">
 
-  <!-- 🔥 COLUNAS DINÂMICAS -->
+  <!-- 🔥 COLUNAS PRINCIPAIS -->
   <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
 
-    <!-- HEADER -->
+    <!-- HEADER PRINCIPAL -->
     <th mat-header-cell *matHeaderCellDef>
       {{ column === 'rowHeader' ? '' : column }}
     </th>
 
-    <!-- CELL -->
+    <!-- CELULA -->
     <td mat-cell class="rowHeaderCell" *matCellDef="let element">
 
-      <!-- 🔥 PRIMEIRA COLUNA (HIERARQUIA) -->
+      <!-- COLUNA HIERARQUICA -->
       <ng-container *ngIf="column === 'rowHeader'; else valorColuna">
 
         <div class="cell-content">
-        <span [style.padding-left.px]="(element.level || 0) * 20">
+          <span [style.padding-left.px]="(element.level || 0) * 20">
+            {{ element.rowHeader }}
+          </span>
 
-
-
-          {{ element.rowHeader }}
-
-        </span>
-
-                  <!-- 🔥 BOTÃO EXPAND -->
-
-          <button mat-icon-button  class="btn-expand" *ngIf="hasChildren(element, grid)" (click)="toggle(element)">
+          <button mat-icon-button
+                  class="btn-expand"
+                  *ngIf="hasChildren(element, grid)"
+                  (click)="toggle(element)">
 
             <mat-icon>
               {{ element.expanded ? 'remove_circle' : 'add_circle' }}
             </mat-icon>
 
           </button>
-          </div>
+        </div>
+
       </ng-container>
 
-      <!-- 🔥 OUTRAS COLUNAS -->
+      <!-- OUTRAS COLUNAS -->
       <ng-template #valorColuna>
         {{ element[column] }}
       </ng-template>
@@ -113,11 +111,28 @@
 
   </ng-container>
 
-  <!-- HEADER ROW -->
+  <!-- 🔥 COLUNAS FILHAS (SUBHEADER) -->
+  <ng-container *ngFor="let column of childDisplayedColumns" [matColumnDef]="column">
+
+    <th mat-header-cell *matHeaderCellDef>
+      {{ column }}
+    </th>
+
+    <td mat-cell *matCellDef="let element">
+      <!-- pode deixar vazio -->
+    </td>
+
+  </ng-container>
+
+  <!-- HEADER PRINCIPAL -->
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 
-  <!-- 🔥 DATA ROW (AQUI É O PONTO CRÍTICO) -->
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;" [style.display]="row.visible ? '' : 'none'">
+  <!-- 🔥 SUBHEADER (SEGUNDA LINHA) -->
+<tr mat-header-row *matHeaderRowDef="subHeaderColumns" class="sub-header"></tr>
+
+  <!-- DADOS -->
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+      [style.display]="row.visible ? '' : 'none'">
   </tr>
 
 </table>

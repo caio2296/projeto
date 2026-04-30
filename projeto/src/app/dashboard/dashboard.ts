@@ -96,10 +96,21 @@ export class Dashboard implements OnInit {
       const rows = template?.rows || [];
       const cols = template?.cols || [];
 
-      const displayedColumns = [
-        'rowHeader',
-        ...cols.map(c => this.normalizarColuna(c))
-      ];
+      const orderedCols = this.buildColumns(cols);
+
+    const parentCols = orderedCols.filter(c => !c.parent);
+
+        const displayedColumns = [
+          'rowHeader',
+          ...parentCols.map(c => this.normalizarColuna(c))
+        ];
+
+        const childCols = orderedCols.filter(c => c.parent);
+
+      // const displayedColumns = [
+      //   'rowHeader',
+      //   ...cols.map(c => this.normalizarColuna(c))
+      // ];
 
       // const grid = rows.map(row => {
 
@@ -118,11 +129,18 @@ export class Dashboard implements OnInit {
      const grid = this.buildGrid(rows, cols);
 
 
+      // this.tabelasProcessadas.push({
+      //   titulo: tablabis?.description,
+      //   grid,
+      //   displayedColumns
+      // });
+
       this.tabelasProcessadas.push({
-        titulo: tablabis?.description,
-        grid,
-        displayedColumns
-      });
+          titulo: tablabis?.description,
+          grid,
+          displayedColumns,
+          childCols
+        });
 
     });
 
@@ -130,46 +148,88 @@ export class Dashboard implements OnInit {
   }
 
 // cria a gird que será utilizado na tabela
-  private buildGrid(rows: Row[], cols: Col[]): any[] {
+ private buildGrid(rows: Row[], cols: Col[]): any[] {
 
   const result: any[] = [];
 
   const map = new Map<number, Row[]>();
 
-  // 🔥 agrupa filhos por parent
+  // 🔥 agrupa linhas
   rows.forEach(r => {
-    if (!map.has(r.parent ?? 0)) {
-      map.set(r.parent ?? 0, []);
+    const parent = r.parent ?? 0;
+
+    if (!map.has(parent)) {
+      map.set(parent, []);
     }
-    map.get(r.parent ?? 0)!.push(r);
+
+    map.get(parent)!.push(r);
   });
+
+  // 🔥 🔥 AQUI É A MUDANÇA IMPORTANTE
+  const orderedCols = this.buildColumns(cols);
 
   const build = (parent: number | null, level = 0) => {
 
     const children = map.get(parent ?? 0) || [];
 
-    children.forEach(row => {
+    children
+      .sort((a, b) => (a.order ?? 0) - (b.order ?? 0)) // 🔥 importante
+      .forEach(row => {
 
-      const linha: any = {
-        id: row.id_row_schema,
-        parent: row.parent,
-        level,
-        expanded: false,
-        visible: parent === null, // 🔥 só raiz visível
-        rowHeader: row.text ?? 'Sem nome'
-      };
+        const linha: any = {
+          id: row.id_row_schema,
+          parent: row.parent,
+          level,
+          expanded: false,
+          visible: parent === null,
+          rowHeader: row.text ?? 'Sem nome'
+        };
 
-      // 🔥 colunas dinâmicas
-      cols.forEach(col => {
-        const colName = this.normalizarColuna(col);
-        linha[colName] = this.getValorDinamico(row, col);
+        // 🔥 agora usa colunas ORDENADAS
+        orderedCols.forEach(col => {
+          const colName = this.normalizarColuna(col);
+          linha[colName] = this.getValorDinamico(row, col);
+        });
+
+        result.push(linha);
+
+        build(row.id_row_schema, level + 1);
       });
+  };
 
-      result.push(linha);
+  build(null);
 
-      // 🔥 RECURSÃO (filhos logo abaixo do pai)
-      build(row.id_row_schema, level + 1);
-    });
+  return result;
+}
+
+// cria as colunas das tabelas
+private buildColumns(cols: Col[]): Col[] {
+
+  const result: Col[] = [];
+  const map = new Map<number, Col[]>();
+
+  cols.forEach(c => {
+    const parent = c.parent ?? 0;
+
+    if (!map.has(parent)) {
+      map.set(parent, []);
+    }
+
+    map.get(parent)!.push(c);
+  });
+
+  const build = (parent: number | null) => {
+
+    const children = map.get(parent ?? 0) || [];
+
+    children
+      .sort((a, b) => (a.order ?? 0) - (b.order ?? 0)) // 🔥 importante
+      .forEach(col => {
+
+        result.push(col);
+
+        build(col.id_col_schema);
+      });
   };
 
   build(null);
