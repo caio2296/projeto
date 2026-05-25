@@ -34,6 +34,10 @@ export class Dashboard implements OnInit {
   grid: any[] = [];
   displayedColumns: string[] = [];
 
+  headerRowsPorNivel: string[][] = [];
+
+  ultimoLevelColuna = 0;
+
   // 🔥 NOVO: estrutura já organizada por tipo
   filtrosPorTipo: Record<string, FilterCat[]> = {};
 
@@ -72,6 +76,7 @@ export class Dashboard implements OnInit {
         this.filtros = dashboard.filtros;
         this.montarFiltrosPorTipo();
       }
+     
 
       if (dashboard?.tabelas) {
         this.tabelas = dashboard.tabelas;
@@ -79,8 +84,47 @@ export class Dashboard implements OnInit {
         // console.log("Tabelas capturadas:", dashboard.tabelas);
       }
     });
+
+    this.tabelas.forEach(t => {
+
+      const tablabis = t?.tablabis?.[0];
+      const template = tablabis?.templates?.[0];
+      const cols = template?.cols || [];
+
+      
+        const orderedCols = this.buildColumns(cols);
+        this.headerRowsPorNivel =
+      this.buildHeadersByLevel(orderedCols);
+    });
+
   }
 
+buildColumnsTree(cols: Col[]) {
+
+  const tree: any[] = [];
+
+  const parents = cols.filter(c => !c.parent);
+
+  parents.forEach(parent => {
+
+    const filhos = cols
+      .filter(c => c.parent === parent.id_col_schema)
+      .map(c => ({
+        id: c.id_col_schema,
+        name: this.normalizarColuna(c)
+      }));
+
+    tree.push({
+      id: parent.id_col_schema,
+      name: this.normalizarColuna(parent),
+      filhos
+    });
+
+  });
+
+  return tree;
+}
+  
   // 🔥 NOVA: monta tudo uma vez só
   private montarTabela() {
 
@@ -98,7 +142,15 @@ export class Dashboard implements OnInit {
 
       const orderedCols = this.buildColumns(cols);
 
+            this.ultimoLevelColuna = Math.max(
+        ...orderedCols.map(c => c.level || 0)
+      );
+
     const parentCols = orderedCols.filter(c => !c.parent);
+
+    console.log("ordererCols:", parentCols);
+
+     const colTree = this.buildColumnsTree(orderedCols);
 
         const displayedColumns = [
           'rowHeader',
@@ -139,7 +191,8 @@ export class Dashboard implements OnInit {
           titulo: tablabis?.description,
           grid,
           displayedColumns,
-          childCols
+          childCols,
+           colTree
         });
 
     });
@@ -147,14 +200,12 @@ export class Dashboard implements OnInit {
     console.log("TABELAS PROCESSADAS:", this.tabelasProcessadas);
   }
 
-// cria a gird que será utilizado na tabela
- private buildGrid(rows: Row[], cols: Col[]): any[] {
+// cria a grid que será utilizado na tabela
+private buildGrid(rows: Row[], cols: Col[]): any[] {
 
   const result: any[] = [];
-
   const map = new Map<number, Row[]>();
 
-  // 🔥 agrupa linhas
   rows.forEach(r => {
     const parent = r.parent ?? 0;
 
@@ -165,37 +216,105 @@ export class Dashboard implements OnInit {
     map.get(parent)!.push(r);
   });
 
-  // 🔥 🔥 AQUI É A MUDANÇA IMPORTANTE
   const orderedCols = this.buildColumns(cols);
+
+  // 🔥 separa pais e filhos
+  const parentCols = orderedCols.filter(c => !c.parent);
+  const childCols = orderedCols.filter(c => c.parent);
 
   const build = (parent: number | null, level = 0) => {
 
     const children = map.get(parent ?? 0) || [];
 
     children
-      .sort((a, b) => (a.order ?? 0) - (b.order ?? 0)) // 🔥 importante
+      .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
       .forEach(row => {
 
+        // 🔥 LINHA NORMAL
         const linha: any = {
           id: row.id_row_schema,
           parent: row.parent,
           level,
           expanded: false,
           visible: parent === null,
-          rowHeader: row.text ?? 'Sem nome'
+          rowHeader: row.text ?? 'Sem nome',
+          isSubHeader: false
         };
 
-        // 🔥 agora usa colunas ORDENADAS
-        orderedCols.forEach(col => {
-          const colName = this.normalizarColuna(col);
-          linha[colName] = this.getValorDinamico(row, col);
-        });
+
+parentCols.forEach(col => {
+
+  // valor da própria coluna
+  const colName = this.normalizarColuna(col);
+
+  linha[colName] = this.getValorDinamico(
+    row,
+    col,
+    orderedCols
+  );
+
+  // procura filhos da coluna atual
+  const filhos = childCols.filter(
+    c => c.parent === col.id_col_schema
+  );
+
+  console.log('COLUNA PAI:', col.text);
+  console.log('FILHOS:', filhos);
+
+  // monta os filhos
+  filhos.forEach(filho => {
+
+    const nomeFilho = this.normalizarColuna(filho);
+
+    linha[nomeFilho] = this.getValorDinamico(
+      row,
+      filho,
+      orderedCols
+    );
+
+    console.log(
+      'VALOR FILHO:',
+      nomeFilho,
+      linha[nomeFilho]
+    );
+
+  });
+
+});
 
         result.push(linha);
 
+
+
         build(row.id_row_schema, level + 1);
       });
+
+
   };
+
+                // 🔥 🔥 SUA IDEIA AQUI (*)
+        // se tiver colunas filhas → cria linha extra
+parentCols.forEach(parentCol => {
+
+  const filhos = childCols.filter(c => c.parent === parentCol.id_col_schema);
+
+  if (filhos.length) {
+
+    const subLinha: any = {
+      rowHeader:parentCol.text,
+      visible: false,
+      isSubHeader: true
+    };
+
+    filhos.forEach(f => {
+      const colName = this.normalizarColuna(f);
+      subLinha[colName] = this.getValorDinamico("testando nodes", f,orderedCols);
+    });
+
+    result.push(subLinha);
+  }
+
+});
 
   build(null);
 
@@ -220,7 +339,7 @@ private buildColumns(cols: Col[]): Col[] {
 
   const build = (parent: number | null) => {
 
-    const children = map.get(parent ?? 0) || [];
+    const children = map.get(parent ?? 0) || []; //inserir as colunas filhas no grid e cada filha com o mesmo parent igual criaria essa linha extra na tabela *
 
     children
       .sort((a, b) => (a.order ?? 0) - (b.order ?? 0)) // 🔥 importante
@@ -244,17 +363,68 @@ private buildColumns(cols: Col[]): Col[] {
       .toLowerCase();
   }
 
+  buildHeadersByLevel(cols: Col[]) {
+
+  const headers: Record<number, string[]> = {};
+
+  cols.forEach(col => {
+
+    const level = col.level ?? 0;
+
+    if (!headers[level]) {
+      headers[level] = [];
+    }
+
+    headers[level].push(
+      this.normalizarColuna(col)
+    );
+  });
+
+  return Object.values(headers);
+}
+
   // torna os valores dos nós dinamicos
-  getValorDinamico(row: any, col: any): any {
-    // ⚠️ REGRA TEMPORÁRIA (você precisa alinhar com backend depois)
-    //  const node = row.nodes?.[colIndex];
-    const node = row.nodes?.find((n: { order: number; }) => n.order == col.order);
+getValorDinamico(
+  row: any,
+  col: any,
+  orderedCols?: any[]
+): any {
 
+  console.log('====================');
+  console.log('COLUNA ATUAL:', col);
 
-    // return node?.indicator?.description || '-';
+  const cols = orderedCols ?? [];
 
-    return node?.format_text || '-';
+  // verifica se a coluna possui filhos
+  const possuiFilhos = cols.some(
+    c => c.parent === col.id_col_schema
+  );
+
+  console.log('POSSUI FILHOS?', possuiFilhos);
+
+  // se possui filhos -> bloqueia
+  if (possuiFilhos) {
+
+    console.log('BLOQUEADO ❌');
+
+    return '-';
   }
+
+  console.log('PERMITIDO ✅');
+
+  // procura node pelo order
+//   const node = row.nodes?.sort(
+//   (a:any, b:any) => a.order - b.order
+// );
+  
+  const node = row.nodes?.find(
+    (n: { order: number }) => n.order == col.order
+  );
+
+  console.log('NODE:', node);
+
+  return node?.format_text || '-';
+}
 
   trackFiltro(index: number, item: FilterCat) {
     return item.id;

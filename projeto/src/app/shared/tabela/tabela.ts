@@ -11,13 +11,15 @@ import { frutas } from '../Models/type';
 import { DialogConfirmeDelete } from './dialog-confirme-delete/dialog-confirme-delete';
 import { TranslocoService } from '@jsverse/transloco';
 
+import { OnChanges, SimpleChanges } from '@angular/core';
+
 @Component({
   selector: 'app-tabela',
   standalone: false,
   templateUrl: './tabela.html',
   styleUrl: './tabela.scss'
 })
-export class Tabela implements OnInit{
+export class Tabela implements OnInit, OnChanges{
 
 
   // dataSource: frutas[] = [];
@@ -25,6 +27,13 @@ export class Tabela implements OnInit{
   @Input() displayedColumns: string[] = [];
 
   @Input() childCols: any[] = [];
+
+@Input() colTree: any[] = [];
+
+  headerRows: string[][] = [];
+parentHeader: string[] = [];
+childHeader: string[] = [];
+allColumns: string[] = [];
 
 
 childDisplayedColumns: string[] = [];
@@ -61,9 +70,82 @@ subHeaderColumns: string[] = [];
 
   console.log('subHeaderColumns:', this.subHeaderColumns);
 
-  console.log('childCols:', this.childCols);
-  console.log('childDisplayedColumns:', this.childDisplayedColumns);
+//   this.allColumns = Array.from(
+//   new Set(this.headerRows.flat())
+// );
+
+console.log('parentHeader:', this.parentHeader);
+console.log('childHeader:', this.childHeader);
+console.log('allColumns:', this.allColumns);
+console.log('grid:', this.grid);
 }
+
+ngOnChanges(changes: SimpleChanges): void {
+
+  if (this.displayedColumns?.length) {
+    console.log('Inputs chegaram!');
+
+    this.buildHeaders();
+  }
+
+}
+
+buildColTree() {
+  const tree: any[] = [];
+
+  this.displayedColumns
+    .filter(c => c !== 'rowHeader')
+    .forEach(parentCol => {
+
+      const parentObj = this.childCols.find(c =>
+        this.normalizarColuna(c) === parentCol
+      );
+
+      const children = this.childCols
+        .filter(c => c.parent === parentObj?.id_col_schema)
+        .map(c => this.normalizarColuna(c));
+
+      tree.push({
+        name: parentCol,
+        children
+      });
+    });
+
+  return tree;
+}
+
+buildHeaders() {
+  const colTree = this.buildColTree();
+
+  const parent: string[] = ['rowHeader'];
+  const child: string[] = ['rowHeader'];
+
+  colTree.forEach(p => {
+    parent.push(p.name);
+
+    // 🔥 só adiciona filhos se existirem
+    if (p.children.length) {
+      child.push(...p.children);
+    }
+  });
+
+  this.parentHeader = parent;
+  this.childHeader = child;
+
+  // 🔥 junta tudo sem fake column
+  this.allColumns = Array.from(new Set([
+    ...parent,
+    ...child
+  ]));
+
+  console.log('parentHeader:', this.parentHeader);
+  console.log('childHeader:', this.childHeader);
+  console.log('allColumns:', this.allColumns);
+
+  console.log('childHeader:', this.childHeader);
+}
+
+
 
 // 🔥 você já tem isso, mas garantindo aqui
 normalizarColuna(col: any): string {
@@ -90,6 +172,19 @@ toggle(row: any) {
   });
 }
 
+
+getColSpan(column: string): number {
+
+  const parent = this.colTree.find(
+    (c: any) => c.name === column
+  );
+
+  if (!parent) {
+    return 1;
+  }
+
+  return parent.filhos.length || 1;
+}
 
 
 private hideChildren(row: any) {
