@@ -148,6 +148,9 @@ export interface Col {
   level?: number | null;
   parent?: number | null;
   collapsed?: boolean | null;
+  cols?: Col[];
+  hasChildren?: boolean;
+  maxLevel?: number;
 }
 
 export interface Node {
