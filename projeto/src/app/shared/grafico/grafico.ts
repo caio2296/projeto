@@ -47,7 +47,7 @@ export class Grafico implements OnInit {
   const ctx = document.getElementById('myChart') as HTMLCanvasElement;
 
   if (ctx) {
-    const valores = [12, 19, 3, 5, 2, 3];
+    const valores = [12, 19, 3, 5, 2, 3]; //dados
     const total = valores.reduce((a, b) => a + b, 0);
     const porcentagens = valores.map(v => ((v / total) * 100).toFixed(2));
 
@@ -70,9 +70,15 @@ export class Grafico implements OnInit {
             max: 100,
             ticks: {
                 callback: (tickValue) => `${tickValue}%`
+            },
+
+             title: {
+              display: true,
+              text: 'Coluna teste'
             }
           }
         },
+          indexAxis: 'y',
         plugins: {
           tooltip: {
             callbacks: {

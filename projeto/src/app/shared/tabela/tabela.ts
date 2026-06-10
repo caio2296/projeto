@@ -26,22 +26,21 @@ export class Tabela implements OnInit, OnChanges{
   @Input() grid: any[] = [];
   @Input() displayedColumns: string[] = [];
 
-  @Input() childCols: any[] = [];
+  @Input() ColsLevelRepetMax: any[] = [];
 
-@Input() colTree: any[] = [];
+  @Input() colTree: any[] = [];
+
+  @Input() headerRowsPorNivel: string[][]= [];
 
   headerRows: string[][] = [];
-parentHeader: string[] = [];
-childHeader: string[] = [];
-allColumns: string[] = [];
+  parentHeader: string[] = [];
+  childHeader: string[] = [];
+  allColumns: string[] = [];
 
 
-childDisplayedColumns: string[] = [];
-
-subHeaderColumns: string[] = [];
+subHeaderColumnsMax: string[] = [];
 
 // 🔥 Recebe as colunas do Dashboard
-// @Input() colTree: any[] = [];
 
 
   // columnLabels: Record<string, string> = {
@@ -57,27 +56,18 @@ subHeaderColumns: string[] = [];
 
    ngOnInit(): void {
 
-  // 🔥 pega só colunas filhas (level > 0 ou parent != null)
-  // this.childCols = this.colTree.filter(c => c.parent);
+    // 🔥 1. transforma em nome de coluna (string)
+    // 🔥 2. insere o rowHeader (placeholder da primeira coluna) para ter a quantidade exatada com a tabela que será exibida
+    this.subHeaderColumnsMax = ['rowHeader', ...this.ColsLevelRepetMax.map(c => this.normalizarColuna(c))];
 
-  // 🔥 transforma em nome de coluna (string)
-  this.childDisplayedColumns = this.childCols.map(c =>
-    this.normalizarColuna(c)
-  );
+    console.log('subHeaderColumnsMax:', this.subHeaderColumnsMax);
+    console.log('headerRowsPorNivel:', this.headerRowsPorNivel);
 
-    // 🔥 AQUI ESTÁ A SOLUÇÃO
-  this.subHeaderColumns = ['rowHeader', ...this.childDisplayedColumns];
-
-  console.log('subHeaderColumns:', this.subHeaderColumns);
-
-//   this.allColumns = Array.from(
-//   new Set(this.headerRows.flat())
-// );
-
-console.log('parentHeader:', this.parentHeader);
-console.log('childHeader:', this.childHeader);
-console.log('allColumns:', this.allColumns);
-console.log('grid:', this.grid);
+    console.log('parentHeader:', this.parentHeader);
+    console.log('displayedColumns:', this.displayedColumns);
+    console.log('childHeader:', this.childHeader);
+    console.log('allColumns:', this.allColumns);
+    console.log('grid:', this.grid);
 }
 
 ngOnChanges(changes: SimpleChanges): void {
@@ -90,61 +80,246 @@ ngOnChanges(changes: SimpleChanges): void {
 
 }
 
-buildColTree() {
-  const tree: any[] = [];
-
-  this.displayedColumns
-    .filter(c => c !== 'rowHeader')
-    .forEach(parentCol => {
-
-      const parentObj = this.childCols.find(c =>
-        this.normalizarColuna(c) === parentCol
-      );
-
-      const children = this.childCols
-        .filter(c => c.parent === parentObj?.id_col_schema)
-        .map(c => this.normalizarColuna(c));
-
-      tree.push({
-        name: parentCol,
-        children
-      });
-    });
-
-  return tree;
+getHeaderNames(row: any[]) {
+  return row.map(x => x.name);
 }
 
 buildHeaders() {
-  const colTree = this.buildColTree();
 
-  const parent: string[] = ['rowHeader'];
-  const child: string[] = ['rowHeader'];
+  interface HeaderCell {
+    name: string;
+    colspan: number;
+    rowspan: number;
+  }
 
-  colTree.forEach(p => {
-    parent.push(p.name);
+  const headersPorNivel: HeaderCell[][] = [];
 
-    // 🔥 só adiciona filhos se existirem
-    if (p.children.length) {
-      child.push(...p.children);
+  const maxLevel =
+    this.getMaxLevel(this.colTree);
+
+  const todasColunas: string[] = [];
+
+  let emptyIndex = 0;
+
+  const walk = (
+    nodes: any[],
+    level = 0
+  ) => {
+
+    if (!headersPorNivel[level]) {
+
+      headersPorNivel[level] = [];
+
+      headersPorNivel[level].push({
+
+        name: 'rowHeader',
+
+        colspan: 1,
+
+        rowspan:
+          level === 0
+            ? maxLevel + 1
+            : 1
+
+      });
+
     }
-  });
 
-  this.parentHeader = parent;
-  this.childHeader = child;
+    nodes.forEach(node => {
 
-  // 🔥 junta tudo sem fake column
-  this.allColumns = Array.from(new Set([
-    ...parent,
-    ...child
-  ]));
+      const possuiFilhos =
+        node.filhos?.length > 0;
 
-  console.log('parentHeader:', this.parentHeader);
-  console.log('childHeader:', this.childHeader);
-  console.log('allColumns:', this.allColumns);
+      const colspan =
+        this.countLeafs(node);
 
-  console.log('childHeader:', this.childHeader);
+      const rowspan =
+        possuiFilhos
+          ? 1
+          : (maxLevel - level + 1);
+
+      headersPorNivel[level].push({
+
+        name: node.name,
+
+        colspan,
+
+        rowspan
+
+      });
+
+      if (possuiFilhos) {
+
+        walk(
+          node.filhos,
+          level + 1
+        );
+
+      } else {
+
+        // Completa os níveis abaixo com EMPTY
+        for (
+          let nextLevel = level + 1;
+          nextLevel <= maxLevel;
+          nextLevel++
+        ) {
+
+          if (!headersPorNivel[nextLevel]) {
+
+            headersPorNivel[nextLevel] = [];
+
+            headersPorNivel[nextLevel].push({
+
+              name: 'rowHeader',
+
+              colspan: 1,
+
+              rowspan: 1
+
+            });
+
+          }
+
+          headersPorNivel[nextLevel].push({
+
+            name:
+              `__EMPTY__${emptyIndex++}_${nextLevel}`,
+
+            colspan: 1,
+
+            rowspan: 1
+
+          });
+
+        }
+
+      }
+
+    });
+
+  };
+
+  walk(this.colTree);
+
+  const walkColumns = (
+    nodes: any[]
+  ) => {
+
+    nodes.forEach(node => {
+
+      todasColunas.push(
+        node.name
+      );
+
+      if (node.filhos?.length) {
+
+        walkColumns(
+          node.filhos
+        );
+
+      }
+
+    });
+
+  };
+
+  walkColumns(this.colTree);
+
+  const folhas =
+    this.getLeafColumns(
+      this.colTree
+    );
+
+  this.headerRows =
+    headersPorNivel as any;
+
+  this.allColumns =
+    Array.from(
+      new Set([
+        'rowHeader',
+
+        ...todasColunas,
+
+        ...folhas.map(
+          (f: any) => f.name
+        ),
+
+        ...headersPorNivel
+          .flat()
+          .filter(x =>
+            x.name.startsWith(
+              '__EMPTY__'
+            )
+          )
+          .map(x => x.name)
+
+      ])
+    );
+
+  console.log(
+    'headerRows',
+    this.headerRows
+  );
+
+  console.log(
+    'allColumns',
+    this.allColumns
+  );
 }
 
+getLeafColumns(nodes: any[]): any[] {
+
+  const result: any[] = [];
+
+  nodes.forEach(node => {
+
+    if (!node.filhos?.length) {
+      result.push(node);
+    } else {
+      result.push(
+        ...this.getLeafColumns(node.filhos)
+      );
+    }
+
+  });
+
+  return result;
+}
+
+countLeafs(node: any): number {
+
+  if (!node.filhos?.length) {
+    return 1;
+  }
+
+  return node.filhos.reduce(
+    (acc: number, filho: any) =>
+      acc + this.countLeafs(filho),
+    0
+  );
+}
+
+getMaxLevel(nodes: any[]): number {
+
+  let max = 0;
+
+  const walk = (arr: any[]) => {
+
+    arr.forEach(n => {
+
+      max = Math.max(max, n.level);
+
+      if (n.filhos?.length) {
+        walk(n.filhos);
+      }
+
+    });
+  };
+
+  walk(nodes);
+
+  return max;
+}
 
 
 // 🔥 você já tem isso, mas garantindo aqui
@@ -175,15 +350,34 @@ toggle(row: any) {
 
 getColSpan(column: string): number {
 
-  const parent = this.colTree.find(
-    (c: any) => c.name === column
-  );
+  const findNode = (nodes: any[]): any => {
 
-  if (!parent) {
+    for (const node of nodes) {
+
+      if (node.name === column) {
+        return node;
+      }
+
+      if (node.filhos?.length) {
+
+        const found = findNode(node.filhos);
+
+        if (found) {
+          return found;
+        }
+      }
+    }
+
+    return null;
+  };
+
+  const node = findNode(this.colTree);
+
+  if (!node) {
     return 1;
   }
 
-  return parent.filhos.length || 1;
+  return this.countLeafs(node);
 }
 
 
