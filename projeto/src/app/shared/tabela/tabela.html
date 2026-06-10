@@ -73,7 +73,7 @@
   <!-- 🔥 COLUNAS PRINCIPAIS -->
   <!-- ===================================== -->
 
-  <ng-container *ngFor="let column of displayedColumns"
+  <ng-container *ngFor="let column of allColumns"
                 [matColumnDef]="column">
 
     <!-- HEADER PRINCIPAL -->
@@ -83,7 +83,13 @@
         [attr.colspan]="getColSpan(column)"
         [style.text-align]="'center'">
 
-      {{ column === 'rowHeader' ? '' : column }}
+       {{
+    column === 'rowHeader' ||
+    column.startsWith('__EMPTY__')
+      ? ''
+      : column
+  }}
+
 
     </th>
 
@@ -129,93 +135,20 @@
 
   </ng-container>
 
-  <!-- ===================================== -->
-  <!-- 🔥 SUBHEADERS -->
-  <!-- ===================================== -->
 
-  <ng-container *ngFor="let column of childDisplayedColumns"
-                [matColumnDef]="column">
 
-       <!-- HEADER PRINCIPAL -->
-    <th mat-header-cell
-        *matHeaderCellDef
+<ng-container *ngFor="let header of headerRows">
 
-        [attr.colspan]="getColSpan(column)"
-        [style.text-align]="'center'">
+  <tr mat-header-row *matHeaderRowDef="getHeaderNames(header)"></tr>
 
-      {{ column === 'rowHeader' ? '' : column }}
-
-    </th>
-
-    <!-- CELULAS -->
-    <td mat-cell
-        class="rowHeaderCell"
-        *matCellDef="let element">
-
-      <!-- COLUNA HIERARQUICA -->
-      <ng-container *ngIf="column === 'rowHeader'; else valorColuna">
-
-        <div class="cell-content">
-
-          <span [style.padding-left.px]="(element.level || 0) * 20">
-
-            {{ element.rowHeader }}
-
-          </span>
-
-          <button mat-icon-button
-                  class="btn-expand"
-                  *ngIf="hasChildren(element, grid)"
-                  (click)="toggle(element)">
-
-            <mat-icon>
-              {{ element.expanded ? 'remove_circle' : 'add_circle' }}
-            </mat-icon>
-
-          </button>
-
-        </div>
-
-      </ng-container>
-
-      <!-- OUTRAS COLUNAS -->
-      <ng-template #valorColuna>
-
-        {{ element[column] }}
-
-      </ng-template>
-
-    </td>
-  </ng-container>
-
-  <!-- ===================================== -->
-  <!-- 🔥 HEADER PRINCIPAL -->
-  <!-- ===================================== -->
-
-  <tr mat-header-row
-      *matHeaderRowDef="displayedColumns">
-  </tr>
-
-  <!-- ===================================== -->
-  <!-- 🔥 SUBHEADER -->
-  <!-- ===================================== -->
-
-  <tr mat-header-row
-      *matHeaderRowDef="subHeaderColumns"
-      class="sub-header">
-  </tr>
+</ng-container>
 
   <!-- ===================================== -->
   <!-- 🔥 DADOS -->
   <!-- ===================================== -->
 
-  <!-- <tr mat-row
-      *matRowDef="let row; columns: displayedColumns;"
-      [style.display]="row.visible ? '' : 'none'">
-  </tr> -->
-
   <tr mat-row
-    *matRowDef="let row; columns: subHeaderColumns;"
+    *matRowDef="let row; columns: subHeaderColumnsMax;"
     [style.display]="row.visible ? '' : 'none'">
 </tr>
 

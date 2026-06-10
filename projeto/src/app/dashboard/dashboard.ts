@@ -85,120 +85,124 @@ export class Dashboard implements OnInit {
       }
     });
 
-    this.tabelas.forEach(t => {
 
-      const tablabis = t?.tablabis?.[0];
-      const template = tablabis?.templates?.[0];
-      const cols = template?.cols || [];
-
-      
-        const orderedCols = this.buildColumns(cols);
-        this.headerRowsPorNivel =
-      this.buildHeadersByLevel(orderedCols);
-    });
+    console.log("header por nivel",this.headerRowsPorNivel);
 
   }
 
 buildColumnsTree(cols: Col[]) {
 
-  const tree: any[] = [];
+  const buildNode = (parentId: number | null): any[] => {
 
-  const parents = cols.filter(c => !c.parent);
+    return cols
+      .filter(c => (c.parent ?? null) === parentId)
+      .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+      .map(col => ({
 
-  parents.forEach(parent => {
+        id: col.id_col_schema,
 
-    const filhos = cols
-      .filter(c => c.parent === parent.id_col_schema)
-      .map(c => ({
-        id: c.id_col_schema,
-        name: this.normalizarColuna(c)
+        name: this.normalizarColuna(col),
+
+        level: col.level,
+
+        original: col,
+
+        filhos: buildNode(col.id_col_schema)
+
       }));
+  };
 
-    tree.push({
-      id: parent.id_col_schema,
-      name: this.normalizarColuna(parent),
-      filhos
+  return buildNode(null);
+}
+  
+private LevelMaisRepetidoPelasColunas(cols: Col[])
+{
+
+   const orderedCols = this.buildColumns(cols);
+  const levelCount: Record<number, number> = {};
+
+// conta quantas vezes cada level aparece
+orderedCols.forEach(col => {
+
+  const level = col.level ?? 0;
+
+  levelCount[level] = (levelCount[level] || 0) + 1;
+
+});
+
+// descobre o level mais frequente
+const mostRepeatedLevel = Number(
+  Object.keys(levelCount)
+    .reduce((a, b) =>
+      levelCount[+a] > levelCount[+b] ? a : b
+    )
+);
+
+return mostRepeatedLevel;
+}
+
+  // 🔥 NOVA: monta tudo uma vez só
+private montarTabela() {
+
+  if (!this.tabelas?.length) return;
+
+  this.tabelasProcessadas = [];
+
+  this.tabelas.forEach(t => {
+
+    const tablabis = t?.tablabis?.[0];
+    const template = tablabis?.templates?.[0];
+
+    const rows = template?.rows || [];
+    const cols = template?.cols || [];
+
+    const orderedCols = this.buildColumns(cols);
+
+    // 🔥 HEADERS POR NIVEL
+    this.headerRowsPorNivel =
+      this.buildHeadersByLevel(orderedCols);
+
+    console.log(
+      'HEADER ROWS:',
+      this.headerRowsPorNivel
+    );
+
+    this.ultimoLevelColuna = Math.max(
+      ...orderedCols.map(c => c.level || 0)
+    );
+
+    const parentCols = orderedCols.filter(c => !c.parent);
+
+    const colTree = this.buildColumnsTree(orderedCols);
+
+    const displayedColumns = [
+      'rowHeader',
+      ...orderedCols.map(c => this.normalizarColuna(c))
+    ];
+
+    const ColsLevelRepetMax = orderedCols.filter(
+  c =>
+    c.level === this.LevelMaisRepetidoPelasColunas(cols)
+);
+
+    const grid = this.buildGrid(rows, cols);
+
+    this.tabelasProcessadas.push({
+      titulo: tablabis?.description,
+      grid,
+      displayedColumns,
+      ColsLevelRepetMax,
+      colTree,
+      // headerRowsPorNivel: this.headerRowsPorNivel
     });
 
   });
 
-  return tree;
+  console.log(
+    'TABELAS PROCESSADAS:',
+    this.tabelasProcessadas
+  );
 }
-  
-  // 🔥 NOVA: monta tudo uma vez só
-  private montarTabela() {
-
-    if (!this.tabelas?.length) return;
-
-    this.tabelasProcessadas = [];
-
-    this.tabelas.forEach(t => {
-
-      const tablabis = t?.tablabis?.[0];
-      const template = tablabis?.templates?.[0];
-
-      const rows = template?.rows || [];
-      const cols = template?.cols || [];
-
-      const orderedCols = this.buildColumns(cols);
-
-            this.ultimoLevelColuna = Math.max(
-        ...orderedCols.map(c => c.level || 0)
-      );
-
-    const parentCols = orderedCols.filter(c => !c.parent);
-
-    console.log("ordererCols:", parentCols);
-
-     const colTree = this.buildColumnsTree(orderedCols);
-
-        const displayedColumns = [
-          'rowHeader',
-          ...parentCols.map(c => this.normalizarColuna(c))
-        ];
-
-        const childCols = orderedCols.filter(c => c.parent);
-
-      // const displayedColumns = [
-      //   'rowHeader',
-      //   ...cols.map(c => this.normalizarColuna(c))
-      // ];
-
-      // const grid = rows.map(row => {
-
-      //   const linha: any = {
-      //     rowHeader: row.text ?? 'Sem nome'
-      //   };
-
-      //   cols.forEach(col => {
-      //     const colName = this.normalizarColuna(col);
-      //     linha[colName] = this.getValorDinamico(row, col);
-      //   });
-
-      //   return linha;
-      // });
-      
-     const grid = this.buildGrid(rows, cols);
-
-
-      // this.tabelasProcessadas.push({
-      //   titulo: tablabis?.description,
-      //   grid,
-      //   displayedColumns
-      // });
-
-      this.tabelasProcessadas.push({
-          titulo: tablabis?.description,
-          grid,
-          displayedColumns,
-          childCols,
-           colTree
-        });
-
-    });
-
-    console.log("TABELAS PROCESSADAS:", this.tabelasProcessadas);
-  }
 
 // cria a grid que será utilizado na tabela
 private buildGrid(rows: Row[], cols: Col[]): any[] {
@@ -258,8 +262,6 @@ parentCols.forEach(col => {
     c => c.parent === col.id_col_schema
   );
 
-  console.log('COLUNA PAI:', col.text);
-  console.log('FILHOS:', filhos);
 
   // monta os filhos
   filhos.forEach(filho => {
@@ -270,12 +272,6 @@ parentCols.forEach(col => {
       row,
       filho,
       orderedCols
-    );
-
-    console.log(
-      'VALOR FILHO:',
-      nomeFilho,
-      linha[nomeFilho]
     );
 
   });
@@ -363,24 +359,65 @@ private buildColumns(cols: Col[]): Col[] {
       .toLowerCase();
   }
 
-  buildHeadersByLevel(cols: Col[]) {
+buildHeadersByLevel(cols: Col[]) {
 
-  const headers: Record<number, string[]> = {};
+  const tree = this.buildColumnsTree(cols);
 
-  cols.forEach(col => {
+  const maxLevel = Math.max(
+    ...cols.map(c => c.level ?? 0)
+  );
 
-    const level = col.level ?? 0;
+  const headers: string[][] = [];
+
+  const walk = (
+    nodes: any[],
+    level: number
+  ) => {
 
     if (!headers[level]) {
       headers[level] = [];
     }
 
-    headers[level].push(
-      this.normalizarColuna(col)
-    );
-  });
+    nodes.forEach(node => {
 
-  return Object.values(headers);
+      headers[level].push(node.name);
+
+      if (node.filhos?.length) {
+
+        walk(
+          node.filhos,
+          level + 1
+        );
+
+      } else {
+
+        // completa os níveis faltantes
+        for (
+          let l = level + 1;
+          l <= maxLevel;
+          l++
+        ) {
+
+          if (!headers[l]) {
+            headers[l] = [];
+          }
+
+          headers[l].push(
+            `__EMPTY__${node.id}_${l}`
+          );
+        }
+
+      }
+
+    });
+
+  };
+
+  walk(tree, 0);
+
+  headers[0].unshift('rowHeader');
+
+  return headers;
 }
 
   // torna os valores dos nós dinamicos
@@ -390,40 +427,28 @@ getValorDinamico(
   orderedCols?: any[]
 ): any {
 
-  console.log('====================');
-  console.log('COLUNA ATUAL:', col);
-
   const cols = orderedCols ?? [];
 
-  // verifica se a coluna possui filhos
-  const possuiFilhos = cols.some(
-    c => c.parent === col.id_col_schema
-  );
+  const nivelMaisRepetido =
+    this.LevelMaisRepetidoPelasColunas(cols);
 
-  console.log('POSSUI FILHOS?', possuiFilhos);
+  const colunasFolha = cols
+    .filter(c => c.level === nivelMaisRepetido)
+    .sort((a, b) => a.order - b.order);
 
-  // se possui filhos -> bloqueia
-  if (possuiFilhos) {
+  const indiceColuna =
+    colunasFolha.findIndex(
+      c => c.id_col_schema === col.id_col_schema
+    );
 
-    console.log('BLOQUEADO ❌');
-
+  if (indiceColuna < 0) {
     return '-';
   }
 
-  console.log('PERMITIDO ✅');
+  const nodesOrdenados = [...(row.nodes ?? [])]
+    .sort((a, b) => a.order - b.order);
 
-  // procura node pelo order
-//   const node = row.nodes?.sort(
-//   (a:any, b:any) => a.order - b.order
-// );
-  
-  const node = row.nodes?.find(
-    (n: { order: number }) => n.order == col.order
-  );
-
-  console.log('NODE:', node);
-
-  return node?.format_text || '-';
+  return nodesOrdenados[indiceColuna]?.format_text ?? '-';
 }
 
   trackFiltro(index: number, item: FilterCat) {
