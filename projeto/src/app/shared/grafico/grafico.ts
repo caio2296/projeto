@@ -54,7 +54,7 @@ export class Grafico implements OnInit {
     new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'], // pegar as data e ser ym array dos ultimos 7 dias (depois criar um controlador de quantidades de array)
         datasets: [{
           label: '% de votos',
           data: porcentagens,
@@ -78,7 +78,7 @@ export class Grafico implements OnInit {
             }
           }
         },
-          indexAxis: 'y',
+          indexAxis: 'y', // deixa o grafico na horizontal, para voltar na vertical basta comentar
         plugins: {
           tooltip: {
             callbacks: {

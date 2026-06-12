@@ -5,7 +5,7 @@
 <h2>Filtros Select</h2>
 <div class="filters-container">
   <app-filtros
-    *ngFor="let filtro of filtrosPorTipo['select']; trackBy: trackFiltro"
+    *ngFor="let filtro of this.dashboardFilterService.filtrosPorTipo['select']; trackBy: this.dashboardFilterService.trackFiltro"
     [ctrls]="filtro">
   </app-filtros>
 </div>
@@ -13,7 +13,7 @@
 <h2>Filtros Imagens</h2>
 <div class="filters-container">
   <app-filtros
-    *ngFor="let filtro of filtrosPorTipo['img']; trackBy: trackFiltro"
+    *ngFor="let filtro of this.dashboardFilterService.filtrosPorTipo['img']; trackBy: this.dashboardFilterService.trackFiltro"
     [ctrls]="filtro">
   </app-filtros>
 </div>
@@ -21,7 +21,7 @@
 <h2>Filtros Multi Select</h2>
 <div class="filters-container">
   <app-filtros
-    *ngFor="let filtro of filtrosPorTipo['multiselect']; trackBy: trackFiltro"
+    *ngFor="let filtro of this.dashboardFilterService.filtrosPorTipo['multiselect']; trackBy: this.dashboardFilterService.trackFiltro"
     [ctrls]="filtro">
   </app-filtros>
 </div>
@@ -29,7 +29,7 @@
 <h2>Filtros Checkout</h2>
 <div class="filters-container">
   <app-filtros
-    *ngFor="let filtro of filtrosPorTipo['chk']; trackBy: trackFiltro"
+    *ngFor="let filtro of this.dashboardFilterService.filtrosPorTipo['chk']; trackBy: this.dashboardFilterService.trackFiltro"
     [ctrls]="filtro">
   </app-filtros>
 </div>
@@ -37,7 +37,7 @@
 <h2>Filtros Button set</h2>
 <div class="filters-container">
   <app-filtros
-    *ngFor="let filtro of filtrosPorTipo['buttonset']; trackBy: trackFiltro"
+    *ngFor="let filtro of this.dashboardFilterService.filtrosPorTipo['buttonset']; trackBy: this.dashboardFilterService.trackFiltro"
     [ctrls]="filtro">
   </app-filtros>
 </div>
@@ -45,12 +45,12 @@
 <h2>Filtros Button</h2>
 <div class="filters-container">
   <app-filtros
-    *ngFor="let filtro of filtrosPorTipo['btn']; trackBy: trackFiltro"
+    *ngFor="let filtro of this.dashboardFilterService.filtrosPorTipo['btn']; trackBy: this.dashboardFilterService.trackFiltro"
     [ctrls]="filtro">
   </app-filtros>
 </div>
 
-<div *ngFor="let tabela of tabelasProcessadas">
+<div *ngFor="let tabela of this.dashboardTabelaService.tabelasProcessadas">
 
   <h2>{{ tabela.titulo }}</h2>
 
