@@ -1,3 +1,43 @@
+<figure class="highcharts-figure">
+<div *ngIf="mode === 'bar'" #chartContainer></div>
+</figure>
+<figure  *ngIf="mode === 'pie'" class="highcharts-figure">
+    <div *ngIf="mode === 'pie'" #chartContainer></div>
+</figure>
+
+<figure  *ngIf="mode === 'gauge'" class="highcharts-figure">
+<div *ngIf="mode === 'gauge'" #chartContainer></div>
+ <p class="highcharts-description">
+        Chart showing use of plot bands with a gauge series.
+    </p>
+</figure>
+
+<figure *ngIf="mode === 'bubble'" class="highcharts-figure">
+   <div *ngIf="mode === 'bubble'" #chartContainer></div>
+</figure>
+
+<figure *ngIf="mode === 'scatterplot'" class="highcharts-figure">
+    <div *ngIf="mode === 'scatterplot'" #chartContainer></div>
+</figure>
+
+
+<figure *ngIf="mode === 'heatmap'" class="highcharts-figure">
+    <div #chartContainer></div>
+    <p class="highcharts-description">
+        Heatmap showing employee data per weekday. Heatmaps are commonly used to
+        visualize hot spots within data sets, and to show patterns or correlations.
+        Due to their compact nature, they are often used with large sets of data.
+    </p>
+</figure>
+<figure *ngIf="mode === 'line'" class="highcharts-figure">
+    <div #chartContainer></div>
+        <p class="highcharts-description">
+            Basic line chart showing trends in a dataset. This chart includes the
+        <code>series-label</code> module, which adds a label to each line for
+        enhanced readability.
+    </p>
+</figure>
+
 <div class="flex-container">
   <canvas id="myChart"></canvas>
   <canvas id="ChartLine"></canvas>

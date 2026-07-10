@@ -3,7 +3,7 @@
 /* eslint-disable @angular-eslint/prefer-standalone */
 import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Chart } from 'chart.js/auto';
+
 
 @Component({
   selector: 'app-dialog',
@@ -30,90 +30,37 @@ getCampos(obj: any) {
     headerKey: this.headerMap[chave] ?? chave // chave de tradução
   }));
 }
+
+  modoGrafico!: 'bar' | 'pie' | 'heatmap' | 'bubble' | 'scatterplot' | 'gauge' | 'line';
+
+  alterarGrafico(modo: typeof this.modoGrafico) {
+    this.modoGrafico = modo;
+  }
+
  ngOnInit() {
     // Calcula os campos uma vez
+    this.modoGrafico = this.data.mode;
     this.campos = this.getCampos(this.data);
   }
 
   ngAfterViewInit(): void {
 
+     this.modoGrafico = this.data.mode;
     console.log(this.data);
-    this.gerarGrafico();
+    // {coluna: 'teste_coluna_filha_2', valores: Array(2)}
+    // coluna
+    // : 
+    // "teste_coluna_filha_2"
+    // valores
+    // : 
+    // Array(2)
+    // 0
+    // : 
+    // {titulo: 'linha de teste', valor: '55'}
+    // 1
+    // : 
+    // {titulo: 'Filho da linha de teste', valor: '22'}
   }
 
-  gerarGrafico() {
-  //   if (typeof document !== 'undefined') {
-  //     const ctx = document.getElementById('myChart') as HTMLCanvasElement;
-
-  //     if (ctx) {
-  //       const myChart = new Chart(ctx, {
-  //         type: 'bar',
-  //         data: {
-  //           labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-  //           datasets: [{
-  //             label: '# of Votes',
-  //             data: [12, 19, 3, 5, 2, 3],
-  //             borderWidth: 1
-  //           }]
-  //         },
-  //         options: {
-  //           scales: {
-  //             y: {
-  //               beginAtZero: true
-  //             }
-  //           }
-  //         }
-  //       });
-  //     } else {
-  //       console.error("Canvas com id 'myChart' não encontrado.");
-  //     }
-  //   }
-
-  if (typeof document !== 'undefined') {
-  const ctx = document.getElementById('myChart1') as HTMLCanvasElement;
-
-  if (ctx) {
-    const valores = [12, 19, 3, 5, 2, 3];
-    const total = valores.reduce((a, b) => a + b, 0);
-    const porcentagens = valores.map(v => ((v / total) * 100).toFixed(2));
-
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-          label: '% de votos',
-          data: porcentagens,
-          backgroundColor: 'rgba(54, 162, 235, 0.5)',
-          borderColor: 'rgba(54, 162, 235, 1)',
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-            max: 100,
-            ticks: {
-                callback: (tickValue) => `${tickValue}%`
-            }
-          }
-        },
-        plugins: {
-          tooltip: {
-            callbacks: {
-              label: function(context) {
-                return context.parsed.y + '%';
-              }
-            }
-          }
-        }
-      }
-    });
-  } else {
-    console.error("Canvas com id 'myChart' não encontrado.");
-  }
-}
-  }
 
 }

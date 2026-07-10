@@ -3,23 +3,87 @@
   <div *ngFor="let campo of campos">
   <p><strong>{{ campo.headerKey | transloco | titlecase }}:</strong> {{ campo.valor }}</p>
   </div>
+<!-- // colocar aqui botões para alterar entre modos de graficos,
+// mas desativar o grafico padrão  -->
+<div class="toolbar-grafico">
 
-    <canvas id="myChart1"></canvas>
+  <button
+      mat-icon-button
+      [color]="modoGrafico === 'bar' ? 'primary' : ''"
+      (click)="alterarGrafico('bar')">
+
+      <mat-icon>bar_chart</mat-icon>
+
+  </button>
+
+  <button
+      mat-icon-button
+      [color]="modoGrafico === 'pie' ? 'primary' : ''"
+      (click)="alterarGrafico('pie')">
+
+      <mat-icon>pie_chart</mat-icon>
+
+  </button>
+
+  <button
+      mat-icon-button
+      [color]="modoGrafico === 'heatmap' ? 'primary' : ''"
+      (click)="alterarGrafico('heatmap')">
+
+      <mat-icon>grid_view</mat-icon>
+
+  </button>
+
+  <button
+      mat-icon-button
+      [color]="modoGrafico === 'bubble' ? 'primary' : ''"
+      (click)="alterarGrafico('bubble')">
+
+      <mat-icon>bubble_chart</mat-icon>
+
+  </button>
+
+  <button
+      mat-icon-button
+      [color]="modoGrafico === 'scatterplot' ? 'primary' : ''"
+      (click)="alterarGrafico('scatterplot')">
+
+      <mat-icon>scatter_plot</mat-icon>
+
+  </button>
+
+  <button
+      mat-icon-button
+      [color]="modoGrafico === 'gauge' ? 'primary' : ''"
+      (click)="alterarGrafico('gauge')">
+
+      <mat-icon>speed</mat-icon>
+
+  </button>
+
+  <button
+      mat-icon-button
+      [color]="modoGrafico === 'line' ? 'primary' : ''"
+      (click)="alterarGrafico('line')">
+
+      <mat-icon>show_chart</mat-icon>
+  </button>
+
+</div>
+
+<app-grafico
+    [mode]="modoGrafico"
+    [data]="data">
+</app-grafico>
+
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close class="fechar-dialog" cdkFocusInitial>{{'Dashboard.TabelaDialog.Detalhes.ButtonFechar' | transloco}}</button>
+   
+  <button mat-button mat-dialog-close class="fechar-dialog" cdkFocusInitial>
+    <mat-icon class="spin-animation">close</mat-icon>
+    {{'Dashboard.TabelaDialog.Detalhes.ButtonFechar' | transloco}}</button>
 
 </mat-dialog-actions>
 
 
-<!-- <mat-dialog-content>
-  <p><strong>Id:</strong> {{ data[0] }}</p>
-  <p><strong>Descrição:</strong> {{ data[1] }}</p>
-  <p><strong>Tamanho:</strong> {{ data[2] }}</p>
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close class="fechar-dialog" cdkFocusInitial>Fechar</button>
-
-    <canvas id="myChart1"></canvas>
-</mat-dialog-actions> -->

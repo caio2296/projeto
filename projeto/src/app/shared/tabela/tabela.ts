@@ -13,6 +13,12 @@ import { TranslocoService } from '@jsverse/transloco';
 
 import { OnChanges, SimpleChanges } from '@angular/core';
 
+  interface HeaderCell {
+    name: string;
+    colspan: number;
+    rowspan: number;
+  }
+
 @Component({
   selector: 'app-tabela',
   standalone: false,
@@ -85,12 +91,6 @@ getHeaderNames(row: any[]) {
 }
 
 buildHeaders() {
-
-  interface HeaderCell {
-    name: string;
-    colspan: number;
-    rowspan: number;
-  }
 
   const headersPorNivel: HeaderCell[][] = [];
 
@@ -294,9 +294,7 @@ countLeafs(node: any): number {
 
   return node.filhos.reduce(
     (acc: number, filho: any) =>
-      acc + this.countLeafs(filho),
-    0
-  );
+      acc + this.countLeafs(filho),0);
 }
 
 getMaxLevel(nodes: any[]): number {
@@ -403,6 +401,69 @@ isVisible(row: any, data: any[]): boolean {
   }
 
   return true;
+}
+obterDescendentesDaColuna(linha: any, coluna: string): any[] {
+
+    const indice = this.grid.indexOf(linha);
+
+    if (indice === -1) {
+        return [];
+    }
+
+    const resultado = [];
+
+    for (let i = indice; i < this.grid.length; i++) {
+
+        const atual = this.grid[i];
+
+        if (atual.isSubHeader) {
+            continue;
+        }
+
+        if (i !== indice && atual.level <= linha.level) {
+            break;
+        }
+
+        const valor = atual[coluna];
+
+        if (
+            valor !== undefined &&
+            valor !== null &&
+            valor !== '-'
+        ) {
+            resultado.push({
+                titulo: atual.rowHeader,
+                valor
+            });
+        }
+    }
+
+    return resultado;
+}
+
+ abrirModal(coluna: string, linha: any, event: Event) {
+
+    let valores = this.obterDescendentesDaColuna(linha, coluna);
+
+    console.log(valores);
+
+    (event.target as HTMLElement).blur();
+
+    const mode = valores.length > 1 ? 'pie' : 'bar';
+
+    // Se for pie, remove o primeiro elemento
+    if (mode === 'pie') {
+        valores = valores.slice(1);
+    }
+
+    this.dialog.open(Dialog, {
+        data: {
+            coluna,
+            valores,
+            mode
+        }
+    });
+
 }
 
 

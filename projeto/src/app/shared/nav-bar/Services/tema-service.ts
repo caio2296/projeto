@@ -1,5 +1,6 @@
-/* eslint-disable @angular-eslint/prefer-inject */
-import { DOCUMENT, Inject, Injectable, Renderer2, RendererFactory2 } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable, Renderer2, RendererFactory2 } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -7,23 +8,33 @@ import { DOCUMENT, Inject, Injectable, Renderer2, RendererFactory2 } from '@angu
 export class TemaService {
 
   private renderer: Renderer2;
+
   public isDarkMode = false;
 
-  constructor(private rendererFactory: RendererFactory2,
-    @Inject(DOCUMENT) private document: Document) {
+  private themeChangedSubject = new BehaviorSubject<boolean>(false);
+  themeChanged$ = this.themeChangedSubject.asObservable();
 
+  constructor(
+    private rendererFactory: RendererFactory2,
+    @Inject(DOCUMENT) private document: Document
+  ) {
     this.renderer = rendererFactory.createRenderer(null, null);
+
     const temaSalvo = localStorage.getItem('tema');
+
     if (temaSalvo === 'dark') {
       this.setDarkTheme(true);
     }
   }
+
   toggleTheme(): void {
     this.setDarkTheme(!this.isDarkMode);
   }
 
   private setDarkTheme(isDark: boolean): void {
+
     this.isDarkMode = isDark;
+
     const body = this.document.body;
 
     if (isDark) {
@@ -35,5 +46,8 @@ export class TemaService {
       this.renderer.removeClass(body, 'dark-theme');
       localStorage.setItem('tema', 'light');
     }
+
+    // 👇 avisa quem estiver ouvindo
+    this.themeChangedSubject.next(isDark);
   }
 }
