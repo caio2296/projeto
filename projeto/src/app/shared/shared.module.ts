@@ -14,7 +14,7 @@ import { DialogConfirmeDelete } from './tabela/dialog-confirme-delete/dialog-con
 import { Footer } from './footer/footer';
 import { TranslocoModule } from "@jsverse/transloco";
 import { Loading } from "./Loading/loading";
-
+import {  HighchartsChartComponent } from 'highcharts-angular';
 
 @NgModule({
     declarations: [
@@ -35,6 +35,7 @@ import { Loading } from "./Loading/loading";
         FormsModule,
         RouterModule,
         TranslocoModule,
+        HighchartsChartComponent
     ],
     exports: [
         Grafico,

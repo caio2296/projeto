@@ -127,7 +127,22 @@
       <!-- OUTRAS COLUNAS -->
       <ng-template #valorColuna>
 
-        {{ element[column] }}
+     <ng-container *ngIf="element[column] !== '-'; else texto">
+
+     
+    <button
+      mat-button
+      color="primary"
+      (click)="abrirModal(column, element, $event)">
+      {{ element[column] }}
+    </button>
+
+  </ng-container>
+
+  <ng-template #texto>
+    {{ element[column] }}
+  </ng-template>   
+
 
       </ng-template>
 
