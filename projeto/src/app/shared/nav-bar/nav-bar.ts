@@ -71,7 +71,7 @@ export class NavBar {
   ) {
     this.activeLang = this.translocoService.getActiveLang(); // pega o idioma ativo atual
 
-    this.labelDataService.tipoData$.subscribe(tipo => {
+    this.labelDataService.calendarMode$.subscribe(tipo => {
       this.currentTipo = tipo;
 
       const key = this.tipoMap[tipo] ?? tipo;
@@ -91,7 +91,7 @@ export class NavBar {
 
     this.translocoService.selectTranslate(key).pipe(take(1)).subscribe(translated => {
       this.currentTipoLabel = translated;
-      this.labelDataService.setTipoData(this.currentTipoLabel);
+      this.labelDataService.setCalendarMode(this.currentTipoLabel);
     });
   }
 

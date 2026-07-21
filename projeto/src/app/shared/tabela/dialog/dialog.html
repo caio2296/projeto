@@ -17,6 +17,7 @@
   </button>
 
   <button
+      *ngIf= "data.valores.length > 1"
       mat-icon-button
       [color]="modoGrafico === 'pie' ? 'primary' : ''"
       (click)="alterarGrafico('pie')">

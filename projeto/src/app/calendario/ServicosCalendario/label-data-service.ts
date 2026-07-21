@@ -11,13 +11,13 @@ import { DateAdapter } from '@angular/material/core';
 })
 export class LabelDataService {
 
-  private tipoDataSubject = new BehaviorSubject<string>('');
+  // private tipoDataSubject = new BehaviorSubject<string>('day');
   public dateReordered = false;
 
   Inicio = false;
 
 
-  tipoData$ = this.tipoDataSubject.asObservable(); // Exposição do observable
+  // tipoData$ = this.tipoDataSubject.asObservable(); // Exposição do observable
 
   private intervaloSubject = new BehaviorSubject<boolean>(false);
 
@@ -31,12 +31,21 @@ export class LabelDataService {
   private _DateLocale!: string;
 
 
-  public setTipoData(tipo: string) {
-    this.tipoDataSubject.next(tipo);
+  // public setTipoData(tipo: string) {
+  //   this.tipoDataSubject.next(tipo);
+  // }
+
+  // public getTipoData(): string {
+  //   return this.tipoDataSubject.value;
+  // }
+
+  public setCalendarMode(mode: string) {
+
+    this.calendarModeSubJect.next(mode);
   }
 
-  public getTipoData(): string {
-    return this.tipoDataSubject.value;
+  public getCalendarMode(): string {
+    return this.calendarModeSubJect.value;
   }
 
   public setLabel(labelData: string, locale?: string) {
@@ -67,14 +76,7 @@ export class LabelDataService {
     this.intervaloSubject.next(valor);
   }
 
-  public setCalendarMode(mode: string) {
 
-    this.calendarModeSubJect.next(mode);
-  }
-
-  public getCalendarMode(): string {
-    return this.calendarModeSubJect.value;
-  }
 
   public TipoInicioLabel(inicio: boolean) {
     this.Inicio = inicio;

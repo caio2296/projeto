@@ -52,7 +52,7 @@ export class LabelData implements OnInit, OnDestroy {
 
       const calendarMode = defaultSelection;
 
-      this.labelDataService.setTipoData(calendarMode);
+      this.labelDataService.setCalendarMode(calendarMode);
       // this.labelDataService.setLabel(data.calendarBar.defaultSelection.dateStart);
 
 
@@ -70,7 +70,7 @@ export class LabelData implements OnInit, OnDestroy {
 
 
     this.subscriptions.add(
-      this.labelDataService.tipoData$.subscribe(tipo => {
+      this.labelDataService.calendarMode$.subscribe(tipo => {
         switch (tipo) {
           case 'day': {
             const mensagem = this.translocoService.translate('Dashboard.Label.day');

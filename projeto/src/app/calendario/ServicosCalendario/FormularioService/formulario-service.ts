@@ -34,7 +34,8 @@ export class FormularioService {
     var { partes, dataJs, dataM, partesPadrao, ano }: { partes: any; dataJs: any; dataM: any; partesPadrao: any; ano: any; } = 
           this.formularioDateHelper.ObtarDataAnoLabel(this.calendarBarModelService);
 
-    this.labelDataService.setTipoData(calendarMode);
+    // this.labelDataService.setTipoData(calendarMode);
+    this.labelDataService.setCalendarMode(calendarMode);
 
     switch (calendarMode) {
       case 'day':
