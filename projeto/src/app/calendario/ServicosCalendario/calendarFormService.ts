@@ -27,7 +27,7 @@ export class CalendarFormService {
     switch (inputName) {
       case 'year': {
         this.labelDataService.setInterval(false);
-        this.labelDataService.setTipoData(inputName);
+        // this.labelDataService.setTipoData(inputName);
         this.labelDataService.setLabel(event.value);
         this.labelDataService.setCalendarMode('year');
 
@@ -38,7 +38,7 @@ export class CalendarFormService {
       }
       case 'fiscalYear': {
         this.labelDataService.setInterval(false);
-        this.labelDataService.setTipoData(inputName);
+        // this.labelDataService.setTipoData(inputName);
         this.labelDataService.setLabel(`${event.value}/${event.value + 1}`);
         this.labelDataService.setCalendarMode('fiscalYear');
         console.log('Ano fiscal selecionado:', event.value);
@@ -56,7 +56,7 @@ export class CalendarFormService {
     switch (input) {
       case 'day': {
         this.labelDataService.setInterval(false);
-        this.labelDataService.setTipoData(input);
+        // this.labelDataService.setTipoData(input);
         const controlInput = this.formularioService.form.get(input);
         this.labelDataService.setCalendarMode('day');
 
@@ -77,7 +77,7 @@ export class CalendarFormService {
       }
       case 'month': {
         this.labelDataService.setInterval(false);
-        this.labelDataService.setTipoData(input);
+        // this.labelDataService.setTipoData(input);
         const controlInput = this.formularioService.form.get(input);
         this.labelDataService.setCalendarMode('month');
 
@@ -131,7 +131,7 @@ export class CalendarFormService {
 
           const dataFormatadaFim = `${mesFim}/${anoFim}`;
           this.labelDataService.setInterval(true);
-          this.labelDataService.setTipoData("month");
+          // this.labelDataService.setTipoData("month");
           this.labelDataService.setCalendarMode('month');
           this.labelDataService.setLabel(`${dataFormatadaInicio}-${dataFormatadaFim}`);
 
@@ -157,7 +157,7 @@ export class CalendarFormService {
         if (dataFim instanceof Date && dataInicio instanceof Date && dataFim > dataInicio) {
           const locale = this.localeService.getLocale();
           this.labelDataService.setInterval(true);
-          this.labelDataService.setTipoData("day");
+          // this.labelDataService.setTipoData("day");
           this.labelDataService.setCalendarMode('day');
           const label = `${dataInicioValor.toLocaleDateString(locale)} - ${dataFimValor.toLocaleDateString(locale)}`;
           this.labelDataService.setLabel(label,locale);
@@ -180,7 +180,7 @@ export class CalendarFormService {
 
         if (dataFim && dataFim > dataInicio) {
           this.labelDataService.setInterval(true);
-          this.labelDataService.setTipoData("fiscalYear");
+          // this.labelDataService.setTipoData("fiscalYear");
           this.labelDataService.setCalendarMode('fiscalYear');
 
           this.labelDataService
@@ -201,7 +201,7 @@ export class CalendarFormService {
 
         if (dataFim && dataFim > dataInicio) {
           this.labelDataService.setInterval(true);
-          this.labelDataService.setTipoData("year");
+          this.labelDataService.setCalendarMode("year");
           this.labelDataService.setCalendarMode('year');
           
           this.labelDataService
