@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/prefer-inject */
 /* eslint-disable @angular-eslint/prefer-standalone */
-import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { MatDatepicker } from '@angular/material/datepicker';
+import { MatDatepicker, MatDatepickerInputEvent } from '@angular/material/datepicker';
 import moment from 'moment';
 import { Moment } from 'moment';
 
@@ -30,6 +30,9 @@ import { InputConfig } from '../../../ServicosCalendario/InputConfig';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputMes implements OnInit  {
+
+  @Output()selecaoFinalizada = new EventEmitter<void>();
+
   @Input() form!: FormGroup;
 
   public calendarMode: 'day' | 'month' | 'year' | 'fiscalYear' | 'week' | 'datetime' = 'day';
@@ -59,5 +62,17 @@ export class InputMes implements OnInit  {
       { value: momentValue.format('MM/YYYY') } as any,
       'month',
     );
+
+    this.selecaoFinalizada.emit();
   }
+
+    onDateChangeDataAndMonth(event: MatDatepickerInputEvent<Date>) {
+
+  this.calendarFormService.onDateChangeDataAndMonth(
+    event,
+    'month'
+  );
+
+  this.selecaoFinalizada.emit();
+}
 }

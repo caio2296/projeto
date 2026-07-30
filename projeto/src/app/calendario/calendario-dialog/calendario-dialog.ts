@@ -27,6 +27,8 @@ export class CalendarioDialog implements OnInit, OnDestroy {
   intervaloAtivo = false;
   calendarMode!: 'day' | 'month' | 'year' | 'fiscalYear' | 'week' | 'datetime';
 
+  fecharAoSelecionar = false;
+
   constructor(
     public dialogRef: MatDialogRef<CalendarioDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -91,6 +93,18 @@ export class CalendarioDialog implements OnInit, OnDestroy {
     if (!this.calendarBarModelService.dados.calendarBar[mode]?.visible) return;
     this.intervaloAtivo = false;
     this.calendarMode = mode;
+  }
+
+  travarDialog(){
+    this.fecharAoSelecionar = !this.fecharAoSelecionar;
+  }
+
+  onSelecaoFinalizada() {
+
+    console.log('Seleção finalizada');
+   if (this.fecharAoSelecionar) {
+      this.fecharDialog();
+   }
   }
 
   MudarTipoFormulario(): boolean {

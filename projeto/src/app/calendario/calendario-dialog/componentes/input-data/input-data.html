@@ -2,7 +2,7 @@
     <mat-form-field appearance="outline">
         <mat-label>{{'Dashboard.Calendario.Dia'| transloco}}</mat-label>
         <input class="inputData" matInput [matDatepicker]="picker" formControlName="day" [min]="dateHelperServices.dateMinISO()"
-            [max]="dateHelperServices.dateMaxISO()"  (dateInput)="this.calendarFormService.onDateChangeDataAndMonth($event, 'day')" [readonly]="true" />
+            [max]="dateHelperServices.dateMaxISO()"  (dateInput)="onDateInput($event)" [readonly]="true" />
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>

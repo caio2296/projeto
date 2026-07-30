@@ -15,7 +15,7 @@
     <mat-label>Fim</mat-label>
     <input [type]="inputConfig.type" matInput [matDatepicker]="pickerFimMes" formControlName="dataFimMes"
       [min]="dateHelperService.dateMinISO()" [max]="dateHelperService.dateMaxISO()"
-      (dateInput)="this.calendarFormService.onDateChangeInterval($event, 'dataInicioMes','dataFimMes')"
+      (dateInput)="onDateChangeInterval($event)"
       [readonly]="true" />
 
     <mat-hint>MM/YYYY</mat-hint>

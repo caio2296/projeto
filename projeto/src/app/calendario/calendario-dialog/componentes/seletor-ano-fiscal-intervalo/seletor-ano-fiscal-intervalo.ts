@@ -1,11 +1,12 @@
 /* eslint-disable @angular-eslint/prefer-inject */
 /* eslint-disable @angular-eslint/prefer-standalone */
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { InputConfig } from '../../../ServicosCalendario/InputConfig';
 import { FormularioService } from '../../../ServicosCalendario/FormularioService/formulario-service';
 import { DateHelperService } from '../../../ServicosCalendario/dateHelperService';
 import { CalendarFormService } from '../../../ServicosCalendario/calendarFormService';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-seletor-ano-fiscal-intervalo',
@@ -14,6 +15,8 @@ import { CalendarFormService } from '../../../ServicosCalendario/calendarFormSer
   styleUrl: './seletor-ano-fiscal-intervalo.scss'
 })
 export class SeletorAnoFiscalIntervalo implements OnInit {
+
+   @Output()selecaoFinalizada = new EventEmitter<void>();
    @Input() intervaloForm!: FormGroup;
    @Input() calendarMode: 'year' | 'fiscalYear' = 'year';
 
@@ -31,4 +34,15 @@ export class SeletorAnoFiscalIntervalo implements OnInit {
       this.inputConfigs.updateInputConfig(value);
     });
   }
+
+    onYearFiscalChangeInterval(event: MatSelectChange) {
+
+  this.calendarFormServices.onYearFiscalChangeInterval(
+     event,
+    'anoIntervaloInicio',
+    'anoIntervaloFim'
+  );
+
+  this.selecaoFinalizada.emit();
+}
 }

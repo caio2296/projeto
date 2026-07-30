@@ -1,11 +1,12 @@
 /* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @angular-eslint/prefer-inject */
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { DateHelperService } from '../../../ServicosCalendario/dateHelperService';
 import { InputConfig } from '../../../ServicosCalendario/InputConfig';
 import { FormularioService } from '../../../ServicosCalendario/FormularioService/formulario-service';
 import { CalendarFormService } from '../../../ServicosCalendario/calendarFormService';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-seletor-ano-intervalo',
@@ -14,6 +15,8 @@ import { CalendarFormService } from '../../../ServicosCalendario/calendarFormSer
   styleUrl: './seletor-ano-intervalo.scss'
 })
 export class SeletorAnoIntervalo implements OnInit {
+
+ @Output()selecaoFinalizada = new EventEmitter<void>();
  @Input() intervaloForm!: FormGroup;
 
   public selectedValue!: string;
@@ -32,4 +35,15 @@ export class SeletorAnoIntervalo implements OnInit {
       this.inputConfigs.updateInputConfig(value);
     });
   }
+
+      onYearChangeInterval(event: MatSelectChange) {
+
+  this.calendarFormServices.onYearChangeInterval(
+     event,
+    'anoInicio',
+    'anoFim'
+  );
+
+  this.selecaoFinalizada.emit();
+}
 }

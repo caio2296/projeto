@@ -1,11 +1,6 @@
 <div class="central-container">
-<div class="labelBox">
-    <h2 class="label">
-        {{
-        tipo
-      }}:
-    </h2> <!--tipo-->
-
-    <p class="label">{{ label }}</p> <!--datas-->
+<div class="labelBox" [class.navbar-mode]="navbarMode">
+  <span class="tipo ">{{ tipo }}:</span>
+  <span class="valor ">{{ label }}</span>
 </div>
 </div>

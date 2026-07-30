@@ -15,6 +15,7 @@ import { Footer } from './footer/footer';
 import { TranslocoModule } from "@jsverse/transloco";
 import { Loading } from "./Loading/loading";
 import {  HighchartsChartComponent } from 'highcharts-angular';
+import { CalendarioModule } from "../calendario/modulo/calendario-module";
 
 @NgModule({
     declarations: [
@@ -35,7 +36,8 @@ import {  HighchartsChartComponent } from 'highcharts-angular';
         FormsModule,
         RouterModule,
         TranslocoModule,
-        HighchartsChartComponent
+        HighchartsChartComponent,
+        CalendarioModule
     ],
     exports: [
         Grafico,

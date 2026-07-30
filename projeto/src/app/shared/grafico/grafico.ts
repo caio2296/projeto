@@ -7,7 +7,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Chart } from 'chart.js/auto';
 import { TemaService } from '../nav-bar/Services/tema-service';
 import { LabelDataService } from '../../calendario/ServicosCalendario/label-data-service';
-import { GraficoTipoService } from './grafico-tipo-Service';
+import { GraficoTipoService } from './ServiceGrafico/grafico-tipo-Service';
+import { GraficoApi } from './ServiceGrafico/grafico-api';
 
 
 
@@ -48,6 +49,7 @@ export class Grafico implements OnInit, OnChanges, AfterViewInit {
         private temaService: TemaService,
         private labelDataService: LabelDataService,
         private graficoTipoService: GraficoTipoService,
+        private graficoApi: GraficoApi,
     ) { }
     ngOnInit(): void {
         // this.gerarGrafico();
@@ -146,31 +148,52 @@ export class Grafico implements OnInit, OnChanges, AfterViewInit {
         switch (this.mode) {
 
             case 'bar':
+                console.log('mudou o gráfico:', this.mode);
                 this.graficoTipoService.GraficoHightcharts(this.container.nativeElement);
                 break;
 
             case 'pie':
+                console.log('mudou o gráfico:', this.mode);
                 this.graficoTipoService.GraficoHightchartsPieChart(this.container.nativeElement, this.data);
                 break;
 
             case 'gauge':
+                console.log('mudou o gráfico:', this.mode);
                 this.graficoTipoService.GraficoHightchartsGaugeChart(this.container.nativeElement);
                 break;
 
             case 'bubble':
+                console.log('mudou o gráfico:', this.mode);
                 this.graficoTipoService.GraficoHightchartsBubbleChart(this.container.nativeElement);
                 break;
 
             case 'scatterplot':
+                console.log('mudou o gráfico:', this.mode);
                 this.graficoTipoService.GraficoHightchartsScatterplot(this.container.nativeElement);
                 break;
 
             case 'heatmap':
+                console.log('mudou o gráfico:', this.mode);
                 this.graficoTipoService.GraficoHightchartsHeatmap(this.container.nativeElement);
                 break;
             case 'line':
+                console.log('mudou o gráfico:', this.mode);
                 this.graficoTipoService.GraficoHightchartsLineChart(this.container.nativeElement,
-                     this.TituloDataGrafico(), this.obterDadosDataDoLabel());
+                this.TituloDataGrafico(), this.obterDadosDataDoLabel());
+
+                // this.graficoApi.carregarDados().subscribe({
+                //     next:(dados:any)=>{
+                //      this.graficoTipoService.GraficoHightchartsLineChart(this.container.nativeElement,
+                //      this.TituloDataGrafico(), this.obterDadosDataDoLabel());
+                //     },
+                //     error: (e: Error) =>{
+                //           console.error('Erro ao carregar dados para o gráfico de linha:', e);
+                //     },
+                //     complete: () =>{
+                //         // Executado quando o Observable é concluído
+                //     }
+                // });
+               
                 break;
         }
         this.atualizarTemaGraficos();
