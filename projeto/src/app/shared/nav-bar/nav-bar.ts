@@ -103,6 +103,11 @@ export class NavBar {
     this.dialog.open(CalendarioDialog, {
       width: '100%',
       maxWidth: '500px',
+      position: {
+        top: '70px',
+        left: '20px'
+      },
+      // hasBackdrop: false,
       data: {} // pode passar dados se quiser
     });
   }

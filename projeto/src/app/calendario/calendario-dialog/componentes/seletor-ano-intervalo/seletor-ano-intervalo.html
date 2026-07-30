@@ -10,7 +10,7 @@
 
   <mat-form-field>
     <mat-label>Ano Final</mat-label>
-    <mat-select formControlName="anoFim" (selectionChange)="this.calendarFormServices.onYearChangeInterval($event,'anoInicio', 'anoFim')">
+    <mat-select formControlName="anoFim" (selectionChange)="onYearChangeInterval($event)">
       <mat-option *ngFor="let year of dateHelperServices.yearOptions" [value]="year">{{ year }}
       </mat-option>
     </mat-select>

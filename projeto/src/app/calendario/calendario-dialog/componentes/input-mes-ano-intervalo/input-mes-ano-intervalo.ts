@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @angular-eslint/prefer-inject */
-import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 
 import { FormControl, FormGroup } from '@angular/forms';
 
 import { Moment } from 'moment';
-import { MatDatepicker } from '@angular/material/datepicker';
+import { MatDatepicker, MatDatepickerInputEvent } from '@angular/material/datepicker';
 import moment from 'moment';
 import { MY_FORMATS } from '../../../Models/Formats';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
@@ -31,6 +31,8 @@ import { FormularioService } from '../../../ServicosCalendario/FormularioService
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputMesAnoIntervalo implements OnInit {
+
+    @Output()selecaoFinalizada = new EventEmitter<void>();
 
   // intervaloForm!:FormGroup;
 
@@ -59,6 +61,8 @@ export class InputMesAnoIntervalo implements OnInit {
   }
   setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>, inputControlName: string) {
     const ctrlValue = this.intervaloForm.get(inputControlName)?.value ?? moment();
+    const dataInicioMes = this.intervaloForm.get('dataInicioMes')?.value;
+    const dataFimMes = this.intervaloForm.get('dataFimMes')?.value;
 
     ctrlValue.month(normalizedMonthAndYear.month());
     ctrlValue.year(normalizedMonthAndYear.year());
@@ -77,6 +81,19 @@ export class InputMesAnoIntervalo implements OnInit {
         'dataInicioMes',
         'dataFimMes'
       );
+
+      if (dataFimMes && dataFimMes > dataInicioMes)
+       this.selecaoFinalizada.emit();  
     }
+
   }
+
+  onDateChangeInterval(event: MatDatepickerInputEvent<Date>) {
+
+  this.calendarFormService.onDateChangeInterval(
+    event,
+    'dataInicioMes',
+    'dataFimMes'
+  );
+}
 }

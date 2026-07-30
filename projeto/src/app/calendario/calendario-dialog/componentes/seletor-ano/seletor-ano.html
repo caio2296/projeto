@@ -2,7 +2,7 @@
     <mat-form-field>
         <mat-label>{{label}}</mat-label>
         <mat-select [formControlName]="calendarMode === 'fiscalYear' ? 'fiscalYear' : 'year'"
-            (selectionChange)="this.calendarFormServices.onYearChange($event, calendarMode)">
+            (selectionChange)="onYearChange($event)">
             <!-- Opções de ano normal -->
             <ng-container *ngIf="calendarMode === 'year'">
                 <mat-option *ngFor="let year of dateHelperServices.yearOptions" [value]="year">

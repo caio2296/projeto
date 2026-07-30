@@ -1,5 +1,15 @@
 <section class="calendario" *ngIf="this.calendarBarModelService.dados as dados">
+
   <div class="dialog-header">
+       <!-- <mat-slide-toggle
+      [(ngModel)]="fecharAoSelecionar"
+      matTooltip="Fecha automaticamente o calendário ao selecionar uma data">
+    Fechar ao selecionar
+  </mat-slide-toggle> -->
+
+  <button mat-icon-button (click)="travarDialog()" aria-label="Fechar" matTooltip="Fechar">
+      <mat-icon class="icon-theme"> {{ fecharAoSelecionar ? 'lock_open' : 'lock' }} </mat-icon>
+    </button>
     <button mat-icon-button (click)="fecharDialog()" aria-label="Fechar" matTooltip="Fechar">
       <mat-icon class="icon-theme">close</mat-icon>
     </button>
@@ -37,33 +47,35 @@
       <!-- Input para dia -->
       <div class= "day" *ngIf="calendarMode === 'day'">
 
-        <app-input-data [form]="form"></app-input-data>
+        <app-input-data [form]="form" (selecaoFinalizada)="onSelecaoFinalizada()"></app-input-data>
 
       </div>
 
       <!-- Input para mês -->
       <div class= "month" *ngIf="calendarMode === 'month'">
 
-        <app-input-mes [form]="form"></app-input-mes>
+        <app-input-mes [form]="form" (selecaoFinalizada)="onSelecaoFinalizada()"></app-input-mes>
 
       </div>
 
       <!-- Input para ano -->
       <div class= "year"  *ngIf="calendarMode === 'year'">
 
-        <app-seletor-ano [form]="form" [calendarMode]="calendarMode" [label]="('Dashboard.Calendario.SelecioneAno'|transloco)"></app-seletor-ano>
+        <app-seletor-ano [form]="form" [calendarMode]="calendarMode"
+         [label]="('Dashboard.Calendario.SelecioneAno'|transloco)" (selecaoFinalizada)="onSelecaoFinalizada()"></app-seletor-ano>
 
       </div>
 
       <!-- Input para ano fiscal -->
       <div class= "fiscalYear" *ngIf="calendarMode === 'fiscalYear'">
 
-        <app-seletor-ano [form]="form" [calendarMode]="calendarMode" [label]="('Dashboard.Calendario.SelecioneAnoFiscal'|transloco)"> </app-seletor-ano>
+        <app-seletor-ano [form]="form" [calendarMode]="calendarMode" [label]="('Dashboard.Calendario.SelecioneAnoFiscal'|transloco)"
+         (selecaoFinalizada)="onSelecaoFinalizada()"></app-seletor-ano>
 
       </div>
 
     </form>
-  </section>
+  </section> 
 
 
   <section>
@@ -85,23 +97,27 @@
 
       <div  *ngIf="intervaloForm.get('unidade')?.value === 'day'">
 
-        <app-data-intervalo class="inputs-datas" [intervaloForm]="intervaloForm"></app-data-intervalo>
+        <app-data-intervalo class="inputs-datas" [intervaloForm]="intervaloForm"
+         (selecaoFinalizada)="onSelecaoFinalizada()"></app-data-intervalo>
 
       </div>
 
       <div  *ngIf="intervaloForm.get('unidade')?.value === 'month'">
 
-        <app-input-mes-ano-intervalo [intervaloForm]="intervaloForm"></app-input-mes-ano-intervalo>
+        <app-input-mes-ano-intervalo [intervaloForm]="intervaloForm"
+         (selecaoFinalizada)="onSelecaoFinalizada()"></app-input-mes-ano-intervalo>
 
       </div>
 
       <div  *ngIf="intervaloForm.get('unidade')?.value === 'year'">
 
-        <app-seletor-ano-intervalo [intervaloForm]="intervaloForm"></app-seletor-ano-intervalo>
+        <app-seletor-ano-intervalo [intervaloForm]="intervaloForm"
+         (selecaoFinalizada)="onSelecaoFinalizada()"></app-seletor-ano-intervalo>
 
       </div>
       <div  *ngIf="intervaloForm.get('unidade')?.value === 'fiscalYear'">
-       <app-seletor-ano-fiscal-intervalo [intervaloForm]="intervaloForm"></app-seletor-ano-fiscal-intervalo>
+       <app-seletor-ano-fiscal-intervalo [intervaloForm]="intervaloForm"
+        (selecaoFinalizada)="onSelecaoFinalizada()"></app-seletor-ano-fiscal-intervalo>
       </div>
     </form>
 

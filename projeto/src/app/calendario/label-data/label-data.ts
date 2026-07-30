@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @angular-eslint/prefer-inject */
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { combineLatest, distinctUntilChanged, Subscription } from 'rxjs';
 import { LabelDataService } from '../ServicosCalendario/label-data-service';
 
@@ -19,6 +19,8 @@ import { CalendarModel } from '../Models/type';
 })
 export class LabelData implements OnInit, OnDestroy {
 
+  @Input() navbarMode = false;
+  
   tipo = '';
   private _label = '';
   IniciouEn = false;

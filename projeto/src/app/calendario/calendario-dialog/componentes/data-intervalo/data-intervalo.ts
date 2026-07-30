@@ -1,11 +1,12 @@
 /* eslint-disable @angular-eslint/prefer-inject */
 /* eslint-disable @angular-eslint/prefer-standalone */
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { DateHelperService } from '../../../ServicosCalendario/dateHelperService';
 import { InputConfig } from '../../../ServicosCalendario/InputConfig';
 import { FormularioService } from '../../../ServicosCalendario/FormularioService/formulario-service';
 import { CalendarFormService } from '../../../ServicosCalendario/calendarFormService';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-data-intervalo',
@@ -14,6 +15,9 @@ import { CalendarFormService } from '../../../ServicosCalendario/calendarFormSer
   styleUrl: './data-intervalo.scss'
 })
 export class DataIntervalo implements OnInit {
+
+@Output()selecaoFinalizada = new EventEmitter<void>();
+
 @Input() intervaloForm!: FormGroup;
   inputConfig = {
     type: 'data',
@@ -41,4 +45,16 @@ constructor(
      this.inputConfigs.updateInputConfig(value);
     });
 }
+
+onDateInput(event: MatDatepickerInputEvent<Date>) {
+
+  this.calendarFormServices.onDateChangeInterval(
+    event,
+    'dataInicio',
+    'dataFim'
+  );
+
+  this.selecaoFinalizada.emit();
+}
+
 }
