@@ -28,22 +28,68 @@
 //   }
 // }
 
-mat-toolbar{
+mat-toolbar {
   position: relative;
   z-index: 5;
 }
 
-.content{
-   padding-top: 64px; // empurra o conteúdo pra baixo da navbar
-  // padding: 24px;
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 16px;
+  width: 100%;
 }
-.layout{
-   padding-top: 64px; // empurra o conteúdo pra baixo da navbar
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  flex-wrap: nowrap;
+}
+
+.navbar-action-btn {
+  min-width: 40px;
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.navbar-action-btn mat-icon {
+  margin-right: 6px;
+}
+
+.navbar-action-btn .button-label {
+  display: inline;
+}
+
+.navbar > app-label-data {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.navbar-dashboard-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+  min-width: 0;
+}
+
+.content {
+  padding-top: 64px; // empurra o conteúdo pra baixo da navbar
   // padding: 24px;
 }
 
+.layout {
+  padding-top: 64px; // empurra o conteúdo pra baixo da navbar
+  // padding: 24px;
+}
 
-mat-sidenav-content{
+mat-sidenav-content {
   height: calc(100vh - 64px);
 }
 
@@ -58,6 +104,41 @@ mat-toolbar {
 
 mat-sidenav-container {
   height: 100vh;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    gap: 6px;
+    padding: 0 8px;
+  }
+
+  .navbar-actions {
+    gap: 6px;
+  }
+
+  .navbar-action-btn {
+    min-width: 40px;
+    padding: 0 8px;
+  }
+
+  .navbar-action-btn mat-icon {
+    margin-right: 0;
+  }
+
+  .navbar-action-btn .button-label {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0 6px;
+  }
+
+  .navbar-action-btn {
+    min-width: 36px;
+    padding: 0 6px;
+  }
 }
 
 
