@@ -1,41 +1,42 @@
 <div id="meuFiltroContainer"></div>
 
-<table class="tblFiltersContainer">
-  <!-- Caso controlsbyrow = true -->
-  <ng-container *ngIf="ctrls?.controlsbyrow; else verticalMode">
-    <tr [id]="ctrls?.id + '_' + indAux">
+<ng-container *ngIf="ctrls?.controlsbyrow; else verticalMode">
+  <div *ngFor="let group of groupedChildren" class="filter-type-block">
+    <div class="filter-type-title">{{ getTypeLabel(group.type) }}</div>
 
+    <table class="tblFiltersContainer">
+      <tr [id]="ctrls?.id + '_' + indAux">
+        <td *ngFor="let ctrl of group.items; let i = index;">
+          <div class="filter-card">
+            <app-filter-item
+              [ctrl]="ctrl!"
+              [ctrls]="ctrls"
+              [i]="i"
+              [controlsbyrow]="ctrls?.controlsbyrow">
+            </app-filter-item>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</ng-container>
 
-      <!-- <tr *ngFor="let row of ctrls.children | slice:0; let rowIndex = index"> -->
-      <td *ngFor="let ctrl of ctrls?.children; let i = index;">
-        <!-- <td *ngFor="let ctrl of ctrls.children | slice:(rowIndex * ctrls.maxctrlsbygroup):(rowIndex * ctrls.maxctrlsbygroup + ctrls.maxctrlsbygroup)"> -->
+<ng-template #verticalMode>
+  <div *ngFor="let group of groupedChildren" class="filter-type-block">
+    <div class="filter-type-title">{{ getTypeLabel(group.type) }}</div>
 
-        <!-- Switch para o tipo -->
-        <app-filter-item 
-            [ctrl]="ctrl!"
-            [ctrls]="ctrls"
-            [i]="i"
-            [controlsbyrow]="ctrls?.controlsbyrow">
-        </app-filter-item>
-
-  </td>
-  </tr>
-
-  </ng-container>
-
-  <!-- Caso controlsbyrow = false -->
-  <ng-template #verticalMode>
-    <tr *ngFor="let ctrl of ctrls?.children">
-      <td>
-
-        <app-filter-item 
-            [ctrl]="ctrl!"
-            [ctrls]="ctrls"
-            [controlsbyrow]="ctrls?.controlsbyrow"
-            >
-        </app-filter-item>
-
-      </td>
-    </tr>
-  </ng-template>
-</table>
+    <table class="tblFiltersContainer">
+      <tr *ngFor="let ctrl of group.items">
+        <td>
+          <div class="filter-card">
+            <app-filter-item
+              [ctrl]="ctrl!"
+              [ctrls]="ctrls"
+              [controlsbyrow]="ctrls?.controlsbyrow">
+            </app-filter-item>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</ng-template>

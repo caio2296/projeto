@@ -71,3 +71,30 @@
 //   justify-content: space-between;
 //   flex-wrap: wrap;
 // }
+
+.filters-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  width: 100%;
+  max-width: 100%;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.filters-container > app-filtros {
+  flex: 1 1 280px;
+  max-width: 100%;
+  min-width: 0;
+}
+
+@media (max-width: 768px) {
+  .filters-container {
+    padding: 0 12px;
+    gap: 12px;
+  }
+
+  .filters-container > app-filtros {
+    flex-basis: 100%;
+  }
+}

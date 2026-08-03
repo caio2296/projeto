@@ -16,10 +16,12 @@ export class Filtros implements  OnInit {
 
   // vai virar input depois
  private _ctrls: FilterCat | null = null;
+ groupedChildren: Array<{ type: string; items: FilterCat[] }> = [];
 
 @Input()
 set ctrls(value: FilterCat | null) {
   this._ctrls = value;
+  this.groupedChildren = this.groupChildrenByType(value?.children ?? null);
 }
 
 get ctrls(): FilterCat | null {
@@ -57,8 +59,46 @@ get ctrls(): FilterCat | null {
 
 
   ngOnInit() {
-      console.log(this._ctrls);
-   
+      this.groupedChildren = this.groupChildrenByType(this.ctrls?.children ?? null);
+  }
+
+  groupChildrenByType(children: FilterCat[] | null): Array<{ type: string; items: FilterCat[] }> {
+    if (!children?.length) {
+      return [];
+    }
+
+    const groups = new Map<string, FilterCat[]>();
+
+    children.forEach((child) => {
+      const type = child?.typectrl?.trim() || 'outros';
+      if (!groups.has(type)) {
+        groups.set(type, []);
+      }
+      groups.get(type)!.push(child);
+    });
+
+    return Array.from(groups.entries()).map(([type, items]) => ({ type, items }));
+  }
+
+  getTypeLabel(type: string): string {
+    switch (type) {
+      case 'select':
+        return 'Seleções';
+      case 'multiselect':
+        return 'Múltiplas seleções';
+      case 'chk':
+        return 'Opções';
+      case 'btn':
+        return 'Ações';
+      case 'buttonset':
+        return 'Grupo de botões';
+      case 'img':
+        return 'Imagens';
+      case 'separator':
+        return 'Separadores';
+      default:
+        return type || 'Outros';
+    }
   }
 //  ngAfterViewInit()  {
 //     // 1) Primeiro buscar os dados
